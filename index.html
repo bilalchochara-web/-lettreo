@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lettreo — Votre courrier officiel en 2 minutes</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1814; --ink-light: #6b6760; --ink-muted: #a8a49f;
+    --paper: #faf9f7; --paper-warm: #f2f0eb;
+    --accent: #2856d4; --accent-light: #eaeffc; --accent-dark: #1e42a8;
+    --success: #1a7f4b; --success-bg: #eaf5ee;
+    --border: #e5e2db; --radius: 10px;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; background: var(--paper); color: var(--ink); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; z-index: 100; background: rgba(250,249,247,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); padding: 0 2rem; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+  .logo { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--ink); letter-spacing: -0.02em; }
+  .logo span { color: var(--accent); }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+  .lang-switcher { display: flex; gap: 4px; }
+  .lang-btn { background: none; border: 1px solid var(--border); border-radius: 6px; padding: 4px 8px; font-size: 12px; font-weight: 500; cursor: pointer; color: var(--ink-light); font-family: 'Inter', sans-serif; transition: all .15s; }
+  .lang-btn:hover, .lang-btn.active { background: var(--accent-light); border-color: var(--accent); color: var(--accent); }
+  .nav-cta { background: var(--accent); color: #fff; border: none; border-radius: var(--radius); padding: 8px 18px; font-size: 14px; font-weight: 500; font-family: 'Inter', sans-serif; cursor: pointer; transition: background .15s; text-decoration: none; }
+  .nav-cta:hover { background: var(--accent-dark); }
+
+  /* HERO */
+  .hero { max-width: 720px; margin: 0 auto; padding: 6rem 2rem 4rem; text-align: center; }
+  .hero-badge { display: inline-block; background: var(--accent-light); color: var(--accent); font-size: 13px; font-weight: 500; border-radius: 100px; padding: 5px 14px; margin-bottom: 2rem; border: 1px solid #c5d3f5; }
+  h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.2rem, 5vw, 3.4rem); line-height: 1.12; letter-spacing: -0.03em; color: var(--ink); margin-bottom: 1.4rem; }
+  h1 em { font-style: italic; color: var(--accent); }
+  .hero-sub { font-size: 1.05rem; color: var(--ink-light); max-width: 520px; margin: 0 auto 2.5rem; line-height: 1.65; }
+
+  /* FORM */
+  .form-wrap { display: flex; gap: 10px; max-width: 460px; margin: 0 auto 1rem; flex-wrap: wrap; }
+  .form-wrap input[type="email"] { flex: 1; min-width: 220px; height: 48px; border: 1.5px solid var(--border); border-radius: var(--radius); padding: 0 16px; font-size: 15px; font-family: 'Inter', sans-serif; color: var(--ink); background: #fff; outline: none; transition: border-color .15s; }
+  .form-wrap input[type="email"]:focus { border-color: var(--accent); }
+  .form-wrap input[type="email"]::placeholder { color: var(--ink-muted); }
+  .btn-primary { height: 48px; background: var(--accent); color: #fff; border: none; border-radius: var(--radius); padding: 0 24px; font-size: 15px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; transition: background .15s, transform .1s; white-space: nowrap; }
+  .btn-primary:hover { background: var(--accent-dark); }
+  .btn-primary:active { transform: scale(0.98); }
+  .form-note { font-size: 12.5px; color: var(--ink-muted); margin-top: 0.5rem; }
+  .success-msg { display: none; background: var(--success-bg); border: 1px solid #b8e0c9; border-radius: var(--radius); padding: 14px 20px; color: var(--success); font-size: 14px; font-weight: 500; max-width: 460px; margin: 0 auto; text-align: center; }
+  .trust-chips { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-top: 1.5rem; }
+  .chip { font-size: 12px; color: var(--ink-muted); display: flex; align-items: center; gap: 5px; }
+  .chip svg { width: 14px; height: 14px; }
+
+  /* MULTILINGUE SECTION */
+  .multilang-section { padding: 4rem 2rem; max-width: 900px; margin: 0 auto; }
+  .multilang-section > h2 { font-family: 'DM Serif Display', serif; font-size: 1.8rem; text-align: center; letter-spacing: -0.02em; margin-bottom: 0.5rem; color: var(--ink); }
+  .multilang-section > .section-sub { text-align: center; color: var(--ink-light); font-size: 0.9rem; margin-bottom: 2.5rem; }
+  .lang-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 2.5rem; }
+  .lang-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; text-align: center; transition: border-color .15s, box-shadow .15s; cursor: default; }
+  .lang-card:hover { border-color: var(--accent); box-shadow: 0 2px 16px rgba(40,86,212,0.08); }
+  .lang-flag { font-size: 28px; margin-bottom: 8px; }
+  .lang-name { font-weight: 600; font-size: 14px; color: var(--ink); margin-bottom: 4px; }
+  .lang-native { font-size: 13px; color: var(--ink-light); margin-bottom: 8px; }
+  .lang-example { font-size: 12px; color: var(--ink-muted); font-style: italic; line-height: 1.5; border-top: 1px solid var(--border); padding-top: 8px; margin-top: 4px; }
+  [dir="rtl"] .lang-example { direction: rtl; font-style: normal; }
+
+  .how-it-works-foreign { background: var(--accent-light); border: 1px solid #c5d3f5; border-radius: 12px; padding: 1.5rem 1.75rem; max-width: 640px; margin: 0 auto; }
+  .how-it-works-foreign h3 { font-size: 15px; font-weight: 600; color: var(--accent-dark); margin-bottom: 1rem; }
+  .flow-steps { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .flow-step { background: #fff; border: 1px solid #c5d3f5; border-radius: var(--radius); padding: 10px 14px; font-size: 13px; color: var(--ink); text-align: center; flex: 1; min-width: 130px; line-height: 1.4; }
+  .flow-step strong { display: block; color: var(--accent); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; }
+  .flow-arrow { font-size: 18px; color: var(--accent); flex-shrink: 0; }
+
+  /* DEMO */
+  .demo-section { background: var(--paper-warm); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 4rem 2rem; margin: 2rem 0; }
+  .demo-inner { max-width: 860px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; }
+  .demo-left h2 { font-family: 'DM Serif Display', serif; font-size: 1.9rem; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 1rem; color: var(--ink); }
+  .demo-left p { color: var(--ink-light); font-size: 0.95rem; margin-bottom: 1.5rem; line-height: 1.7; }
+  .steps-list { list-style: none; }
+  .steps-list li { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 14px; font-size: 0.9rem; color: var(--ink-light); }
+  .step-num { width: 24px; height: 24px; background: var(--accent); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; flex-shrink: 0; margin-top: 1px; }
+  .steps-list li strong { color: var(--ink); }
+  .lettre-mock { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 1.75rem; font-size: 12.5px; line-height: 1.8; color: var(--ink); box-shadow: 0 4px 24px rgba(0,0,0,0.06); position: relative; font-family: 'Times New Roman', serif; }
+  .lettre-mock::before { content: 'Courrier généré'; position: absolute; top: -12px; left: 20px; background: var(--accent); color: #fff; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 100px; letter-spacing: 0.03em; }
+  .lettre-mock .expediteur { margin-bottom: 1rem; }
+  .lettre-mock .destinataire { margin-bottom: 1rem; }
+  .lettre-mock .objet { font-weight: bold; text-decoration: underline; margin-bottom: 1rem; }
+  .lettre-mock .corps p { margin-bottom: 0.75rem; }
+  .lettre-mock .politesse { margin-top: 0.75rem; }
+  .lettre-mock .signature { margin-top: 1.5rem; }
+  .highlight-text { background: #fff3cd; padding: 1px 3px; border-radius: 3px; }
+
+  /* CAS D'USAGE */
+  .usecases { max-width: 860px; margin: 0 auto; padding: 0 2rem 4rem; }
+  .usecases h2 { font-family: 'DM Serif Display', serif; font-size: 1.8rem; text-align: center; letter-spacing: -0.02em; margin-bottom: 0.5rem; color: var(--ink); }
+  .usecases .section-sub { text-align: center; color: var(--ink-light); font-size: 0.9rem; margin-bottom: 2.5rem; }
+  .cases-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+  .case-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.1rem; font-size: 13.5px; color: var(--ink-light); display: flex; align-items: center; gap: 10px; transition: border-color .15s, box-shadow .15s; }
+  .case-card:hover { border-color: var(--accent); box-shadow: 0 2px 12px rgba(40,86,212,0.08); }
+  .case-icon { font-size: 20px; flex-shrink: 0; }
+
+  /* FEEDBACK */
+  .feedback-section { background: var(--paper-warm); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 4rem 2rem; }
+  .feedback-inner { max-width: 700px; margin: 0 auto; text-align: center; }
+  .feedback-inner h2 { font-family: 'DM Serif Display', serif; font-size: 1.8rem; letter-spacing: -0.02em; margin-bottom: 0.75rem; color: var(--ink); }
+  .feedback-inner p { color: var(--ink-light); font-size: 0.9rem; margin-bottom: 2rem; line-height: 1.7; }
+  .questions-list { text-align: left; background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .questions-list li { padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 14px; color: var(--ink); display: flex; gap: 10px; align-items: flex-start; list-style: none; }
+  .questions-list li:last-child { border-bottom: none; }
+  .q-num { color: var(--accent); font-weight: 600; font-size: 13px; min-width: 20px; margin-top: 1px; }
+
+  /* FOOTER CTA */
+  .footer-cta { padding: 5rem 2rem; text-align: center; max-width: 600px; margin: 0 auto; }
+  .footer-cta h2 { font-family: 'DM Serif Display', serif; font-size: 2rem; letter-spacing: -0.02em; margin-bottom: 1rem; color: var(--ink); }
+  .footer-cta p { color: var(--ink-light); font-size: 0.9rem; margin-bottom: 2rem; }
+  footer { border-top: 1px solid var(--border); padding: 1.5rem 2rem; text-align: center; font-size: 12px; color: var(--ink-muted); }
+
+  /* RESPONSIVE */
+  @media (max-width: 640px) {
+    .hero { padding: 4rem 1.5rem 3rem; }
+    .demo-inner { grid-template-columns: 1fr; }
+    .demo-left h2 { font-size: 1.5rem; }
+    .lettre-mock { font-size: 11.5px; }
+    .form-wrap { flex-direction: column; }
+    .form-wrap input[type="email"], .btn-primary { width: 100%; }
+    nav { padding: 0 1rem; }
+    .lang-switcher { display: none; }
+    .flow-steps { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Lettr<span>eo</span></div>
+  <div class="nav-right">
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('fr')">FR</button>
+      <button class="lang-btn" onclick="setLang('ar')">AR</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('es')">ES</button>
+      <button class="lang-btn" onclick="setLang('tr')">TR</button>
+    </div>
+    <a href="#inscription" class="nav-cta" id="nav-cta-txt">Accès anticipé</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge" id="badge-txt">🧪 Version bêta — testeurs recherchés</div>
+  <h1 id="h1-txt">Votre courrier officiel,<br><em>rédigé en 2 minutes.</em></h1>
+  <p class="hero-sub" id="hero-sub-txt">
+    Contestation, relance, demande à un organisme, litige bailleur ou banque —
+    décrivez votre situation et recevez un courrier formel prêt à envoyer.
+    Sans jargon. Sans stress.
+  </p>
+  <div id="form-block">
+    <form class="form-wrap" onsubmit="handleSubmit(event)">
+      <input type="email" id="email-input" placeholder="votre@email.fr" required autocomplete="email">
+      <button type="submit" class="btn-primary" id="btn-hero-txt">Tester gratuitement</button>
+    </form>
+    <p class="form-note" id="form-note-txt">Accès gratuit pendant la phase bêta · Aucune carte requise</p>
+  </div>
+  <div class="success-msg" id="success-msg">✓ <span id="success-txt">C'est noté ! Je vous contacte dans les 48h pour tester Lettreo.</span></div>
+  <div class="trust-chips" style="margin-top:2rem">
+    <span class="chip">
+      <svg viewBox="0 0 16 16" fill="none"><path d="M8 1l1.5 4.5H14l-3.7 2.7 1.4 4.3L8 10.2 4.3 12.5l1.4-4.3L2 5.5h4.5z" fill="#c8c4be"/></svg>
+      <span id="chip1">Courrier au format français officiel</span>
+    </span>
+    <span class="chip">
+      <svg viewBox="0 0 16 16" fill="none"><rect x="3" y="3" width="10" height="10" rx="2" stroke="#c8c4be" stroke-width="1.5"/><path d="M6 8l2 2 3-3" stroke="#c8c4be" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <span id="chip2">Aucune donnée stockée</span>
+    </span>
+    <span class="chip">
+      <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="#c8c4be" stroke-width="1.5"/><path d="M8 5v3.5l2 2" stroke="#c8c4be" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <span id="chip3">Résultat en moins de 2 min</span>
+    </span>
+  </div>
+</section>
+
+<!-- VOLET MULTILINGUE -->
+<section class="multilang-section">
+  <h2 id="ml-title">Accessible dans votre langue</h2>
+  <p class="section-sub" id="ml-sub">Décrivez votre situation en arabe, anglais, espagnol ou turc — le courrier officiel sort toujours en français, prêt à envoyer.</p>
+
+  <div class="lang-cards">
+    <div class="lang-card">
+      <div class="lang-flag">🇫🇷</div>
+      <div class="lang-name">Français</div>
+      <div class="lang-native">Français</div>
+      <div class="lang-example">"Mon propriétaire refuse de me rendre mon dépôt de garantie depuis 3 mois."</div>
+    </div>
+    <div class="lang-card">
+      <div class="lang-flag">🇸🇦</div>
+      <div class="lang-name">Arabe</div>
+      <div class="lang-native">العربية</div>
+      <div class="lang-example" dir="rtl">"رفض المالك إعادة وديعة الضمان منذ 3 أشهر."</div>
+    </div>
+    <div class="lang-card">
+      <div class="lang-flag">🇬🇧</div>
+      <div class="lang-name">Anglais</div>
+      <div class="lang-native">English</div>
+      <div class="lang-example">"My landlord has refused to return my security deposit for 3 months."</div>
+    </div>
+    <div class="lang-card">
+      <div class="lang-flag">🇪🇸</div>
+      <div class="lang-name">Espagnol</div>
+      <div class="lang-native">Español</div>
+      <div class="lang-example">"Mi arrendador se niega a devolverme la fianza desde hace 3 meses."</div>
+    </div>
+    <div class="lang-card">
+      <div class="lang-flag">🇹🇷</div>
+      <div class="lang-name">Turc</div>
+      <div class="lang-native">Türkçe</div>
+      <div class="lang-example">"Ev sahibim 3 aydır depozitomı iade etmeyi reddediyor."</div>
+    </div>
+  </div>
+
+  <div class="how-it-works-foreign">
+    <h3 id="ml-how-title">Comment ça fonctionne pour les non-francophones ?</h3>
+    <div class="flow-steps">
+      <div class="flow-step"><strong id="step1-label">Étape 1</strong><span id="step1-txt">Vous décrivez la situation dans votre langue</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><strong id="step2-label">Étape 2</strong><span id="step2-txt">Lettreo comprend et traduit</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><strong id="step3-label">Étape 3</strong><span id="step3-txt">Courrier officiel généré en français</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO -->
+<section class="demo-section">
+  <div class="demo-inner">
+    <div class="demo-left">
+      <h2 id="demo-h2">Comment ça marche ?</h2>
+      <p id="demo-p">Pas de formulaire complexe. Pas de modèle à remplir seul. Vous décrivez votre situation en quelques phrases — Lettreo fait le reste.</p>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><span id="step-a"><strong>Décrivez votre situation</strong> — 4 à 6 questions simples : qui vous écrivez, pourquoi, ce que vous voulez obtenir.</span></li>
+        <li><span class="step-num">2</span><span id="step-b"><strong>Le courrier est généré</strong> — structure officielle, formules françaises correctes, ton adapté à votre destinataire.</span></li>
+        <li><span class="step-num">3</span><span id="step-c"><strong>Vous exportez et envoyez</strong> — copie directe ou PDF prêt à imprimer ou envoyer par email.</span></li>
+      </ul>
+    </div>
+    <div class="lettre-mock">
+      <div class="expediteur">Sophie Martin<br>12 rue des Lilas, 31000 Toulouse<br>sophie.martin@email.fr</div>
+      <div style="margin-bottom:1rem">Toulouse, le 2 juillet 2026</div>
+      <div class="destinataire">M. Bernard Lefebvre<br>Propriétaire — Paris</div>
+      <div class="objet">Objet : Demande de restitution du dépôt de garantie</div>
+      <div class="corps">
+        <p>Madame, Monsieur,</p>
+        <p>Locataire de votre bien jusqu'au 31 mars 2026, j'ai versé un dépôt de garantie de <span class="highlight-text">800 €</span>. Conformément à l'article 22 de la loi du 6 juillet 1989, ce dépôt doit être restitué dans un délai d'un mois.</p>
+        <p>À ce jour, soit plus de <span class="highlight-text">3 mois</span> après mon départ, aucune restitution ne m'a été faite.</p>
+        <p>Je vous mets en demeure de me restituer cette somme dans un délai de <span class="highlight-text">15 jours</span>.</p>
+      </div>
+      <div class="politesse">Veuillez agréer, Madame, Monsieur, l'expression de mes salutations distinguées.</div>
+      <div class="signature">Sophie Martin<br><em style="font-size:11px;color:#888">(Signature)</em></div>
+    </div>
+  </div>
+</section>
+
+<!-- CAS D'USAGE -->
+<section class="usecases">
+  <h2 id="cases-h2">Pour quelles situations ?</h2>
+  <p class="section-sub" id="cases-sub">Tout ce qui nécessite un courrier formel — sans savoir comment le rédiger.</p>
+  <div class="cases-grid">
+    <div class="case-card"><span class="case-icon">🏠</span> <span id="c1">Restitution de dépôt de garantie</span></div>
+    <div class="case-card"><span class="case-icon">🏦</span> <span id="c2">Litige bancaire ou assurance</span></div>
+    <div class="case-card"><span class="case-icon">📋</span> <span id="c3">Contestation d'amende ou décision CAF</span></div>
+    <div class="case-card"><span class="case-icon">💼</span> <span id="c4">Courrier RH ou employeur</span></div>
+    <div class="case-card"><span class="case-icon">📡</span> <span id="c5">Réclamation opérateur téléphonique</span></div>
+    <div class="case-card"><span class="case-icon">🏛️</span> <span id="c6">Réponse à France Travail ou CPAM</span></div>
+    <div class="case-card"><span class="case-icon">💳</span> <span id="c7">Demande d'échéancier de paiement</span></div>
+    <div class="case-card"><span class="case-icon">✉️</span> <span id="c8">Résiliation de contrat ou abonnement</span></div>
+  </div>
+</section>
+
+<!-- FEEDBACK BETA -->
+<section class="feedback-section" id="inscription">
+  <div class="feedback-inner">
+    <h2 id="fb-h2">Vous testez, j'améliore.</h2>
+    <p id="fb-p">Lettreo est encore en phase bêta. Je cherche des personnes qui ont <em>une vraie situation à régler</em> et qui veulent bien me dire si le courrier généré leur a été utile. Votre retour direct vaut plus que 100 avis en ligne.</p>
+    <div class="questions-list">
+      <li><span class="q-num">→</span> <span id="q1">Est-ce que le courrier correspondait bien à votre situation ?</span></li>
+      <li><span class="q-num">→</span> <span id="q2">Le ton et les formules vous ont semblé adaptés ?</span></li>
+      <li><span class="q-num">→</span> <span id="q3">Qu'est-ce qui vous a manqué ou dérangé ?</span></li>
+      <li><span class="q-num">→</span> <span id="q4">Combien paieriez-vous pour ce service si c'était payant ?</span></li>
+    </div>
+    <div id="form-block-2">
+      <form class="form-wrap" style="justify-content:center" onsubmit="handleSubmit2(event)">
+        <input type="email" id="email-input-2" placeholder="votre@email.fr" required autocomplete="email">
+        <button type="submit" class="btn-primary" id="btn-beta-txt">Je participe à la bêta</button>
+      </form>
+      <p class="form-note" id="form-note2-txt">Je vous envoie un lien de test dans les 48h · Accès 100 % gratuit</p>
+    </div>
+    <div class="success-msg" id="success-msg-2">✓ <span id="success2-txt">Parfait ! Je vous envoie le lien de test dans les 48h. Merci pour votre aide.</span></div>
+  </div>
+</section>
+
+<!-- FOOTER CTA -->
+<section class="footer-cta">
+  <h2 id="footer-h2">Une question ? Un retour ?</h2>
+  <p id="footer-p">Ce projet est fait à la main, en solo. Écrivez-moi directement — je lis tout.</p>
+  <a href="mailto:bonjour@lettreo.fr" class="btn-primary" style="display:inline-block; text-decoration:none; line-height:48px; padding: 0 28px;">bonjour@lettreo.fr</a>
+</section>
+
+<footer>© 2026 Lettreo · Fait en France · <span id="footer-privacy">Vos données ne sont pas stockées</span></footer>
+
+<script>
+const translations = {
+  fr: {
+    navCta: "Accès anticipé", badge: "🧪 Version bêta — testeurs recherchés",
+    h1: "Votre courrier officiel,<br><em>rédigé en 2 minutes.</em>",
+    heroSub: "Contestation, relance, demande à un organisme, litige bailleur ou banque — décrivez votre situation et recevez un courrier formel prêt à envoyer. Sans jargon. Sans stress.",
+    btnHero: "Tester gratuitement", formNote: "Accès gratuit pendant la phase bêta · Aucune carte requise",
+    success: "C'est noté ! Je vous contacte dans les 48h pour tester Lettreo.",
+    chip1: "Courrier au format français officiel", chip2: "Aucune donnée stockée", chip3: "Résultat en moins de 2 min",
+    mlTitle: "Accessible dans votre langue",
+    mlSub: "Décrivez votre situation en arabe, anglais, espagnol ou turc — le courrier officiel sort toujours en français, prêt à envoyer.",
+    mlHowTitle: "Comment ça fonctionne pour les non-francophones ?",
+    step1l: "Étape 1", step1: "Vous décrivez la situation dans votre langue",
+    step2l: "Étape 2", step2: "Lettreo comprend et traduit",
+    step3l: "Étape 3", step3: "Courrier officiel généré en français",
+    demoH2: "Comment ça marche ?",
+    demoP: "Pas de formulaire complexe. Pas de modèle à remplir seul. Vous décrivez votre situation en quelques phrases — Lettreo fait le reste.",
+    stepA: "<strong>Décrivez votre situation</strong> — 4 à 6 questions simples : qui vous écrivez, pourquoi, ce que vous voulez obtenir.",
+    stepB: "<strong>Le courrier est généré</strong> — structure officielle, formules françaises correctes, ton adapté à votre destinataire.",
+    stepC: "<strong>Vous exportez et envoyez</strong> — copie directe ou PDF prêt à imprimer ou envoyer par email.",
+    casesH2: "Pour quelles situations ?", casesSub: "Tout ce qui nécessite un courrier formel — sans savoir comment le rédiger.",
+    c1:"Restitution de dépôt de garantie", c2:"Litige bancaire ou assurance", c3:"Contestation d'amende ou décision CAF",
+    c4:"Courrier RH ou employeur", c5:"Réclamation opérateur téléphonique", c6:"Réponse à France Travail ou CPAM",
+    c7:"Demande d'échéancier de paiement", c8:"Résiliation de contrat ou abonnement",
+    fbH2: "Vous testez, j'améliore.",
+    fbP: "Lettreo est encore en phase bêta. Je cherche des personnes qui ont <em>une vraie situation à régler</em> et qui veulent bien me dire si le courrier généré leur a été utile.",
+    q1:"Est-ce que le courrier correspondait bien à votre situation ?", q2:"Le ton et les formules vous ont semblé adaptés ?",
+    q3:"Qu'est-ce qui vous a manqué ou dérangé ?", q4:"Combien paieriez-vous pour ce service si c'était payant ?",
+    btnBeta: "Je participe à la bêta", formNote2: "Je vous envoie un lien de test dans les 48h · Accès 100 % gratuit",
+    success2: "Parfait ! Je vous envoie le lien de test dans les 48h. Merci pour votre aide.",
+    footerH2: "Une question ? Un retour ?", footerP: "Ce projet est fait à la main, en solo. Écrivez-moi directement — je lis tout.",
+    footerPrivacy: "Vos données ne sont pas stockées", dir: "ltr"
+  },
+  ar: {
+    navCta: "الوصول المبكر", badge: "🧪 نسخة تجريبية — نبحث عن مختبرين",
+    h1: "رسالتك الرسمية،<br><em>جاهزة في دقيقتين.</em>",
+    heroSub: "طعن، مطالبة، طلب من جهة إدارية، نزاع مع مالك أو بنك — صف وضعك واستقبل رسالة رسمية جاهزة للإرسال. بدون تعقيد. بدون توتر.",
+    btnHero: "اختبر مجاناً", formNote: "وصول مجاني خلال مرحلة التجريب · بدون بطاقة بنكية",
+    success: "تم التسجيل! سأتواصل معك خلال 48 ساعة.",
+    chip1: "رسالة بالصيغة الرسمية الفرنسية", chip2: "لا يتم تخزين أي بيانات", chip3: "نتيجة في أقل من دقيقتين",
+    mlTitle: "متاح بلغتك",
+    mlSub: "صف وضعك بالعربية أو الإنجليزية أو الإسبانية أو التركية — الرسالة الرسمية تُنتج دائماً بالفرنسية، جاهزة للإرسال.",
+    mlHowTitle: "كيف يعمل للناطقين بغير الفرنسية؟",
+    step1l: "الخطوة 1", step1: "تصف وضعك بلغتك",
+    step2l: "الخطوة 2", step2: "Lettreo يفهم ويترجم",
+    step3l: "الخطوة 3", step3: "رسالة رسمية بالفرنسية جاهزة",
+    demoH2: "كيف يعمل؟",
+    demoP: "بدون نموذج معقد. تصف وضعك في بضع جمل — Lettreo يتكفل بالباقي.",
+    stepA: "<strong>صف وضعك</strong> — 4 إلى 6 أسئلة بسيطة: لمن تكتب، لماذا، وماذا تريد.",
+    stepB: "<strong>تُنشأ الرسالة</strong> — هيكل رسمي، صيغ فرنسية صحيحة، نبرة مناسبة للمستلم.",
+    stepC: "<strong>تصدّر وترسل</strong> — نسخ مباشر أو PDF جاهز للطباعة أو الإرسال بالبريد الإلكتروني.",
+    casesH2: "لأي مواقف؟", casesSub: "كل ما يتطلب رسالة رسمية — بدون معرفة كيفية كتابتها.",
+    c1:"استرداد وديعة الضمان", c2:"نزاع بنكي أو تأميني", c3:"الطعن في مخالفة أو قرار",
+    c4:"رسالة إلى صاحب العمل أو الموارد البشرية", c5:"شكوى ضد مشغل الهاتف", c6:"رد على هيئة التوظيف أو الضمان الاجتماعي",
+    c7:"طلب جدول دفع", c8:"إنهاء عقد أو اشتراك",
+    fbH2: "أنت تختبر، أنا أُحسّن.",
+    fbP: "Lettreo لا يزال في مرحلة تجريبية. أبحث عن أشخاص لديهم <em>وضع حقيقي يحتاج حلاً</em> ويودّون إخباري إن كانت الرسالة مفيدة.",
+    q1:"هل ناسبت الرسالة وضعك تماماً؟", q2:"هل بدت النبرة والصيغ مناسبة؟",
+    q3:"ما الذي افتقدته أو أزعجك؟", q4:"كم ستدفع مقابل هذه الخدمة لو كانت مدفوعة؟",
+    btnBeta: "أشارك في التجربة", formNote2: "سأرسل لك رابط الاختبار خلال 48 ساعة · مجاني تماماً",
+    success2: "ممتاز! سأرسل لك الرابط خلال 48 ساعة. شكراً على مساعدتك.",
+    footerH2: "سؤال؟ ملاحظة؟", footerP: "هذا المشروع مصنوع يدوياً، بجهد فردي. راسلني مباشرة — أقرأ كل شيء.",
+    footerPrivacy: "بياناتك لا يتم تخزينها", dir: "rtl"
+  },
+  en: {
+    navCta: "Early access", badge: "🧪 Beta version — testers wanted",
+    h1: "Your official French letter,<br><em>written in 2 minutes.</em>",
+    heroSub: "Dispute, claim, request to an authority, landlord or bank issue — describe your situation and receive a formal letter ready to send. No jargon. No stress.",
+    btnHero: "Try for free", formNote: "Free access during beta · No credit card required",
+    success: "Noted! I'll contact you within 48h to test Lettreo.",
+    chip1: "Official French letter format", chip2: "No data stored", chip3: "Result in under 2 minutes",
+    mlTitle: "Available in your language",
+    mlSub: "Describe your situation in Arabic, English, Spanish or Turkish — the official letter always comes out in French, ready to send.",
+    mlHowTitle: "How does it work for non-French speakers?",
+    step1l: "Step 1", step1: "You describe the situation in your language",
+    step2l: "Step 2", step2: "Lettreo understands and translates",
+    step3l: "Step 3", step3: "Official letter generated in French",
+    demoH2: "How does it work?",
+    demoP: "No complex form. No template to fill alone. You describe your situation in a few sentences — Lettreo does the rest.",
+    stepA: "<strong>Describe your situation</strong> — 4 to 6 simple questions: who you're writing to, why, what you want.",
+    stepB: "<strong>The letter is generated</strong> — official structure, correct French formulas, tone adapted to your recipient.",
+    stepC: "<strong>Export and send</strong> — direct copy or PDF ready to print or send by email.",
+    casesH2: "For which situations?", casesSub: "Anything that requires a formal letter — without knowing how to write one.",
+    c1:"Security deposit refund", c2:"Banking or insurance dispute", c3:"Fine or benefit decision appeal",
+    c4:"HR or employer letter", c5:"Telecom complaint", c6:"Reply to employment or social security office",
+    c7:"Payment plan request", c8:"Contract or subscription termination",
+    fbH2: "You test, I improve.",
+    fbP: "Lettreo is still in beta. I'm looking for people with <em>a real situation to resolve</em> who will tell me if the generated letter was useful.",
+    q1:"Did the letter match your situation well?", q2:"Did the tone and formulas seem appropriate?",
+    q3:"What was missing or bothered you?", q4:"How much would you pay for this service if it were paid?",
+    btnBeta: "Join the beta", formNote2: "I'll send you a test link within 48h · 100% free",
+    success2: "Great! I'll send you the test link within 48h. Thank you for your help.",
+    footerH2: "A question? Feedback?", footerP: "This project is handmade, solo. Write to me directly — I read everything.",
+    footerPrivacy: "Your data is not stored", dir: "ltr"
+  },
+  es: {
+    navCta: "Acceso anticipado", badge: "🧪 Versión beta — buscamos testers",
+    h1: "Tu carta oficial,<br><em>redactada en 2 minutos.</em>",
+    heroSub: "Reclamación, disputa, solicitud a un organismo, conflicto con propietario o banco — describe tu situación y recibe una carta formal lista para enviar. Sin jerga. Sin estrés.",
+    btnHero: "Probar gratis", formNote: "Acceso gratuito durante la beta · Sin tarjeta de crédito",
+    success: "¡Anotado! Te contacto en 48h para probar Lettreo.",
+    chip1: "Carta en formato oficial francés", chip2: "Ningún dato almacenado", chip3: "Resultado en menos de 2 min",
+    mlTitle: "Disponible en tu idioma",
+    mlSub: "Describe tu situación en árabe, inglés, español o turco — la carta oficial siempre sale en francés, lista para enviar.",
+    mlHowTitle: "¿Cómo funciona para los no francófonos?",
+    step1l: "Paso 1", step1: "Describes la situación en tu idioma",
+    step2l: "Paso 2", step2: "Lettreo entiende y traduce",
+    step3l: "Paso 3", step3: "Carta oficial generada en francés",
+    demoH2: "¿Cómo funciona?",
+    demoP: "Sin formularios complejos. Sin plantillas que rellenar solo. Describes tu situación en unas pocas frases — Lettreo hace el resto.",
+    stepA: "<strong>Describe tu situación</strong> — 4 a 6 preguntas simples: a quién escribes, por qué, qué quieres obtener.",
+    stepB: "<strong>La carta se genera</strong> — estructura oficial, fórmulas francesas correctas, tono adaptado a tu destinatario.",
+    stepC: "<strong>Exportas y envías</strong> — copia directa o PDF listo para imprimir o enviar por email.",
+    casesH2: "¿Para qué situaciones?", casesSub: "Todo lo que requiere una carta formal — sin saber cómo redactarla.",
+    c1:"Devolución de fianza", c2:"Disputa bancaria o de seguros", c3:"Recurso de multa o decisión de la CAF",
+    c4:"Carta a RRHH o empleador", c5:"Reclamación a operador de telefonía", c6:"Respuesta a la oficina de empleo o seguridad social",
+    c7:"Solicitud de plan de pago", c8:"Rescisión de contrato o suscripción",
+    fbH2: "Tú pruebas, yo mejoro.",
+    fbP: "Lettreo está aún en fase beta. Busco personas con <em>una situación real que resolver</em> que quieran decirme si la carta fue útil.",
+    q1:"¿La carta se ajustó bien a tu situación?", q2:"¿El tono y las fórmulas te parecieron adecuados?",
+    q3:"¿Qué echaste de menos o te molestó?", q4:"¿Cuánto pagarías por este servicio si fuera de pago?",
+    btnBeta: "Participar en la beta", formNote2: "Te envío el enlace de prueba en 48h · 100% gratuito",
+    success2: "¡Perfecto! Te envío el enlace en 48h. Gracias por tu ayuda.",
+    footerH2: "¿Una pregunta? ¿Un comentario?", footerP: "Este proyecto está hecho a mano, en solitario. Escríbeme directamente — lo leo todo.",
+    footerPrivacy: "Tus datos no se almacenan", dir: "ltr"
+  },
+  tr: {
+    navCta: "Erken erişim", badge: "🧪 Beta sürüm — test kullanıcısı aranıyor",
+    h1: "Resmi mektubunuz,<br><em>2 dakikada hazır.</em>",
+    heroSub: "İtiraz, talep, kuruma başvuru, kiracı veya banka anlaşmazlığı — durumunuzu anlatın, göndermeye hazır resmi bir mektup alın. Jargon yok. Stres yok.",
+    btnHero: "Ücretsiz dene", formNote: "Beta süresince ücretsiz erişim · Kredi kartı gerekmez",
+    success: "Kaydedildi! 48 saat içinde Lettreo'yu test etmek için sizinle iletişime geçeceğim.",
+    chip1: "Resmi Fransız mektubu formatı", chip2: "Hiçbir veri saklanmaz", chip3: "2 dakikadan az sürede sonuç",
+    mlTitle: "Kendi dilinizde erişilebilir",
+    mlSub: "Durumunuzu Arapça, İngilizce, İspanyolca veya Türkçe anlatın — resmi mektup her zaman Fransızca çıkar, göndermeye hazır.",
+    mlHowTitle: "Fransızca bilmeyenler için nasıl çalışır?",
+    step1l: "Adım 1", step1: "Durumu kendi dilinizde anlatırsınız",
+    step2l: "Adım 2", step2: "Lettreo anlar ve çevirir",
+    step3l: "Adım 3", step3: "Fransızca resmi mektup oluşturulur",
+    demoH2: "Nasıl çalışır?",
+    demoP: "Karmaşık form yok. Tek başına doldurulacak şablon yok. Durumunuzu birkaç cümleyle anlatırsınız — Lettreo gerisini halleder.",
+    stepA: "<strong>Durumunuzu anlatın</strong> — 4 ila 6 basit soru: kime yazıyorsunuz, neden, ne istiyorsunuz.",
+    stepB: "<strong>Mektup oluşturulur</strong> — resmi yapı, doğru Fransızca ifadeler, alıcıya uygun ton.",
+    stepC: "<strong>Dışa aktarın ve gönderin</strong> — doğrudan kopyalayın veya yazdırmaya ya da e-postayla göndermeye hazır PDF.",
+    casesH2: "Hangi durumlar için?", casesSub: "Nasıl yazılacağını bilmeden resmi mektup gerektiren her şey.",
+    c1:"Depozito iadesi", c2:"Banka veya sigorta anlaşmazlığı", c3:"Ceza veya CAF kararına itiraz",
+    c4:"İK veya işverene mektup", c5:"Telecom operatörüne şikâyet", c6:"İş ve sosyal güvenlik kurumuna yanıt",
+    c7:"Ödeme planı talebi", c8:"Sözleşme veya abonelik iptali",
+    fbH2: "Siz test edin, ben geliştireyim.",
+    fbP: "Lettreo hâlâ beta aşamasında. <em>Gerçek bir sorunu çözülmesi gereken</em> ve oluşturulan mektubun işe yarayıp yaramadığını söyleyecek kişiler arıyorum.",
+    q1:"Mektup durumunuza uygun muydu?", q2:"Ton ve ifadeler size uygun geldi mi?",
+    q3:"Neyi eksik buldunuz veya rahatsız etti?", q4:"Bu hizmet ücretli olsaydı ne kadar öderdiniz?",
+    btnBeta: "Betaya katıl", formNote2: "48 saat içinde test bağlantısı göndereceğim · %100 ücretsiz",
+    success2: "Harika! Test bağlantısını 48 saat içinde göndereceğim. Yardımınız için teşekkürler.",
+    footerH2: "Bir sorunuz mu var? Geri bildirim?", footerP: "Bu proje el yapımı, tek kişilik. Bana doğrudan yazın — hepsini okuyorum.",
+    footerPrivacy: "Verileriniz saklanmaz", dir: "ltr"
+  }
+};
+
+function setLang(lang) {
+  const t = translations[lang];
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+  document.documentElement.setAttribute('dir', t.dir);
+  document.getElementById('nav-cta-txt').textContent = t.navCta;
+  document.getElementById('badge-txt').textContent = t.badge;
+  document.getElementById('h1-txt').innerHTML = t.h1;
+  document.getElementById('hero-sub-txt').textContent = t.heroSub;
+  document.getElementById('btn-hero-txt').textContent = t.btnHero;
+  document.getElementById('form-note-txt').textContent = t.formNote;
+  document.getElementById('success-txt').textContent = t.success;
+  document.getElementById('chip1').textContent = t.chip1;
+  document.getElementById('chip2').textContent = t.chip2;
+  document.getElementById('chip3').textContent = t.chip3;
+  document.getElementById('ml-title').textContent = t.mlTitle;
+  document.getElementById('ml-sub').textContent = t.mlSub;
+  document.getElementById('ml-how-title').textContent = t.mlHowTitle;
+  document.getElementById('step1-label').textContent = t.step1l;
+  document.getElementById('step1-txt').textContent = t.step1;
+  document.getElementById('step2-label').textContent = t.step2l;
+  document.getElementById('step2-txt').textContent = t.step2;
+  document.getElementById('step3-label').textContent = t.step3l;
+  document.getElementById('step3-txt').textContent = t.step3;
+  document.getElementById('demo-h2').textContent = t.demoH2;
+  document.getElementById('demo-p').textContent = t.demoP;
+  document.getElementById('step-a').innerHTML = t.stepA;
+  document.getElementById('step-b').innerHTML = t.stepB;
+  document.getElementById('step-c').innerHTML = t.stepC;
+  document.getElementById('cases-h2').textContent = t.casesH2;
+  document.getElementById('cases-sub').textContent = t.casesSub;
+  ['c1','c2','c3','c4','c5','c6','c7','c8'].forEach(id => { document.getElementById(id).textContent = t[id]; });
+  document.getElementById('fb-h2').textContent = t.fbH2;
+  document.getElementById('fb-p').innerHTML = t.fbP;
+  document.getElementById('q1').textContent = t.q1;
+  document.getElementById('q2').textContent = t.q2;
+  document.getElementById('q3').textContent = t.q3;
+  document.getElementById('q4').textContent = t.q4;
+  document.getElementById('btn-beta-txt').textContent = t.btnBeta;
+  document.getElementById('form-note2-txt').textContent = t.formNote2;
+  document.getElementById('success2-txt').textContent = t.success2;
+  document.getElementById('footer-h2').textContent = t.footerH2;
+  document.getElementById('footer-p').textContent = t.footerP;
+  document.getElementById('footer-privacy').textContent = t.footerPrivacy;
+  document.getElementById('email-input').placeholder = lang === 'ar' ? 'بريدك@email.fr' : lang === 'tr' ? 'email@adresiniz.fr' : lang === 'es' ? 'tu@email.fr' : 'your@email.fr';
+  document.getElementById('email-input-2').placeholder = document.getElementById('email-input').placeholder;
+}
+
+function handleSubmit(e) {
+  e.preventDefault();
+  document.getElementById('form-block').style.display = 'none';
+  document.getElementById('success-msg').style.display = 'block';
+}
+function handleSubmit2(e) {
+  e.preventDefault();
+  document.getElementById('form-block-2').style.display = 'none';
+  document.getElementById('success-msg-2').style.display = 'block';
+}
+</script>
+</body>
+</html>
