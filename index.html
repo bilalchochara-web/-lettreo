@@ -155,8 +155,9 @@
     Sans jargon. Sans stress.
   </p>
   <div id="form-block">
-    <form class="form-wrap" onsubmit="handleSubmit(event)">
-      <input type="email" id="email-input" placeholder="votre@email.fr" required autocomplete="email">
+    <form class="form-wrap" id="form-hero" onsubmit="handleSubmit(event)">
+      <input type="hidden" name="source" value="Hero - Tester gratuitement">
+      <input type="email" name="email" id="email-input" placeholder="votre@email.fr" required autocomplete="email">
       <button type="submit" class="btn-primary" id="btn-hero-txt">Tester gratuitement</button>
     </form>
     <p class="form-note" id="form-note-txt">Accès gratuit pendant la phase bêta · Aucune carte requise</p>
@@ -285,8 +286,9 @@
       <li><span class="q-num">→</span> <span id="q4">Combien paieriez-vous pour ce service si c'était payant ?</span></li>
     </div>
     <div id="form-block-2">
-      <form class="form-wrap" style="justify-content:center" onsubmit="handleSubmit2(event)">
-        <input type="email" id="email-input-2" placeholder="votre@email.fr" required autocomplete="email">
+      <form class="form-wrap" id="form-beta" style="justify-content:center" onsubmit="handleSubmit2(event)">
+        <input type="hidden" name="source" value="Section bêta - Je participe">
+        <input type="email" name="email" id="email-input-2" placeholder="votre@email.fr" required autocomplete="email">
         <button type="submit" class="btn-primary" id="btn-beta-txt">Je participe à la bêta</button>
       </form>
       <p class="form-note" id="form-note2-txt">Je vous envoie un lien de test dans les 48h · Accès 100 % gratuit</p>
@@ -299,7 +301,7 @@
 <section class="footer-cta">
   <h2 id="footer-h2">Une question ? Un retour ?</h2>
   <p id="footer-p">Ce projet est fait à la main, en solo. Écrivez-moi directement — je lis tout.</p>
-  <a href="mailto:bonjour@lettreo.fr" class="btn-primary" style="display:inline-block; text-decoration:none; line-height:48px; padding: 0 28px;">bonjour@lettreo.fr</a>
+  <a href="mailto:bilalchochara@gmail.com" class="btn-primary" style="display:inline-block; text-decoration:none; line-height:48px; padding: 0 28px;">bilalchochara@gmail.com</a>
 </section>
 
 <footer>© 2026 Lettreo · Fait en France · <span id="footer-privacy">Vos données ne sont pas stockées</span></footer>
@@ -511,13 +513,35 @@ function setLang(lang) {
   document.getElementById('email-input-2').placeholder = document.getElementById('email-input').placeholder;
 }
 
-function handleSubmit(e) {
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/meebppek";
+
+async function sendToFormspree(formEl) {
+  const formData = new FormData(formEl);
+  try {
+    await fetch(FORMSPREE_ENDPOINT, {
+      method: "POST",
+      body: formData,
+      headers: { "Accept": "application/json" }
+    });
+    return true;
+  } catch (err) {
+    console.error("Erreur envoi Formspree:", err);
+    return false;
+  }
+}
+
+async function handleSubmit(e) {
   e.preventDefault();
+  const form = document.getElementById('form-hero');
+  await sendToFormspree(form);
   document.getElementById('form-block').style.display = 'none';
   document.getElementById('success-msg').style.display = 'block';
 }
-function handleSubmit2(e) {
+
+async function handleSubmit2(e) {
   e.preventDefault();
+  const form = document.getElementById('form-beta');
+  await sendToFormspree(form);
   document.getElementById('form-block-2').style.display = 'none';
   document.getElementById('success-msg-2').style.display = 'block';
 }
