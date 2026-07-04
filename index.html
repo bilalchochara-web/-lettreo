@@ -1,3 +1,6 @@
+
+
+Lettreo landing · HTML
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -16,7 +19,7 @@
   }
   html { scroll-behavior: smooth; }
   body { font-family: 'Inter', sans-serif; background: var(--paper); color: var(--ink); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
-
+ 
   /* NAV */
   nav { position: sticky; top: 0; z-index: 100; background: rgba(250,249,247,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); padding: 0 2rem; height: 56px; display: flex; align-items: center; justify-content: space-between; }
   .logo { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--ink); letter-spacing: -0.02em; }
@@ -27,14 +30,14 @@
   .lang-btn:hover, .lang-btn.active { background: var(--accent-light); border-color: var(--accent); color: var(--accent); }
   .nav-cta { background: var(--accent); color: #fff; border: none; border-radius: var(--radius); padding: 8px 18px; font-size: 14px; font-weight: 500; font-family: 'Inter', sans-serif; cursor: pointer; transition: background .15s; text-decoration: none; }
   .nav-cta:hover { background: var(--accent-dark); }
-
+ 
   /* HERO */
   .hero { max-width: 720px; margin: 0 auto; padding: 6rem 2rem 4rem; text-align: center; }
   .hero-badge { display: inline-block; background: var(--accent-light); color: var(--accent); font-size: 13px; font-weight: 500; border-radius: 100px; padding: 5px 14px; margin-bottom: 2rem; border: 1px solid #c5d3f5; }
   h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.2rem, 5vw, 3.4rem); line-height: 1.12; letter-spacing: -0.03em; color: var(--ink); margin-bottom: 1.4rem; }
   h1 em { font-style: italic; color: var(--accent); }
   .hero-sub { font-size: 1.05rem; color: var(--ink-light); max-width: 520px; margin: 0 auto 2.5rem; line-height: 1.65; }
-
+ 
   /* FORM */
   .form-wrap { display: flex; gap: 10px; max-width: 460px; margin: 0 auto 1rem; flex-wrap: wrap; }
   .form-wrap input[type="email"] { flex: 1; min-width: 220px; height: 48px; border: 1.5px solid var(--border); border-radius: var(--radius); padding: 0 16px; font-size: 15px; font-family: 'Inter', sans-serif; color: var(--ink); background: #fff; outline: none; transition: border-color .15s; }
@@ -48,7 +51,7 @@
   .trust-chips { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-top: 1.5rem; }
   .chip { font-size: 12px; color: var(--ink-muted); display: flex; align-items: center; gap: 5px; }
   .chip svg { width: 14px; height: 14px; }
-
+ 
   /* MULTILINGUE SECTION */
   .multilang-section { padding: 4rem 2rem; max-width: 900px; margin: 0 auto; }
   .multilang-section > h2 { font-family: 'DM Serif Display', serif; font-size: 1.8rem; text-align: center; letter-spacing: -0.02em; margin-bottom: 0.5rem; color: var(--ink); }
@@ -61,14 +64,14 @@
   .lang-native { font-size: 13px; color: var(--ink-light); margin-bottom: 8px; }
   .lang-example { font-size: 12px; color: var(--ink-muted); font-style: italic; line-height: 1.5; border-top: 1px solid var(--border); padding-top: 8px; margin-top: 4px; }
   [dir="rtl"] .lang-example { direction: rtl; font-style: normal; }
-
+ 
   .how-it-works-foreign { background: var(--accent-light); border: 1px solid #c5d3f5; border-radius: 12px; padding: 1.5rem 1.75rem; max-width: 640px; margin: 0 auto; }
   .how-it-works-foreign h3 { font-size: 15px; font-weight: 600; color: var(--accent-dark); margin-bottom: 1rem; }
   .flow-steps { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; }
   .flow-step { background: #fff; border: 1px solid #c5d3f5; border-radius: var(--radius); padding: 10px 14px; font-size: 13px; color: var(--ink); text-align: center; flex: 1; min-width: 130px; line-height: 1.4; }
   .flow-step strong { display: block; color: var(--accent); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; }
   .flow-arrow { font-size: 18px; color: var(--accent); flex-shrink: 0; }
-
+ 
   /* DEMO */
   .demo-section { background: var(--paper-warm); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 4rem 2rem; margin: 2rem 0; }
   .demo-inner { max-width: 860px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; }
@@ -87,7 +90,7 @@
   .lettre-mock .politesse { margin-top: 0.75rem; }
   .lettre-mock .signature { margin-top: 1.5rem; }
   .highlight-text { background: #fff3cd; padding: 1px 3px; border-radius: 3px; }
-
+ 
   /* CAS D'USAGE */
   .usecases { max-width: 860px; margin: 0 auto; padding: 0 2rem 4rem; }
   .usecases h2 { font-family: 'DM Serif Display', serif; font-size: 1.8rem; text-align: center; letter-spacing: -0.02em; margin-bottom: 0.5rem; color: var(--ink); }
@@ -96,7 +99,7 @@
   .case-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.1rem; font-size: 13.5px; color: var(--ink-light); display: flex; align-items: center; gap: 10px; transition: border-color .15s, box-shadow .15s; }
   .case-card:hover { border-color: var(--accent); box-shadow: 0 2px 12px rgba(40,86,212,0.08); }
   .case-icon { font-size: 20px; flex-shrink: 0; }
-
+ 
   /* FEEDBACK */
   .feedback-section { background: var(--paper-warm); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 4rem 2rem; }
   .feedback-inner { max-width: 700px; margin: 0 auto; text-align: center; }
@@ -106,13 +109,13 @@
   .questions-list li { padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 14px; color: var(--ink); display: flex; gap: 10px; align-items: flex-start; list-style: none; }
   .questions-list li:last-child { border-bottom: none; }
   .q-num { color: var(--accent); font-weight: 600; font-size: 13px; min-width: 20px; margin-top: 1px; }
-
+ 
   /* FOOTER CTA */
   .footer-cta { padding: 5rem 2rem; text-align: center; max-width: 600px; margin: 0 auto; }
   .footer-cta h2 { font-family: 'DM Serif Display', serif; font-size: 2rem; letter-spacing: -0.02em; margin-bottom: 1rem; color: var(--ink); }
   .footer-cta p { color: var(--ink-light); font-size: 0.9rem; margin-bottom: 2rem; }
   footer { border-top: 1px solid var(--border); padding: 1.5rem 2rem; text-align: center; font-size: 12px; color: var(--ink-muted); }
-
+ 
   /* RESPONSIVE */
   @media (max-width: 640px) {
     .hero { padding: 4rem 1.5rem 3rem; }
@@ -130,7 +133,7 @@
 </style>
 </head>
 <body>
-
+ 
 <nav>
   <div class="logo">Lettr<span>eo</span></div>
   <div class="nav-right">
@@ -144,7 +147,7 @@
     <a href="#inscription" class="nav-cta" id="nav-cta-txt">Accès anticipé</a>
   </div>
 </nav>
-
+ 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-badge" id="badge-txt">🧪 Version bêta — testeurs recherchés</div>
@@ -155,7 +158,9 @@
     Sans jargon. Sans stress.
   </p>
   <div id="form-block">
-    <form class="form-wrap" id="form-hero" onsubmit="handleSubmit(event)">
+    <form class="form-wrap" id="form-hero" action="https://api.web3forms.com/submit" method="POST" onsubmit="handleSubmit(event)">
+      <input type="hidden" name="access_key" value="6b12aa15-a40c-4b2b-a9cd-f56103f3eb56">
+      <input type="hidden" name="subject" value="Nouveau lead Lettreo - Hero">
       <input type="hidden" name="source" value="Hero - Tester gratuitement">
       <input type="email" name="email" id="email-input" placeholder="votre@email.fr" required autocomplete="email">
       <button type="submit" class="btn-primary" id="btn-hero-txt">Tester gratuitement</button>
@@ -178,12 +183,12 @@
     </span>
   </div>
 </section>
-
+ 
 <!-- VOLET MULTILINGUE -->
 <section class="multilang-section">
   <h2 id="ml-title">Accessible dans votre langue</h2>
   <p class="section-sub" id="ml-sub">Décrivez votre situation en arabe, anglais, espagnol ou turc — le courrier officiel sort toujours en français, prêt à envoyer.</p>
-
+ 
   <div class="lang-cards">
     <div class="lang-card">
       <div class="lang-flag">🇫🇷</div>
@@ -216,7 +221,7 @@
       <div class="lang-example">"Ev sahibim 3 aydır depozitomı iade etmeyi reddediyor."</div>
     </div>
   </div>
-
+ 
   <div class="how-it-works-foreign">
     <h3 id="ml-how-title">Comment ça fonctionne pour les non-francophones ?</h3>
     <div class="flow-steps">
@@ -228,7 +233,7 @@
     </div>
   </div>
 </section>
-
+ 
 <!-- DEMO -->
 <section class="demo-section">
   <div class="demo-inner">
@@ -257,7 +262,7 @@
     </div>
   </div>
 </section>
-
+ 
 <!-- CAS D'USAGE -->
 <section class="usecases">
   <h2 id="cases-h2">Pour quelles situations ?</h2>
@@ -273,7 +278,7 @@
     <div class="case-card"><span class="case-icon">✉️</span> <span id="c8">Résiliation de contrat ou abonnement</span></div>
   </div>
 </section>
-
+ 
 <!-- FEEDBACK BETA -->
 <section class="feedback-section" id="inscription">
   <div class="feedback-inner">
@@ -286,7 +291,9 @@
       <li><span class="q-num">→</span> <span id="q4">Combien paieriez-vous pour ce service si c'était payant ?</span></li>
     </div>
     <div id="form-block-2">
-      <form class="form-wrap" id="form-beta" style="justify-content:center" onsubmit="handleSubmit2(event)">
+      <form class="form-wrap" id="form-beta" action="https://api.web3forms.com/submit" method="POST" style="justify-content:center" onsubmit="handleSubmit2(event)">
+        <input type="hidden" name="access_key" value="6b12aa15-a40c-4b2b-a9cd-f56103f3eb56">
+        <input type="hidden" name="subject" value="Nouveau lead Lettreo - Bêta">
         <input type="hidden" name="source" value="Section bêta - Je participe">
         <input type="email" name="email" id="email-input-2" placeholder="votre@email.fr" required autocomplete="email">
         <button type="submit" class="btn-primary" id="btn-beta-txt">Je participe à la bêta</button>
@@ -296,16 +303,16 @@
     <div class="success-msg" id="success-msg-2">✓ <span id="success2-txt">Parfait ! Je vous envoie le lien de test dans les 48h. Merci pour votre aide.</span></div>
   </div>
 </section>
-
+ 
 <!-- FOOTER CTA -->
 <section class="footer-cta">
   <h2 id="footer-h2">Une question ? Un retour ?</h2>
   <p id="footer-p">Ce projet est fait à la main, en solo. Écrivez-moi directement — je lis tout.</p>
   <a href="mailto:bilalchochara@gmail.com" class="btn-primary" style="display:inline-block; text-decoration:none; line-height:48px; padding: 0 28px;">bilalchochara@gmail.com</a>
 </section>
-
+ 
 <footer>© 2026 Lettreo · Fait en France · <span id="footer-privacy">Vos données ne sont pas stockées</span></footer>
-
+ 
 <script>
 const translations = {
   fr: {
@@ -464,7 +471,7 @@ const translations = {
     footerPrivacy: "Verileriniz saklanmaz", dir: "ltr"
   }
 };
-
+ 
 function setLang(lang) {
   const t = translations[lang];
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
@@ -512,39 +519,41 @@ function setLang(lang) {
   document.getElementById('email-input').placeholder = lang === 'ar' ? 'بريدك@email.fr' : lang === 'tr' ? 'email@adresiniz.fr' : lang === 'es' ? 'tu@email.fr' : 'your@email.fr';
   document.getElementById('email-input-2').placeholder = document.getElementById('email-input').placeholder;
 }
-
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/meebppek";
-
-async function sendToFormspree(formEl) {
-  const formData = new FormData(formEl);
-  try {
-    await fetch(FORMSPREE_ENDPOINT, {
-      method: "POST",
-      body: formData,
-      headers: { "Accept": "application/json" }
-    });
-    return true;
-  } catch (err) {
-    console.error("Erreur envoi Formspree:", err);
-    return false;
-  }
+ 
+async function submitFormNatively(form) {
+  const formData = new FormData(form);
+  const response = await fetch(form.action, {
+    method: "POST",
+    body: formData,
+    headers: { "Accept": "application/json" }
+  });
+  return response.ok;
 }
-
+ 
 async function handleSubmit(e) {
   e.preventDefault();
   const form = document.getElementById('form-hero');
-  await sendToFormspree(form);
+  try {
+    await submitFormNatively(form);
+  } catch (err) {
+    console.error("Erreur envoi:", err);
+  }
   document.getElementById('form-block').style.display = 'none';
   document.getElementById('success-msg').style.display = 'block';
 }
-
+ 
 async function handleSubmit2(e) {
   e.preventDefault();
   const form = document.getElementById('form-beta');
-  await sendToFormspree(form);
+  try {
+    await submitFormNatively(form);
+  } catch (err) {
+    console.error("Erreur envoi:", err);
+  }
   document.getElementById('form-block-2').style.display = 'none';
   document.getElementById('success-msg-2').style.display = 'block';
 }
 </script>
 </body>
 </html>
+ 
