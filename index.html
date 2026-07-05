@@ -482,9 +482,11 @@ Index · HTML
       </div>
       <div id="lw-success-box" class="lw-center-box" style="display:none;">
         <div class="lw-success-icon">✓</div>
-        <h1 class="lw-h1" id="lw-success-title">Votre demande est bien reçue.</h1>
+        <h1 class="lw-h1" id="lw-success-title">Votre courrier est prêt.</h1>
         <p class="lw-sub" id="lw-success-body" style="max-width:420px;"></p>
-        <p class="lw-hint" id="lw-success-hint">Pensez à vérifier vos spams si vous ne voyez rien passer.</p>
+        <pre id="lw-letter-box" style="display:none; text-align:left; background:#fff; border:1px solid #e5e2db; border-radius:12px; padding:24px; max-width:520px; width:100%; max-height:420px; overflow-y:auto; font-family:'Times New Roman', serif; font-size:14px; line-height:1.8; white-space:pre-wrap; color:#1a1814; box-shadow:0 4px 24px rgba(0,0,0,0.06);"></pre>
+        <button class="lw-btn-primary" onclick="lwCopyLetter()" id="lw-copy-btn" style="margin-top:16px;">Copier le courrier</button>
+        <p class="lw-hint" id="lw-success-hint">Relisez ce courrier avant de l'envoyer. Les passages [À COMPLÉTER] doivent être remplis manuellement.</p>
         <button class="lw-btn-secondary" onclick="lwRestart()" id="lw-new-request-btn" style="margin-top:12px;">Faire une nouvelle demande</button>
       </div>
     </div>
@@ -1151,6 +1153,8 @@ async function handleSubmit(e) {
     lwValidateStep();
   }
  
+  const MAKE_WEBHOOK_URL = "https://hook.eu1.make.com/xa5y8mlqb21le5nai4wkerk81l12fg7a";
+ 
   window.lwSubmitRequest = async function() {
     document.getElementById("lw-loading-box").style.display = "flex";
     document.getElementById("lw-error-box").style.display = "none";
@@ -1161,9 +1165,6 @@ async function handleSubmit(e) {
     const tonLabel = (d.tons.find(x => x.id === lwData.ton) || {}).label || lwData.ton;
  
     const payload = {
-      access_key: WEB3FORMS_KEY,
-      subject: `Nouvelle demande Lettreo — ${typeLabel}`,
-      from_name: "Lettreo — Formulaire courrier",
       type_courrier: typeLabel,
       langue_interface: lwLang,
       ton_souhaite: tonLabel,
@@ -1178,23 +1179,38 @@ async function handleSubmit(e) {
     };
  
     try {
-      const resp = await fetch("https://api.web3forms.com/submit", {
+      const resp = await fetch(MAKE_WEBHOOK_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      const json = await resp.json();
+      if (!resp.ok) throw new Error("Échec envoi");
+      const letterText = await resp.text();
       document.getElementById("lw-loading-box").style.display = "none";
-      if (json.success) {
-        document.getElementById("lw-success-body").textContent = d.successBody(lwData.expEmail);
+      if (letterText && letterText.trim().length > 0) {
+        document.getElementById("lw-success-body").textContent = "";
+        const letterBox = document.getElementById("lw-letter-box");
+        letterBox.textContent = letterText;
+        letterBox.style.display = "block";
         document.getElementById("lw-success-box").style.display = "flex";
       } else {
-        throw new Error("Échec envoi");
+        throw new Error("Réponse vide");
       }
     } catch (e) {
       document.getElementById("lw-loading-box").style.display = "none";
       document.getElementById("lw-error-box").style.display = "flex";
     }
+  };
+ 
+  window.lwCopyLetter = async function() {
+    const text = document.getElementById("lw-letter-box").textContent;
+    try {
+      await navigator.clipboard.writeText(text);
+      const btn = document.getElementById("lw-copy-btn");
+      const original = btn.textContent;
+      btn.textContent = "Copié ✓";
+      setTimeout(() => { btn.textContent = original; }, 2000);
+    } catch (e) {}
   };
  
   window.lwRestart = function() {
@@ -1209,6 +1225,8 @@ async function handleSubmit(e) {
     document.getElementById("lw-exp-adresse").value = "";
     document.getElementById("lw-exp-tel").value = "";
     document.getElementById("lw-success-box").style.display = "none";
+    document.getElementById("lw-letter-box").style.display = "none";
+    document.getElementById("lw-letter-box").textContent = "";
     document.getElementById("lw-error-box").style.display = "none";
     lwRenderChoices();
     lwRender();
