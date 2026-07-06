@@ -255,19 +255,8 @@
     décrivez votre situation et recevez un courrier formel prêt à envoyer.
     Sans jargon. Sans stress.
   </p>
-  <div id="form-block">
-    <form class="form-wrap" id="form-hero" action="https://api.web3forms.com/submit" method="POST" onsubmit="handleSubmit(event)">
-      <input type="hidden" name="access_key" value="6b12aa15-a40c-4b2b-a9cd-f56103f3eb56">
-      <input type="hidden" name="subject" value="Nouveau lead Lettreo - Hero">
-      <input type="hidden" name="source" value="Hero - Tester gratuitement">
-      <input type="email" name="email" id="email-input" placeholder="votre@email.fr" required autocomplete="email">
-      <button type="submit" class="btn-primary" id="btn-hero-txt">Tester gratuitement</button>
-    </form>
-    <p class="form-note" id="form-note-txt">👆 Entrez votre email ci-dessus et cliquez sur le bouton — c'est la seule action à faire pour commencer</p>
-  </div>
-  <div class="success-msg" id="success-msg">
-    ✓ <span id="success-txt"><strong>Merci !</strong> Vérifiez votre boîte mail (et vos spams) : je vous réponds sous 48h pour vous demander votre situation en 2-3 phrases, puis je vous envoie votre courrier prêt à envoyer.</span>
-  </div>
+  <a href="#inscription" class="btn-primary" style="display:inline-block; text-decoration:none; line-height:48px; padding:0 28px;" id="btn-hero-txt">Rédiger mon courrier</a>
+  <p class="form-note" id="form-note-txt">👇 Répondez à quelques questions ci-dessous, votre courrier est généré automatiquement</p>
   <div class="trust-chips" style="margin-top:2rem">
     <span class="chip">
       <svg viewBox="0 0 16 16" fill="none"><path d="M8 1l1.5 4.5H14l-3.7 2.7 1.4 4.3L8 10.2 4.3 12.5l1.4-4.3L2 5.5h4.5z" fill="#c8c4be"/></svg>
@@ -335,34 +324,6 @@
 </section>
 
 <!-- DEMO -->
-<section class="demo-section">
-  <div class="demo-inner">
-    <div class="demo-left">
-      <h2 id="demo-h2">Comment ça marche, concrètement ?</h2>
-      <p id="demo-p">Aucune app à télécharger, aucun compte à créer. Voici exactement ce qui se passe après votre inscription :</p>
-      <ul class="steps-list">
-        <li><span class="step-num">1</span><span id="step-a"><strong>Vous laissez votre email</strong> — en haut de cette page, dans le champ prévu, puis cliquez sur "Tester gratuitement".</span></li>
-        <li><span class="step-num">2</span><span id="step-b"><strong>Vous recevez un email sous 48h</strong> — je vous demande de me décrire votre situation en quelques phrases (qui, pourquoi, ce que vous voulez obtenir).</span></li>
-        <li><span class="step-num">3</span><span id="step-c"><strong>Vous recevez votre courrier</strong> — rédigé, structuré, prêt à copier-coller ou imprimer et envoyer.</span></li>
-      </ul>
-    </div>
-    <div class="lettre-mock">
-      <div class="expediteur">Sophie Martin<br>12 rue des Lilas, 31000 Toulouse<br>sophie.martin@email.fr</div>
-      <div style="margin-bottom:1rem">Toulouse, le 2 juillet 2026</div>
-      <div class="destinataire">M. Bernard Lefebvre<br>Propriétaire — Paris</div>
-      <div class="objet">Objet : Demande de restitution du dépôt de garantie</div>
-      <div class="corps">
-        <p>Madame, Monsieur,</p>
-        <p>Locataire de votre bien jusqu'au 31 mars 2026, j'ai versé un dépôt de garantie de <span class="highlight-text">800 €</span>. Conformément à l'article 22 de la loi du 6 juillet 1989, ce dépôt doit être restitué dans un délai d'un mois.</p>
-        <p>À ce jour, soit plus de <span class="highlight-text">3 mois</span> après mon départ, aucune restitution ne m'a été faite.</p>
-        <p>Je vous mets en demeure de me restituer cette somme dans un délai de <span class="highlight-text">15 jours</span>.</p>
-      </div>
-      <div class="politesse">Veuillez agréer, Madame, Monsieur, l'expression de mes salutations distinguées.</div>
-      <div class="signature">Sophie Martin<br><em style="font-size:11px;color:#888">(Signature)</em></div>
-    </div>
-  </div>
-</section>
-
 <!-- CAS D'USAGE -->
 <section class="usecases">
   <h2 id="cases-h2">Pour quelles situations ?</h2>
@@ -677,7 +638,6 @@ function setLang(lang) {
   document.getElementById('hero-sub-txt').textContent = t.heroSub;
   document.getElementById('btn-hero-txt').textContent = t.btnHero;
   document.getElementById('form-note-txt').textContent = t.formNote;
-  document.getElementById('success-txt').textContent = t.success;
   document.getElementById('chip1').textContent = t.chip1;
   document.getElementById('chip2').textContent = t.chip2;
   document.getElementById('chip3').textContent = t.chip3;
@@ -710,36 +670,10 @@ function setLang(lang) {
   document.getElementById('footer-h2').textContent = t.footerH2;
   document.getElementById('footer-p').textContent = t.footerP;
   document.getElementById('footer-privacy').textContent = t.footerPrivacy;
-  document.getElementById('email-input').placeholder = lang === 'ar' ? 'بريدك@email.fr' : lang === 'tr' ? 'email@adresiniz.fr' : lang === 'es' ? 'tu@email.fr' : 'your@email.fr';
-  document.getElementById('email-input-2').placeholder = document.getElementById('email-input').placeholder;
-}
-
-async function submitFormNatively(form) {
-  const formData = new FormData(form);
-  const response = await fetch(form.action, {
-    method: "POST",
-    body: formData,
-    headers: { "Accept": "application/json" }
-  });
-  return response.ok;
-}
-
-async function handleSubmit(e) {
-  e.preventDefault();
-  const form = document.getElementById('form-hero');
-  try {
-    await submitFormNatively(form);
-  } catch (err) {
-    console.error("Erreur envoi:", err);
-  }
-  document.getElementById('form-block').style.display = 'none';
-  document.getElementById('success-msg').style.display = 'block';
 }
 </script>
 <script>
 (function() {
-  const WEB3FORMS_KEY = "6b12aa15-a40c-4b2b-a9cd-f56103f3eb56";
-
   const LW_I18N = {
     fr: {
       dir: "ltr",
