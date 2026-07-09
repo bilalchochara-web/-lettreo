@@ -113,6 +113,25 @@
   .footer-cta p { color: var(--ink-light); font-size: 0.9rem; margin-bottom: 2rem; }
   footer { border-top: 1px solid var(--border); padding: 1.5rem 2rem; text-align: center; font-size: 12px; color: var(--ink-muted); }
 
+  /* EXEMPLES SUPPLÉMENTAIRES */
+  .examples-more { max-width: 860px; margin: 0 auto; padding: 0 2rem 4rem; }
+  .examples-more h2 { font-family: 'DM Serif Display', serif; font-size: 1.8rem; text-align: center; letter-spacing: -0.02em; margin-bottom: 0.5rem; color: var(--ink); }
+  .examples-more .section-sub { text-align: center; color: var(--ink-light); font-size: 0.9rem; margin-bottom: 2.5rem; }
+  .examples-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .example-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.4rem; }
+  .example-type { display: inline-block; font-size: 11.5px; font-weight: 600; color: var(--accent); background: var(--accent-light); border-radius: 100px; padding: 3px 10px; margin-bottom: 10px; }
+  .example-excerpt { font-size: 13.5px; color: var(--ink-light); font-style: italic; line-height: 1.6; }
+
+  /* QUI EST DERRIÈRE */
+  .who-section { background: var(--paper-warm); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 4rem 2rem; }
+  .who-inner { max-width: 640px; margin: 0 auto; display: flex; gap: 1.75rem; align-items: flex-start; }
+  .who-avatar { flex-shrink: 0; width: 64px; height: 64px; border-radius: 50%; background: var(--accent); color: #fff; font-family: 'DM Serif Display', serif; font-size: 22px; display: flex; align-items: center; justify-content: center; }
+  .who-text h2 { font-family: 'DM Serif Display', serif; font-size: 1.6rem; letter-spacing: -0.02em; margin-bottom: 0.75rem; color: var(--ink); }
+  .who-text p { color: var(--ink-light); font-size: 0.9rem; line-height: 1.7; margin-bottom: 0.75rem; }
+  .who-text a { color: var(--accent); font-weight: 500; text-decoration: none; }
+  .who-text a:hover { text-decoration: underline; }
+  @media (max-width: 560px) { .who-inner { flex-direction: column; align-items: center; text-align: center; } }
+
   /* RESPONSIVE */
   @media (max-width: 640px) {
     .hero { padding: 4rem 1.5rem 3rem; }
@@ -222,6 +241,7 @@
     font-size: 26px; font-weight: 700; display: flex; align-items: center; justify-content: center;
   }
   .lw-error-text { color: #c0392b; font-size: 14px; }
+  #lw-letter-box:focus { outline: 2px solid #2856d4; outline-offset: 2px; }
 
   [dir="rtl"] .lw-choice-card, [dir="rtl"] .lw-tone-card { text-align: right; }
 
@@ -324,6 +344,36 @@
 </section>
 
 <!-- DEMO -->
+<section class="demo-section">
+  <div class="demo-inner">
+    <div class="demo-left">
+      <h2 id="demo-h2">Comment ça marche ?</h2>
+      <p id="demo-p">Pas de formulaire complexe. Pas de modèle à remplir seul. Vous décrivez votre situation en quelques phrases — Lettreo fait le reste.</p>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><span id="step-a"><strong>Décrivez votre situation</strong> — 4 à 6 questions simples : qui vous écrivez, pourquoi, ce que vous voulez obtenir.</span></li>
+        <li><span class="step-num">2</span><span id="step-b"><strong>Le courrier est généré</strong> — structure officielle, formules françaises correctes, ton adapté à votre destinataire.</span></li>
+        <li><span class="step-num">3</span><span id="step-c"><strong>Vous exportez et envoyez</strong> — copie directe ou PDF prêt à imprimer ou envoyer par email.</span></li>
+      </ul>
+    </div>
+    <div class="demo-right">
+      <div class="lettre-mock">
+        <div class="expediteur">Claire Dubreuil<br>12 rue des Lilas, 31000 Toulouse</div>
+        <div class="destinataire">SCI Bellevue Immobilier<br>8 avenue Jean Jaurès, 31000 Toulouse</div>
+        <p style="margin-bottom:1rem;">Toulouse, le 12 mars 2026</p>
+        <div class="objet">Objet : Demande de restitution du dépôt de garantie</div>
+        <div class="corps">
+          <p>Madame, Monsieur,</p>
+          <p>J'ai quitté le logement situé au 4 rue de la Paix le <span class="highlight-text">15 janvier 2026</span>, après un état des lieux de sortie ne présentant aucune réserve. À ce jour, le dépôt de garantie de <span class="highlight-text">800 €</span> ne m'a toujours pas été restitué, alors que le délai légal d'un mois est dépassé.</p>
+          <p>Je vous demande de bien vouloir procéder au versement de cette somme sous 15 jours à compter de la réception de ce courrier.</p>
+          <p>À défaut de réponse de votre part, je me verrai contraint(e) d'engager les démarches nécessaires pour faire valoir mes droits.</p>
+        </div>
+        <p class="politesse">Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.</p>
+        <div class="signature">Claire Dubreuil</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- CAS D'USAGE -->
 <section class="usecases">
   <h2 id="cases-h2">Pour quelles situations ?</h2>
@@ -340,11 +390,44 @@
   </div>
 </section>
 
+<!-- AUTRES EXEMPLES -->
+<section class="examples-more">
+  <h2>D'autres courriers déjà générés</h2>
+  <p class="section-sub">Un aperçu de courriers produits par Lettreo pour d'autres situations.</p>
+  <div class="examples-grid">
+    <div class="example-card">
+      <span class="example-type">Réclamation opérateur téléphonique</span>
+      <p class="example-excerpt">« Je conteste les frais de résiliation de 120 € appliqués sur ma facture de janvier 2026, alors que mon contrat prévoyait une reconduction sans engagement à compter du 1er décembre 2025... »</p>
+    </div>
+    <div class="example-card">
+      <span class="example-type">Réponse à France Travail</span>
+      <p class="example-excerpt">« Je fais suite à votre courrier du 3 février 2026 m'informant d'une suspension de mes droits, et souhaite apporter les précisions suivantes concernant ma recherche d'emploi... »</p>
+    </div>
+    <div class="example-card">
+      <span class="example-type">Demande d'échéancier de paiement</span>
+      <p class="example-excerpt">« Suite à la réception de votre relance du 20 février 2026, je vous sollicite pour la mise en place d'un échéancier de paiement sur 6 mois concernant le solde restant dû de 640 €... »</p>
+    </div>
+  </div>
+</section>
+
+<!-- QUI EST DERRIÈRE LETTREO -->
+<section class="who-section">
+  <div class="who-inner">
+    <div class="who-avatar">BC</div>
+    <div class="who-text">
+      <h2>Qui est derrière Lettreo ?</h2>
+      <p>Je m'appelle Bilal Chochara. Lettreo est un projet que je développe seul, pour aider les personnes qui n'ont pas les codes de l'administration française à écrire un courrier qu'on prend au sérieux.</p>
+      <p>Pas de studio, pas d'équipe marketing — juste un outil que j'essaie de rendre le plus utile possible, retour après retour, avec les personnes qui le testent.</p>
+      <a href="mailto:bilalchochara@gmail.com">bilalchochara@gmail.com</a>
+    </div>
+  </div>
+</section>
+
 <!-- FEEDBACK BETA -->
 <section class="feedback-section" id="inscription">
   <div class="feedback-inner">
-    <h2>Vous testez, j'améliore.</h2>
-    <p>Répondez à ces quelques questions pour générer votre demande de courrier personnalisée. Vous recevrez le résultat par email sous 24h, prêt à relire et à envoyer.</p>
+    <h2 id="fb-h2">Vous testez, j'améliore.</h2>
+    <p id="fb-p">Répondez à ces quelques questions pour générer votre demande de courrier personnalisée. Vous recevrez le résultat par email sous 24h, prêt à relire et à envoyer.</p>
   </div>
 <div id="lettreo-wizard" dir="ltr">
   <nav id="lw-nav">
@@ -442,9 +525,12 @@
         <div class="lw-success-icon">✓</div>
         <h1 class="lw-h1" id="lw-success-title">Votre courrier est prêt.</h1>
         <p class="lw-sub" id="lw-success-body" style="max-width:420px;"></p>
-        <pre id="lw-letter-box" style="display:none; text-align:left; background:#fff; border:1px solid #e5e2db; border-radius:12px; padding:24px; max-width:520px; width:100%; max-height:420px; overflow-y:auto; font-family:'Times New Roman', serif; font-size:14px; line-height:1.8; white-space:pre-wrap; color:#1a1814; box-shadow:0 4px 24px rgba(0,0,0,0.06);"></pre>
-        <button class="lw-btn-primary" onclick="lwCopyLetter()" id="lw-copy-btn" style="margin-top:16px;">Copier le courrier</button>
-        <p class="lw-hint" id="lw-success-hint">Relisez ce courrier avant de l'envoyer. Les passages [À COMPLÉTER] doivent être remplis manuellement.</p>
+        <pre id="lw-letter-box" contenteditable="true" spellcheck="true" style="display:none; text-align:left; background:#fff; border:1px solid #e5e2db; border-radius:12px; padding:24px; max-width:520px; width:100%; max-height:420px; overflow-y:auto; font-family:'Times New Roman', serif; font-size:14px; line-height:1.8; white-space:pre-wrap; color:#1a1814; box-shadow:0 4px 24px rgba(0,0,0,0.06); cursor:text;"></pre>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:16px;">
+          <button class="lw-btn-primary" onclick="lwCopyLetter()" id="lw-copy-btn">Copier le courrier</button>
+          <button class="lw-btn-secondary" onclick="lwDownloadPDF()" id="lw-pdf-btn">Télécharger en PDF</button>
+        </div>
+        <p class="lw-hint" id="lw-success-hint">Vous pouvez modifier le texte directement ci-dessus avant de l'envoyer. Les passages [À COMPLÉTER] doivent être remplis manuellement.</p>
         <button class="lw-btn-secondary" onclick="lwRestart()" id="lw-new-request-btn" style="margin-top:12px;">Faire une nouvelle demande</button>
       </div>
     </div>
@@ -468,6 +554,7 @@
 
 <footer>© 2026 Lettreo · Fait en France · <span id="footer-privacy">Vos données ne sont pas stockées</span></footer>
 
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 <script>
 const translations = {
   fr: {
@@ -660,13 +747,6 @@ function setLang(lang) {
   ['c1','c2','c3','c4','c5','c6','c7','c8'].forEach(id => { document.getElementById(id).textContent = t[id]; });
   document.getElementById('fb-h2').textContent = t.fbH2;
   document.getElementById('fb-p').innerHTML = t.fbP;
-  document.getElementById('q1').textContent = t.q1;
-  document.getElementById('q2').textContent = t.q2;
-  document.getElementById('q3').textContent = t.q3;
-  document.getElementById('q4').textContent = t.q4;
-  document.getElementById('btn-beta-txt').textContent = t.btnBeta;
-  document.getElementById('form-note2-txt').textContent = t.formNote2;
-  document.getElementById('success2-txt').textContent = t.success2;
   document.getElementById('footer-h2').textContent = t.footerH2;
   document.getElementById('footer-p').textContent = t.footerP;
   document.getElementById('footer-privacy').textContent = t.footerPrivacy;
@@ -1083,8 +1163,6 @@ function setLang(lang) {
     lwValidateStep();
   }
 
-  const MAKE_WEBHOOK_URL = "https://hook.eu1.make.com/xa5y8mlqb21le5nai4wkerk81l12fg7a";
-
   window.lwSubmitRequest = async function() {
     document.getElementById("lw-loading-box").style.display = "flex";
     document.getElementById("lw-error-box").style.display = "none";
@@ -1109,13 +1187,14 @@ function setLang(lang) {
     };
 
     try {
-      const resp = await fetch(MAKE_WEBHOOK_URL, {
+      const resp = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      if (!resp.ok) throw new Error("Échec envoi");
-      const letterText = await resp.text();
+      const json = await resp.json();
+      if (!resp.ok) throw new Error(json.error || "Échec envoi");
+      const letterText = json.letter;
       document.getElementById("lw-loading-box").style.display = "none";
       if (letterText && letterText.trim().length > 0) {
         document.getElementById("lw-success-body").textContent = "";
@@ -1141,6 +1220,30 @@ function setLang(lang) {
       btn.textContent = "Copié ✓";
       setTimeout(() => { btn.textContent = original; }, 2000);
     } catch (e) {}
+  };
+
+  window.lwDownloadPDF = function() {
+    const text = document.getElementById("lw-letter-box").textContent;
+    if (!text || !window.jspdf) return;
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit: "mm", format: "a4" });
+    const marginLeft = 20;
+    const marginTop = 25;
+    const maxWidth = 170;
+    doc.setFont("times", "normal");
+    doc.setFontSize(12);
+    const lines = doc.splitTextToSize(text, maxWidth);
+    const lineHeight = 6;
+    let y = marginTop;
+    lines.forEach((line) => {
+      if (y > 280) {
+        doc.addPage();
+        y = marginTop;
+      }
+      doc.text(line, marginLeft, y);
+      y += lineHeight;
+    });
+    doc.save("courrier-lettreo.pdf");
   };
 
   window.lwRestart = function() {
