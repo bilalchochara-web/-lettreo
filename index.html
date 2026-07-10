@@ -525,12 +525,13 @@
         <div class="lw-success-icon">✓</div>
         <h1 class="lw-h1" id="lw-success-title">Votre courrier est prêt.</h1>
         <p class="lw-sub" id="lw-success-body" style="max-width:420px;"></p>
-        <pre id="lw-letter-box" contenteditable="true" spellcheck="true" style="display:none; text-align:left; background:#fff; border:1px solid #e5e2db; border-radius:12px; padding:24px; max-width:520px; width:100%; max-height:420px; overflow-y:auto; font-family:'Times New Roman', serif; font-size:14px; line-height:1.8; white-space:pre-wrap; color:#1a1814; box-shadow:0 4px 24px rgba(0,0,0,0.06); cursor:text;"></pre>
+        <pre id="lw-letter-box" contenteditable="true" spellcheck="true" style="display:none; text-align:justify; background:#fff; border:1px solid #e5e2db; border-radius:12px; padding:24px; max-width:520px; width:100%; max-height:420px; overflow-y:auto; font-family:'Times New Roman', serif; font-size:14px; line-height:1.8; white-space:pre-wrap; color:#1a1814; box-shadow:0 4px 24px rgba(0,0,0,0.06); cursor:text;"></pre>
         <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:16px;">
           <button class="lw-btn-primary" onclick="lwCopyLetter()" id="lw-copy-btn">Copier le courrier</button>
           <button class="lw-btn-secondary" onclick="lwDownloadPDF()" id="lw-pdf-btn">Télécharger en PDF</button>
         </div>
         <p class="lw-hint" id="lw-success-hint">Vous pouvez modifier le texte directement ci-dessus avant de l'envoyer. Les passages [À COMPLÉTER] doivent être remplis manuellement.</p>
+        <p class="lw-hint" style="color:#e67e22; margin-top:8px;">⚠️ Ce texte est une aide à la rédaction et ne constitue pas un conseil juridique. Pour les situations sensibles, il est recommandé de faire relire ce courrier par un professionnel du droit.</p>
         <button class="lw-btn-secondary" onclick="lwRestart()" id="lw-new-request-btn" style="margin-top:12px;">Faire une nouvelle demande</button>
       </div>
     </div>
@@ -1177,13 +1178,13 @@ function setLang(lang) {
       langue_interface: lwLang,
       ton_souhaite: tonLabel,
       situation: lwData.situation,
-      destinataire_nom: lwData.destNom || "(non fourni)",
-      destinataire_adresse: lwData.destAdresse || "(non fournie)",
-      demande_finale: lwData.demande,
+      destinataire_nom: lwData.destNom || "",
+      destinataire_adresse: lwData.destAdresse || "",
+      demande_finale: lwData.demande || "",
       expediteur_nom: lwData.expNom,
       expediteur_email: lwData.expEmail,
-      expediteur_adresse: lwData.expAdresse || "(non fournie)",
-      expediteur_telephone: lwData.expTel || "(non fourni)",
+      expediteur_adresse: lwData.expAdresse || "",
+      expediteur_telephone: lwData.expTel || "",
     };
 
     try {
