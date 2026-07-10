@@ -427,7 +427,7 @@
 <section class="feedback-section" id="inscription">
   <div class="feedback-inner">
     <h2 id="fb-h2">Vous testez, j'améliore.</h2>
-    <p id="fb-p">Répondez à ces quelques questions pour générer votre demande de courrier personnalisée. Vous recevrez le résultat par email sous 24h, prêt à relire et à envoyer.</p>
+    <p id="fb-p">Répondez à ces quelques questions pour générer votre demande de courrier personnalisée. Votre courrier est généré automatiquement et s'affiche directement à l'écran, prêt à copier ou télécharger en PDF.</p>
   </div>
 <div id="lettreo-wizard" dir="ltr">
   <nav id="lw-nav">
@@ -802,7 +802,7 @@ function setLang(lang) {
       errorText: "Une erreur est survenue lors de l'envoi. Réessayez.",
       btnRetry: "Réessayer",
       successTitle: "Votre demande est bien reçue.",
-      successBody: email => `Nous préparons votre courrier à partir des informations transmises. Vous le recevrez par email à ${email} sous 24h, prêt à relire et à envoyer.`,
+      successBody: () => `Votre courrier est généré automatiquement et s'affiche directement à l'écran, prêt à copier ou télécharger en PDF.`,
       successHint: "Pensez à vérifier vos spams si vous ne voyez rien passer.",
       btnNewRequest: "Faire une nouvelle demande",
     },
@@ -852,7 +852,7 @@ function setLang(lang) {
       errorText: "حدث خطأ أثناء الإرسال. حاول مرة أخرى.",
       btnRetry: "إعادة المحاولة",
       successTitle: "تم استلام طلبك بنجاح.",
-      successBody: email => `نقوم بإعداد رسالتك. ستستلمها عبر البريد الإلكتروني على ${email} خلال 24 ساعة.`,
+      successBody: () => `يتم إنشاء رسالتك تلقائياً وتظهر مباشرة على الشاشة، جاهزة للنسخ أو التنزيل بصيغة PDF.`,
       successHint: "تحقق من مجلد البريد المزعج إذا لم تجد الرسالة.",
       btnNewRequest: "تقديم طلب جديد",
     },
@@ -902,7 +902,7 @@ function setLang(lang) {
       errorText: "An error occurred. Please try again.",
       btnRetry: "Retry",
       successTitle: "Your request has been received.",
-      successBody: email => `We are preparing your letter. You will receive it by email at ${email} within 24h.`,
+      successBody: () => `Your letter is generated automatically and appears directly on screen, ready to copy or download as a PDF.`,
       successHint: "Remember to check your spam folder if you don't see it.",
       btnNewRequest: "Make a new request",
     },
@@ -952,7 +952,7 @@ function setLang(lang) {
       errorText: "Ocurrió un error. Inténtelo de nuevo.",
       btnRetry: "Reintentar",
       successTitle: "Su solicitud ha sido recibida.",
-      successBody: email => `Estamos preparando su carta. La recibirá por correo en ${email} dentro de 24h.`,
+      successBody: () => `Su carta se genera automáticamente y aparece directamente en pantalla, lista para copiar o descargar en PDF.`,
       successHint: "Recuerde revisar su carpeta de spam.",
       btnNewRequest: "Hacer una nueva solicitud",
     },
@@ -1002,7 +1002,7 @@ function setLang(lang) {
       errorText: "Bir hata oluştu. Tekrar deneyin.",
       btnRetry: "Tekrar dene",
       successTitle: "Talebiniz alındı.",
-      successBody: email => `Mektubunuzu hazırlıyoruz. 24 saat içinde ${email} adresine e-posta ile ulaşacaktır.`,
+      successBody: () => `Mektubunuz otomatik olarak oluşturulur ve doğrudan ekranda görüntülenir, kopyalamaya veya PDF olarak indirmeye hazırdır.`,
       successHint: "Görünmüyorsa spam klasörünüzü kontrol edin.",
       btnNewRequest: "Yeni bir talep oluştur",
     },
