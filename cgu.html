@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conditions Générales d'Utilisation — Lettreo</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1814; --ink-light: #6b6760; --ink-muted: #a8a49f;
+    --paper: #faf9f7; --paper-warm: #f2f0eb;
+    --accent: #2856d4; --accent-light: #eaeffc; --accent-dark: #1e42a8;
+    --border: #e5e2db; --radius: 10px;
+  }
+  body { font-family: 'Inter', sans-serif; background: var(--paper); color: var(--ink); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+
+  nav { position: sticky; top: 0; z-index: 100; background: rgba(250,249,247,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); padding: 0 2rem; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+  .logo { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--ink); letter-spacing: -0.02em; text-decoration: none; }
+  .logo span { color: var(--accent); }
+  .back-link { color: var(--ink-light); font-size: 14px; text-decoration: none; }
+  .back-link:hover { color: var(--accent); }
+
+  main { max-width: 720px; margin: 0 auto; padding: 3.5rem 2rem 5rem; }
+  h1 { font-family: 'DM Serif Display', serif; font-size: 2.1rem; letter-spacing: -0.02em; margin-bottom: 0.5rem; color: var(--ink); }
+  .updated { color: var(--ink-muted); font-size: 13px; margin-bottom: 2.5rem; }
+  h2 { font-family: 'DM Serif Display', serif; font-size: 1.3rem; letter-spacing: -0.01em; margin: 2.2rem 0 0.75rem; color: var(--ink); }
+  p, li { color: var(--ink-light); font-size: 14.5px; margin-bottom: 0.9rem; }
+  ul { padding-left: 1.3rem; margin-bottom: 0.9rem; }
+  strong { color: var(--ink); font-weight: 600; }
+  a { color: var(--accent); }
+  .highlight-box { background: var(--accent-light); border: 1px solid #c5d3f5; border-radius: var(--radius); padding: 1.1rem 1.3rem; margin: 1.5rem 0; }
+  .highlight-box p { color: var(--ink); margin-bottom: 0; font-size: 13.5px; }
+
+  footer { border-top: 1px solid var(--border); padding: 1.5rem 2rem; text-align: center; font-size: 12px; color: var(--ink-muted); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">Lettr<span>eo</span></a>
+  <a href="index.html" class="back-link">← Retour à l'accueil</a>
+</nav>
+
+<main>
+  <h1>Conditions Générales d'Utilisation</h1>
+  <p class="updated">Dernière mise à jour : juillet 2026 — Version bêta</p>
+
+  <div class="highlight-box">
+    <p><strong>En résumé :</strong> Lettreo génère automatiquement des courriers administratifs à partir des informations que vous fournissez. Ce n'est pas un service de conseil juridique, vos données ne sont pas stockées, et le service est actuellement gratuit pendant sa phase bêta.</p>
+  </div>
+
+  <h2>1. Objet du service</h2>
+  <p>Lettreo (ci-après « le Service ») est un outil édité à titre individuel par Bilal Chochara, accessible à l'adresse lettreo.vercel.app, permettant à toute personne (ci-après « l'Utilisateur ») de générer automatiquement, à partir des informations qu'elle renseigne, un courrier administratif ou professionnel rédigé en français.</p>
+  <p>Le Service s'appuie sur un modèle d'intelligence artificielle (Claude, développé par Anthropic) pour générer le texte du courrier à partir de la situation décrite par l'Utilisateur.</p>
+
+  <h2>2. Nature du service — Absence de conseil juridique</h2>
+  <p>Le Service a une vocation exclusivement rédactionnelle et pratique. <strong>Lettreo ne fournit aucun conseil juridique, aucune consultation juridique et n'a pas vocation à se substituer à un professionnel du droit</strong> (avocat, notaire, huissier, association de défense des consommateurs, etc.).</p>
+  <p>Les courriers générés constituent une aide à la rédaction. Il appartient systématiquement à l'Utilisateur de :</p>
+  <ul>
+    <li>relire intégralement le courrier avant tout envoi ;</li>
+    <li>vérifier l'exactitude des faits, dates, montants et références mentionnés ;</li>
+    <li>compléter les passages signalés par la mention <em>[À COMPLÉTER]</em> ;</li>
+    <li>solliciter l'avis d'un professionnel du droit pour toute situation sensible, complexe ou à forts enjeux financiers ou juridiques.</li>
+  </ul>
+  <p>Les éventuelles références à des textes de loi ou articles de code mentionnées dans un courrier généré le sont à titre indicatif, sur la base des connaissances générales du modèle d'intelligence artificielle utilisé, et ne sauraient constituer une garantie d'exactitude, d'applicabilité ou d'exhaustivité juridique.</p>
+
+  <h2>3. Fonctionnement du service</h2>
+  <p>L'Utilisateur répond à une série de questions (type de courrier, situation, ton souhaité, destinataire, coordonnées de l'expéditeur). Ces informations sont transmises à un modèle d'intelligence artificielle qui génère un texte de courrier, affiché directement à l'écran. L'Utilisateur peut ensuite modifier ce texte, le copier ou le télécharger au format PDF.</p>
+  <p>Le Service ne procède à aucun envoi du courrier pour le compte de l'Utilisateur : c'est à ce dernier qu'il revient d'envoyer le courrier généré, par le moyen de son choix (courrier postal, recommandé, email, etc.).</p>
+
+  <h2>4. Données personnelles</h2>
+  <p>Le Service ne conserve ni ne stocke, sur ses propres serveurs, les informations saisies par l'Utilisateur (situation décrite, coordonnées de l'expéditeur ou du destinataire, contenu du courrier généré). Ces informations sont transmises de façon ponctuelle, au moment de la génération, au prestataire d'intelligence artificielle tiers (Anthropic) nécessaire à la production du courrier, puis ne sont pas conservées par Lettreo au-delà de cette opération.</p>
+  <p>L'adresse email de l'expéditeur, lorsqu'elle est renseignée, sert uniquement à figurer dans l'en-tête du courrier généré et n'est utilisée à aucune autre fin (prospection, revente, etc.).</p>
+  <p>Pour toute question relative à vos données, vous pouvez contacter l'éditeur du Service à l'adresse : <a href="mailto:bilalchochara@gmail.com">bilalchochara@gmail.com</a>.</p>
+
+  <h2>5. Tarification</h2>
+  <p>Le Service est actuellement proposé <strong>gratuitement</strong>, dans le cadre de sa phase bêta de test. L'éditeur se réserve la possibilité d'introduire, à l'avenir, une tarification pour tout ou partie des fonctionnalités du Service. Le cas échéant, les Utilisateurs en seront informés préalablement, et l'utilisation de toute fonctionnalité payante fera l'objet d'une acceptation expresse et distincte.</p>
+
+  <h2>6. Responsabilité</h2>
+  <p>L'Utilisateur reste seul responsable de l'usage qu'il fait des courriers générés par le Service, ainsi que des conséquences de leur envoi. L'éditeur du Service ne saurait être tenu responsable :</p>
+  <ul>
+    <li>des conséquences juridiques, financières ou autres résultant de l'envoi d'un courrier généré par le Service ;</li>
+    <li>d'erreurs, d'approximations ou d'omissions dans le contenu généré par le modèle d'intelligence artificielle ;</li>
+    <li>d'une indisponibilité temporaire ou prolongée du Service, notamment liée à un prestataire tiers ;</li>
+    <li>d'un usage du Service non conforme aux présentes CGU.</li>
+  </ul>
+  <p>Le Service est fourni « en l'état », sans garantie d'aucune sorte, explicite ou implicite, quant à son exactitude, sa disponibilité ou son adéquation à un usage particulier, notamment compte tenu de son statut de version bêta.</p>
+
+  <h2>7. Propriété intellectuelle</h2>
+  <p>Le texte de chaque courrier généré appartient à l'Utilisateur qui en a demandé la génération, qui est libre de l'utiliser, le modifier et l'envoyer comme il l'entend. La structure du Service, son interface, sa marque et son contenu éditorial propre restent la propriété de l'éditeur de Lettreo.</p>
+
+  <h2>8. Modification des CGU</h2>
+  <p>Les présentes CGU peuvent être modifiées à tout moment, notamment pour tenir compte de l'évolution du Service (sortie de la phase bêta, introduction d'une tarification, nouvelles fonctionnalités). La version en vigueur est celle publiée sur cette page à la date de consultation.</p>
+
+  <h2>9. Droit applicable</h2>
+  <p>Les présentes CGU sont soumises au droit français. Tout litige relatif à leur interprétation ou à leur exécution relève, à défaut de résolution amiable, des tribunaux compétents selon les règles de droit commun.</p>
+
+  <h2>10. Contact</h2>
+  <p>Pour toute question relative aux présentes CGU ou au Service, vous pouvez écrire directement à : <a href="mailto:bilalchochara@gmail.com">bilalchochara@gmail.com</a>.</p>
+</main>
+
+<footer>© 2026 Lettreo · Fait en France</footer>
+
+</body>
+</html>

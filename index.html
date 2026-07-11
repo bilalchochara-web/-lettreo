@@ -196,6 +196,16 @@
   .lw-textarea { padding: 14px; resize: vertical; line-height: 1.6; min-height: 140px; }
   .lw-input:focus, .lw-textarea:focus { outline: none; border-color: #2856d4; }
 
+  #lw-mic-btn {
+    display: none; align-items: center; justify-content: center;
+    position: absolute; top: 10px; right: 10px; width: 32px; height: 32px;
+    border-radius: 50%; border: 1.5px solid #e5e2db; background: #fff;
+    cursor: pointer; font-size: 15px; line-height: 1; padding: 0; transition: all .15s;
+  }
+  #lw-mic-btn.recording { background: #2856d4; border-color: #2856d4; box-shadow: 0 0 0 4px #eaeffc; }
+  [dir="rtl"] #lw-mic-btn { right: auto; left: 10px; }
+  [dir="rtl"] .lw-textarea#lw-situation { padding-right: 14px; padding-left: 48px; }
+
   .lw-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .lw-grid2-gap { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 20px; }
   .lw-grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
@@ -464,7 +474,10 @@
       <p class="lw-eyebrow" id="lw-step1-eyebrow">Étape 2 sur 4</p>
       <h1 class="lw-h1" id="lw-step1-title">Décrivez votre situation</h1>
       <p class="lw-sub" id="lw-step1-sub">Expliquez ce qui s'est passé, avec le plus de détails possible.</p>
-      <textarea class="lw-textarea" id="lw-situation" oninput="lwOnSituationInput()"></textarea>
+      <div style="position:relative;">
+        <textarea class="lw-textarea" id="lw-situation" oninput="lwOnSituationInput()" style="padding-right:48px;"></textarea>
+        <button type="button" id="lw-mic-btn" onclick="lwToggleMic()" title="Dicter à l'oral">🎤</button>
+      </div>
       <p class="lw-hint" id="lw-wordcount" style="text-align:right;">0 mot</p>
 
       <p class="lw-label" id="lw-tone-question" style="margin-top:24px;">Quel ton voulez-vous adopter ?</p>
@@ -553,7 +566,7 @@
   <a href="mailto:bilalchochara@gmail.com" class="btn-primary" style="display:inline-block; text-decoration:none; line-height:48px; padding: 0 28px;">bilalchochara@gmail.com</a>
 </section>
 
-<footer>© 2026 Lettreo · Fait en France · <span id="footer-privacy">Vos données ne sont pas stockées</span></footer>
+<footer>© 2026 Lettreo · Fait en France · <span id="footer-privacy">Vos données ne sont pas stockées</span> · <a href="cgu.html" style="color:inherit;">CGU</a></footer>
 
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 <script>
@@ -1101,6 +1114,63 @@ function setLang(lang) {
     lwValidateStep();
   };
 
+  const LW_SPEECH_RECOGNITION = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const LW_SPEECH_LOCALES = { fr: "fr-FR", ar: "ar-SA", en: "en-US", es: "es-ES", tr: "tr-TR" };
+  let lwRecognition = null;
+  let lwRecording = false;
+
+  function lwInitMic() {
+    const micBtn = document.getElementById("lw-mic-btn");
+    if (!LW_SPEECH_RECOGNITION) {
+      micBtn.style.display = "none";
+      return;
+    }
+    micBtn.style.display = "flex";
+  }
+
+  window.lwToggleMic = function() {
+    if (!LW_SPEECH_RECOGNITION) return;
+    const micBtn = document.getElementById("lw-mic-btn");
+
+    if (lwRecording) {
+      lwRecognition && lwRecognition.stop();
+      return;
+    }
+
+    lwRecognition = new LW_SPEECH_RECOGNITION();
+    lwRecognition.lang = LW_SPEECH_LOCALES[lwLang] || "fr-FR";
+    lwRecognition.continuous = true;
+    lwRecognition.interimResults = false;
+
+    lwRecognition.onstart = () => {
+      lwRecording = true;
+      micBtn.classList.add("recording");
+    };
+    lwRecognition.onresult = (event) => {
+      let finalTranscript = "";
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        if (event.results[i].isFinal) {
+          finalTranscript += event.results[i][0].transcript;
+        }
+      }
+      if (finalTranscript.trim()) {
+        const textarea = document.getElementById("lw-situation");
+        const needsSpace = textarea.value && !/\s$/.test(textarea.value);
+        textarea.value += (needsSpace ? " " : "") + finalTranscript.trim() + " ";
+        lwOnSituationInput();
+      }
+    };
+    lwRecognition.onerror = () => {
+      lwRecording = false;
+      micBtn.classList.remove("recording");
+    };
+    lwRecognition.onend = () => {
+      lwRecording = false;
+      micBtn.classList.remove("recording");
+    };
+    lwRecognition.start();
+  };
+
   function lwUpdateWordCount() {
     const words = lwData.situation.trim().split(/\s+/).filter(Boolean).length;
     document.getElementById("lw-wordcount").textContent = t().wordCount(words);
@@ -1271,6 +1341,7 @@ function setLang(lang) {
   lwRenderTexts();
   lwRenderChoices();
   lwRender();
+  lwInitMic();
 })();
 </script>
 </body>

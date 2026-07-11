@@ -1,3 +1,8 @@
+const DISPOSABLE_EMAIL_DOMAINS = [
+  'yopmail.com', 'mailinator.com', 'guerrillamail.com', 'tempmail.com',
+  '10minutemail.com', 'throwam.com', 'sharklasers.com', 'trashmail.com'
+];
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -8,6 +13,11 @@ export default async function handler(req, res) {
     destinataire_nom, destinataire_adresse, demande_finale,
     expediteur_nom, expediteur_email, expediteur_adresse, expediteur_telephone
   } = req.body;
+
+  const emailDomain = (expediteur_email || '').split('@')[1]?.toLowerCase().trim();
+  if (emailDomain && DISPOSABLE_EMAIL_DOMAINS.includes(emailDomain)) {
+    return res.status(400).json({ error: 'Veuillez utiliser une adresse email valide.' });
+  }
 
   const systemPrompt = `Tu es un expert en rédaction de courriers administratifs et professionnels français. Tu rédiges des courriers formels, clairs et juridiquement corrects pour des particuliers qui ne maîtrisent pas les codes de la correspondance officielle.
 
@@ -22,12 +32,13 @@ RÈGLES ABSOLUES :
    - Corps en 3 paragraphes (contexte / demande précise / action+délai)
    - Formule de politesse complète
    - Signature
-3. Tu adaptes le ton selon le type de courrier demandé (ferme / neutre / conciliant).
-4. Tu n'inventes JAMAIS de faits, dates, références ou montants non fournis. Utilise [À COMPLÉTER : description] si une info manque.
-5. Vouvoiement systématique. Jamais de tutoiement.
-6. Le corps du courrier ne contient aucun conseil juridique ni mise en garde.
-7. Texte brut uniquement. Pas de markdown. Paragraphes séparés par une ligne vide.
-8. Ne mets AUCUNE mention, avertissement ou note après la signature. Le courrier se termine après la signature et les éventuelles pièces jointes. Rien d'autre.`;
+3. Cite TOUJOURS l'article de loi applicable à la situation si tu en connais un (ex: article 22 loi du 6 juillet 1989 pour les dépôts de garantie, article L1237-19 Code du travail pour la rupture conventionnelle, etc.). Si tu ne connais pas l'article exact, n'en invente pas.
+4. Tu adaptes le ton selon le type de courrier demandé (ferme / neutre / conciliant).
+5. Tu n'inventes JAMAIS de faits, dates, références ou montants non fournis. Utilise [À COMPLÉTER : description] si une info manque.
+6. Vouvoiement systématique. Jamais de tutoiement.
+7. Le corps du courrier ne contient aucun conseil juridique ni mise en garde.
+8. Texte brut uniquement. Pas de markdown. Paragraphes séparés par une ligne vide.
+9. Ne mets AUCUNE mention, avertissement ou note après la signature. Le courrier se termine après la signature et les éventuelles pièces jointes. Rien d'autre.`;
 
   const userContent = `Génère le courrier correspondant à cette situation. Si la situation est décrite dans une autre langue que le français, comprends-la mais génère le courrier entièrement en français.
 
