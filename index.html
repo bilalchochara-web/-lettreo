@@ -10,7 +10,7 @@
   :root {
     --ink: #1a1814; --ink-light: #6b6760; --ink-muted: #a8a49f;
     --paper: #faf9f7; --paper-warm: #f2f0eb;
-    --accent: #2856d4; --accent-light: #eaeffc; --accent-dark: #1e42a8;
+    --accent: #1e4fd8; --accent-light: #eaeffc; --accent-dark: #1e42a8;
     --success: #1a7f4b; --success-bg: #eaf5ee;
     --border: #e5e2db; --radius: 10px;
   }
@@ -18,7 +18,12 @@
   body { font-family: 'Inter', sans-serif; background: var(--paper); color: var(--ink); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
 
   /* NAV */
-  nav { position: sticky; top: 0; z-index: 100; background: rgba(250,249,247,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); padding: 0 2rem; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background-color: rgba(250,249,247,0.92);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M0 24L24 0' stroke='%231a1814' stroke-width='1' stroke-opacity='0.05'/%3E%3C/svg%3E");
+    backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); padding: 0 2rem; height: 56px; display: flex; align-items: center; justify-content: space-between;
+  }
   .logo { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--ink); letter-spacing: -0.02em; }
   .logo span { color: var(--accent); }
   .nav-right { display: flex; align-items: center; gap: 12px; }
@@ -40,8 +45,8 @@
   .form-wrap input[type="email"] { flex: 1; min-width: 220px; height: 48px; border: 1.5px solid var(--border); border-radius: var(--radius); padding: 0 16px; font-size: 15px; font-family: 'Inter', sans-serif; color: var(--ink); background: #fff; outline: none; transition: border-color .15s; }
   .form-wrap input[type="email"]:focus { border-color: var(--accent); }
   .form-wrap input[type="email"]::placeholder { color: var(--ink-muted); }
-  .btn-primary { height: 48px; background: var(--accent); color: #fff; border: none; border-radius: var(--radius); padding: 0 24px; font-size: 15px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; transition: background .15s, transform .1s; white-space: nowrap; }
-  .btn-primary:hover { background: var(--accent-dark); }
+  .btn-primary { height: 48px; background: linear-gradient(135deg, #1e4fd8, #2563eb); color: #fff; border: none; border-radius: var(--radius); padding: 0 24px; font-size: 15px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; transition: filter .15s, transform .1s; white-space: nowrap; }
+  .btn-primary:hover { filter: brightness(0.93); }
   .btn-primary:active { transform: scale(0.98); }
   .form-note { font-size: 12.5px; color: var(--ink-muted); margin-top: 0.5rem; }
   .success-msg { display: none; background: var(--success-bg); border: 1px solid #b8e0c9; border-radius: var(--radius); padding: 14px 20px; color: var(--success); font-size: 14px; font-weight: 500; max-width: 460px; margin: 0 auto; text-align: center; }
@@ -55,7 +60,7 @@
   .multilang-section > .section-sub { text-align: center; color: var(--ink-light); font-size: 0.9rem; margin-bottom: 2.5rem; }
   .lang-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 2.5rem; }
   .lang-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; text-align: center; transition: border-color .15s, box-shadow .15s; cursor: default; }
-  .lang-card:hover { border-color: var(--accent); box-shadow: 0 2px 16px rgba(40,86,212,0.08); }
+  .lang-card:hover { border-color: var(--accent); box-shadow: 0 2px 16px rgba(30,79,216,0.08); }
   .lang-flag { font-size: 28px; margin-bottom: 8px; }
   .lang-name { font-weight: 600; font-size: 14px; color: var(--ink); margin-bottom: 4px; }
   .lang-native { font-size: 13px; color: var(--ink-light); margin-bottom: 8px; }
@@ -94,7 +99,7 @@
   .usecases .section-sub { text-align: center; color: var(--ink-light); font-size: 0.9rem; margin-bottom: 2.5rem; }
   .cases-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
   .case-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.1rem; font-size: 13.5px; color: var(--ink-light); display: flex; align-items: center; gap: 10px; transition: border-color .15s, box-shadow .15s; }
-  .case-card:hover { border-color: var(--accent); box-shadow: 0 2px 12px rgba(40,86,212,0.08); }
+  .case-card:hover { border-color: var(--accent); box-shadow: 0 2px 12px rgba(30,79,216,0.08); }
   .case-icon { font-size: 20px; flex-shrink: 0; }
 
   /* FEEDBACK */
@@ -166,7 +171,7 @@
     background: #fff;
   }
   #lw-logo { font-family: 'DM Serif Display', serif; font-size: 20px; letter-spacing: -0.02em; color: #1a1814; }
-  #lw-logo span { color: #2856d4; }
+  #lw-logo span { color: #1e4fd8; }
   #lw-nav-right { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
   .lw-lang-switcher { display: flex; gap: 4px; }
   .lw-lang-btn {
@@ -174,15 +179,15 @@
     font-size: 11.5px; font-weight: 600; cursor: pointer; background: transparent; color: #6b6760;
     font-family: 'Inter', sans-serif; transition: all .15s;
   }
-  .lw-lang-btn.active { background: #eaeffc; color: #2856d4; border-color: #2856d4; }
+  .lw-lang-btn.active { background: #eaeffc; color: #1e4fd8; border-color: #1e4fd8; }
   #lw-progress { display: flex; gap: 6px; }
   .lw-progress-dot { width: 24px; height: 4px; border-radius: 2px; background: #e5e2db; transition: background .2s; }
-  .lw-progress-dot.active { background: #2856d4; }
+  .lw-progress-dot.active { background: #1e4fd8; }
 
   #lw-main { padding: 32px 24px 24px; min-height: 360px; }
   .lw-step { display: none; flex-direction: column; }
   .lw-step.active { display: flex; }
-  .lw-eyebrow { font-size: 12px; font-weight: 600; color: #2856d4; text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 8px; }
+  .lw-eyebrow { font-size: 12px; font-weight: 600; color: #1e4fd8; text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 8px; }
   .lw-h1 { font-family: 'DM Serif Display', serif; font-size: 24px; line-height: 1.25; letter-spacing: -0.02em; margin: 0 0 8px; color: #1a1814; }
   .lw-sub { font-size: 14px; color: #6b6760; line-height: 1.6; margin: 0 0 18px; }
   .lw-label { display: block; font-size: 13px; font-weight: 600; color: #1a1814; margin-bottom: 8px; }
@@ -194,7 +199,7 @@
   }
   .lw-input { height: 46px; }
   .lw-textarea { padding: 14px; resize: vertical; line-height: 1.6; min-height: 140px; }
-  .lw-input:focus, .lw-textarea:focus { outline: none; border-color: #2856d4; }
+  .lw-input:focus, .lw-textarea:focus { outline: none; border-color: #1e4fd8; }
 
   #lw-mic-btn {
     display: none; align-items: center; justify-content: center;
@@ -202,7 +207,7 @@
     border-radius: 50%; border: 1.5px solid #e5e2db; background: #fff;
     cursor: pointer; font-size: 15px; line-height: 1; padding: 0; transition: all .15s;
   }
-  #lw-mic-btn.recording { background: #2856d4; border-color: #2856d4; box-shadow: 0 0 0 4px #eaeffc; }
+  #lw-mic-btn.recording { background: #1e4fd8; border-color: #1e4fd8; box-shadow: 0 0 0 4px #eaeffc; }
   [dir="rtl"] #lw-mic-btn { right: auto; left: 10px; }
   [dir="rtl"] .lw-textarea#lw-situation { padding-right: 14px; padding-left: 48px; }
 
@@ -212,10 +217,11 @@
 
   .lw-choice-card {
     display: flex; flex-direction: column; align-items: flex-start; gap: 8px;
-    padding: 16px; border-radius: 12px; border: 1.5px solid #e5e2db; cursor: pointer;
+    padding: 16px; border-radius: 12px; border: 1.5px solid #e5e2db; border-left-width: 1.5px; cursor: pointer;
     text-align: left; transition: all .15s; background: #fff; font-family: 'Inter', sans-serif;
   }
-  .lw-choice-card.selected { border-color: #2856d4; background: #eaeffc; }
+  .lw-choice-card:hover { box-shadow: 0 4px 16px rgba(30,79,216,0.12); border-left: 3px solid #1e4fd8; }
+  .lw-choice-card.selected { border-color: #1e4fd8; background: #eaeffc; }
   .lw-choice-icon { font-size: 22px; }
   .lw-choice-label { font-size: 13.5px; font-weight: 500; line-height: 1.35; color: #1a1814; }
 
@@ -223,7 +229,7 @@
     display: flex; flex-direction: column; gap: 4px; padding: 14px; border-radius: 12px;
     border: 1.5px solid #e5e2db; cursor: pointer; text-align: left; background: #fff; font-family: 'Inter', sans-serif;
   }
-  .lw-tone-card.selected { border-color: #2856d4; background: #eaeffc; }
+  .lw-tone-card.selected { border-color: #1e4fd8; background: #eaeffc; }
   .lw-tone-label { font-size: 13.5px; font-weight: 600; color: #1a1814; }
   .lw-tone-desc { font-size: 11.5px; color: #6b6760; line-height: 1.4; margin-top: 2px; }
 
@@ -235,14 +241,15 @@
     height: 46px; border-radius: 10px; padding: 0 24px; font-size: 14.5px;
     cursor: pointer; font-family: 'Inter', sans-serif; border: none;
   }
-  .lw-btn-primary { background: #2856d4; color: #fff; font-weight: 600; }
+  .lw-btn-primary { background: linear-gradient(135deg, #1e4fd8, #2563eb); color: #fff; font-weight: 600; transition: filter .15s; }
+  .lw-btn-primary:hover:not(:disabled) { filter: brightness(0.93); }
   .lw-btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
   .lw-btn-secondary { background: #fff; color: #1a1814; border: 1.5px solid #e5e2db; font-weight: 500; }
   .lw-btn-secondary:disabled { opacity: 0.35; cursor: not-allowed; }
 
   .lw-center-box { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 0; gap: 16px; text-align: center; }
   .lw-spinner {
-    width: 32px; height: 32px; border: 3px solid #e5e2db; border-top-color: #2856d4;
+    width: 32px; height: 32px; border: 3px solid #e5e2db; border-top-color: #1e4fd8;
     border-radius: 50%; animation: lw-spin 0.8s linear infinite;
   }
   @keyframes lw-spin { to { transform: rotate(360deg); } }
@@ -251,7 +258,13 @@
     font-size: 26px; font-weight: 700; display: flex; align-items: center; justify-content: center;
   }
   .lw-error-text { color: #c0392b; font-size: 14px; }
-  #lw-letter-box:focus { outline: 2px solid #2856d4; outline-offset: 2px; }
+  #lw-letter-box:focus { outline: 2px solid #1e4fd8; outline-offset: 2px; }
+  .lw-placeholder-highlight { background: #fff3cd; color: #856404; border-radius: 3px; padding: 1px 3px; }
+
+  .lw-recap-item { padding: 12px 14px; background: #fff; border: 1.5px solid #e5e2db; border-radius: 10px; }
+  .lw-recap-label { display: block; font-size: 11px; font-weight: 600; color: #1e4fd8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+  .lw-recap-value { display: block; font-size: 14px; color: #1a1814; line-height: 1.5; white-space: pre-wrap; }
+  [dir="rtl"] .lw-recap-item { text-align: right; }
 
   [dir="rtl"] .lw-choice-card, [dir="rtl"] .lw-tone-card { text-align: right; }
 
@@ -279,14 +292,13 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-badge" id="badge-txt">🧪 Version bêta — testeurs recherchés</div>
-  <h1 id="h1-txt">Votre courrier officiel,<br><em>rédigé en 2 minutes.</em></h1>
+  <h1 id="h1-txt">Un courrier officiel,<br><em>écrit pour vous en deux minutes.</em></h1>
   <p class="hero-sub" id="hero-sub-txt">
-    Contestation, relance, demande à un organisme, litige bailleur ou banque —
-    décrivez votre situation et recevez un courrier formel prêt à envoyer.
-    Sans jargon. Sans stress.
+    Un litige avec le bailleur, une amende à contester, un mail RH à transformer en vraie lettre...
+    Racontez-nous ce qui vous arrive, et repartez avec un texte clair, dans les formes, prêt à envoyer.
   </p>
   <a href="#inscription" class="btn-primary" style="display:inline-block; text-decoration:none; line-height:48px; padding:0 28px;" id="btn-hero-txt">Rédiger mon courrier</a>
-  <p class="form-note" id="form-note-txt">👇 Répondez à quelques questions ci-dessous, votre courrier est généré automatiquement</p>
+  <p class="form-note" id="form-note-txt">👇 Deux minutes de questions, et votre courrier est prêt.</p>
   <div class="trust-chips" style="margin-top:2rem">
     <span class="chip">
       <svg viewBox="0 0 16 16" fill="none"><path d="M8 1l1.5 4.5H14l-3.7 2.7 1.4 4.3L8 10.2 4.3 12.5l1.4-4.3L2 5.5h4.5z" fill="#c8c4be"/></svg>
@@ -455,6 +467,7 @@
         <div class="lw-progress-dot" data-step="1"></div>
         <div class="lw-progress-dot" data-step="2"></div>
         <div class="lw-progress-dot" data-step="3"></div>
+        <div class="lw-progress-dot" data-step="4"></div>
       </div>
     </div>
   </nav>
@@ -496,6 +509,17 @@
       <label class="lw-label" id="lw-dest-adresse-label" style="margin-top:20px;">Adresse du destinataire</label>
       <input class="lw-input" id="lw-dest-adresse" type="text">
 
+      <div class="lw-grid2-gap">
+        <div>
+          <label class="lw-label" id="lw-dest-cp-label">Code postal</label>
+          <input class="lw-input" id="lw-dest-cp" type="text" placeholder="Ex : 75001">
+        </div>
+        <div>
+          <label class="lw-label" id="lw-dest-ville-label">Ville</label>
+          <input class="lw-input" id="lw-dest-ville" type="text" placeholder="Ex : Paris">
+        </div>
+      </div>
+
       <label class="lw-label" id="lw-demande-label" style="margin-top:20px;">Qu'attendez-vous concrètement de ce courrier ?</label>
       <textarea class="lw-textarea" id="lw-demande" style="min-height:80px;"></textarea>
     </div>
@@ -522,10 +546,39 @@
           <input class="lw-input" id="lw-exp-tel" type="text">
         </div>
       </div>
+
+      <div class="lw-grid2-gap">
+        <div>
+          <label class="lw-label" id="lw-exp-cp-label">Code postal</label>
+          <input class="lw-input" id="lw-exp-cp" type="text" placeholder="Ex : 31000">
+        </div>
+        <div>
+          <label class="lw-label" id="lw-exp-ville-label">Ville</label>
+          <input class="lw-input" id="lw-exp-ville" type="text" placeholder="Ex : Toulouse">
+        </div>
+      </div>
     </div>
 
-    <!-- ÉTAPE 4 — CONFIRMATION -->
+    <!-- ÉTAPE 4 — RÉCAPITULATIF -->
     <div class="lw-step" data-step="4">
+      <p class="lw-eyebrow" id="lw-step4-eyebrow">Étape 5 sur 5</p>
+      <h1 class="lw-h1" id="lw-step4-title">Vérifiez votre demande</h1>
+      <div id="lw-recap-box" style="display:flex; flex-direction:column; gap:12px;">
+        <div class="lw-recap-item"><span class="lw-recap-label" id="lw-recap-type-label">Type de courrier</span><span class="lw-recap-value" id="lw-recap-type-value"></span></div>
+        <div class="lw-recap-item"><span class="lw-recap-label" id="lw-recap-ton-label">Ton souhaité</span><span class="lw-recap-value" id="lw-recap-ton-value"></span></div>
+        <div class="lw-recap-item"><span class="lw-recap-label" id="lw-recap-dest-label">Destinataire</span><span class="lw-recap-value" id="lw-recap-dest-value"></span></div>
+        <div class="lw-recap-item"><span class="lw-recap-label" id="lw-recap-demande-label">Demande finale</span><span class="lw-recap-value" id="lw-recap-demande-value"></span></div>
+        <div class="lw-recap-item"><span class="lw-recap-label" id="lw-recap-situation-label">Résumé de la situation</span><span class="lw-recap-value" id="lw-recap-situation-value"></span></div>
+        <div class="lw-recap-item"><span class="lw-recap-label" id="lw-recap-exp-label">Expéditeur</span><span class="lw-recap-value" id="lw-recap-exp-value"></span></div>
+      </div>
+      <div style="display:flex; gap:10px; margin-top:26px;">
+        <button class="lw-btn-secondary" onclick="lwGoBack()" id="lw-recap-edit-btn" style="flex:1;">Modifier</button>
+        <button class="lw-btn-primary" onclick="lwConfirmGenerate()" id="lw-recap-confirm-btn" style="flex:1;">Confirmer et générer</button>
+      </div>
+    </div>
+
+    <!-- ÉTAPE 5 — CONFIRMATION -->
+    <div class="lw-step" data-step="5">
       <div id="lw-loading-box" class="lw-center-box" style="display:none;">
         <div class="lw-spinner"></div>
         <p class="lw-sub" id="lw-sending-text">Envoi de votre demande…</p>
@@ -538,7 +591,10 @@
         <div class="lw-success-icon">✓</div>
         <h1 class="lw-h1" id="lw-success-title">Votre courrier est prêt.</h1>
         <p class="lw-sub" id="lw-success-body" style="max-width:420px;"></p>
-        <pre id="lw-letter-box" contenteditable="true" spellcheck="true" style="display:none; text-align:justify; background:#fff; border:1px solid #e5e2db; border-radius:12px; padding:24px; max-width:520px; width:100%; max-height:420px; overflow-y:auto; font-family:'Times New Roman', serif; font-size:14px; line-height:1.8; white-space:pre-wrap; color:#1a1814; box-shadow:0 4px 24px rgba(0,0,0,0.06); cursor:text;"></pre>
+        <div id="lw-letter-wrap" style="display:none; max-width:520px; width:100%; margin:0 auto; background:#fff; border:1px solid #e5e2db; border-top:3px solid #d4a843; border-radius:12px; overflow:hidden; box-shadow:0 4px 24px rgba(0,0,0,0.06);">
+          <div style="padding:9px 20px; font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#a8a49f; background:#faf9f7; border-bottom:1px solid #e5e2db;">Votre courrier</div>
+          <div id="lw-letter-box" contenteditable="true" spellcheck="true" style="text-align:justify; padding:24px; max-height:380px; overflow-y:auto; font-family:'Times New Roman', serif; font-size:14px; line-height:1.8; white-space:pre-wrap; color:#1a1814; cursor:text;"></div>
+        </div>
         <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:16px;">
           <button class="lw-btn-primary" onclick="lwCopyLetter()" id="lw-copy-btn">Copier le courrier</button>
           <button class="lw-btn-secondary" onclick="lwDownloadPDF()" id="lw-pdf-btn">Télécharger en PDF</button>
@@ -562,7 +618,7 @@
 <!-- FOOTER CTA -->
 <section class="footer-cta">
   <h2 id="footer-h2">Une question ? Un retour ?</h2>
-  <p id="footer-p">Ce projet est fait à la main, en solo. Écrivez-moi directement — je lis tout.</p>
+  <p id="footer-p">Ce projet, je le fais à la main, tout seul. Écrivez-moi directement, je lis tout.</p>
   <a href="mailto:bilalchochara@gmail.com" class="btn-primary" style="display:inline-block; text-decoration:none; line-height:48px; padding: 0 28px;">bilalchochara@gmail.com</a>
 </section>
 
@@ -573,9 +629,9 @@
 const translations = {
   fr: {
     navCta: "Accès anticipé", badge: "🧪 Version bêta — testeurs recherchés",
-    h1: "Votre courrier officiel,<br><em>rédigé en 2 minutes.</em>",
-    heroSub: "Contestation, relance, demande à un organisme, litige bailleur ou banque — décrivez votre situation et recevez un courrier formel prêt à envoyer. Sans jargon. Sans stress.",
-    btnHero: "Tester gratuitement", formNote: "Accès gratuit pendant la phase bêta · Aucune carte requise",
+    h1: "Un courrier officiel,<br><em>écrit pour vous en deux minutes.</em>",
+    heroSub: "Un litige avec le bailleur, une amende à contester, un mail RH à transformer en vraie lettre... Racontez-nous ce qui vous arrive, et repartez avec un texte clair, dans les formes, prêt à envoyer.",
+    btnHero: "Tester gratuitement", formNote: "👇 Deux minutes de questions, et votre courrier est prêt.",
     success: "C'est noté ! Je vous contacte dans les 48h pour tester Lettreo.",
     chip1: "Courrier au format français officiel", chip2: "Aucune donnée stockée", chip3: "Résultat en moins de 2 min",
     mlTitle: "Accessible dans votre langue",
@@ -599,14 +655,14 @@ const translations = {
     q3:"Qu'est-ce qui vous a manqué ou dérangé ?", q4:"Combien paieriez-vous pour ce service si c'était payant ?",
     btnBeta: "Je participe à la bêta", formNote2: "Je vous envoie un lien de test dans les 48h · Accès 100 % gratuit",
     success2: "Parfait ! Je vous envoie le lien de test dans les 48h. Merci pour votre aide.",
-    footerH2: "Une question ? Un retour ?", footerP: "Ce projet est fait à la main, en solo. Écrivez-moi directement — je lis tout.",
+    footerH2: "Une question ? Un retour ?", footerP: "Ce projet, je le fais à la main, tout seul. Écrivez-moi directement, je lis tout.",
     footerPrivacy: "Vos données ne sont pas stockées", dir: "ltr"
   },
   ar: {
     navCta: "الوصول المبكر", badge: "🧪 نسخة تجريبية — نبحث عن مختبرين",
-    h1: "رسالتك الرسمية،<br><em>جاهزة في دقيقتين.</em>",
-    heroSub: "طعن، مطالبة، طلب من جهة إدارية، نزاع مع مالك أو بنك — صف وضعك واستقبل رسالة رسمية جاهزة للإرسال. بدون تعقيد. بدون توتر.",
-    btnHero: "اختبر مجاناً", formNote: "وصول مجاني خلال مرحلة التجريب · بدون بطاقة بنكية",
+    h1: "رسالة رسمية،<br><em>جاهزة لك خلال دقيقتين.</em>",
+    heroSub: "خلاف مع صاحب العقار، مخالفة تريد الطعن فيها، رسالة للموارد البشرية تحتاج صياغة رسمية... احكِ لنا وضعك، واحصل على نص واضح، بالصيغة الصحيحة، جاهز للإرسال.",
+    btnHero: "اختبر مجاناً", formNote: "👇 دقيقتان من الأسئلة، ورسالتك جاهزة.",
     success: "تم التسجيل! سأتواصل معك خلال 48 ساعة.",
     chip1: "رسالة بالصيغة الرسمية الفرنسية", chip2: "لا يتم تخزين أي بيانات", chip3: "نتيجة في أقل من دقيقتين",
     mlTitle: "متاح بلغتك",
@@ -630,14 +686,14 @@ const translations = {
     q3:"ما الذي افتقدته أو أزعجك؟", q4:"كم ستدفع مقابل هذه الخدمة لو كانت مدفوعة؟",
     btnBeta: "أشارك في التجربة", formNote2: "سأرسل لك رابط الاختبار خلال 48 ساعة · مجاني تماماً",
     success2: "ممتاز! سأرسل لك الرابط خلال 48 ساعة. شكراً على مساعدتك.",
-    footerH2: "سؤال؟ ملاحظة؟", footerP: "هذا المشروع مصنوع يدوياً، بجهد فردي. راسلني مباشرة — أقرأ كل شيء.",
+    footerH2: "سؤال؟ ملاحظة؟", footerP: "هذا المشروع أصنعه بيدي، وحدي. راسلني مباشرة، أقرأ كل رسالة.",
     footerPrivacy: "بياناتك لا يتم تخزينها", dir: "rtl"
   },
   en: {
     navCta: "Early access", badge: "🧪 Beta version — testers wanted",
-    h1: "Your official French letter,<br><em>written in 2 minutes.</em>",
-    heroSub: "Dispute, claim, request to an authority, landlord or bank issue — describe your situation and receive a formal letter ready to send. No jargon. No stress.",
-    btnHero: "Try for free", formNote: "Free access during beta · No credit card required",
+    h1: "An official French letter,<br><em>written for you in two minutes.</em>",
+    heroSub: "A dispute with your landlord, a fine you want to contest, an HR email that needs to become a real letter... Tell us what's going on, and walk away with a clear, properly formatted letter, ready to send.",
+    btnHero: "Try for free", formNote: "👇 Two minutes of questions, and your letter is ready.",
     success: "Noted! I'll contact you within 48h to test Lettreo.",
     chip1: "Official French letter format", chip2: "No data stored", chip3: "Result in under 2 minutes",
     mlTitle: "Available in your language",
@@ -661,14 +717,14 @@ const translations = {
     q3:"What was missing or bothered you?", q4:"How much would you pay for this service if it were paid?",
     btnBeta: "Join the beta", formNote2: "I'll send you a test link within 48h · 100% free",
     success2: "Great! I'll send you the test link within 48h. Thank you for your help.",
-    footerH2: "A question? Feedback?", footerP: "This project is handmade, solo. Write to me directly — I read everything.",
+    footerH2: "A question? Feedback?", footerP: "I build this by hand, on my own. Write to me directly, I read every message.",
     footerPrivacy: "Your data is not stored", dir: "ltr"
   },
   es: {
     navCta: "Acceso anticipado", badge: "🧪 Versión beta — buscamos testers",
-    h1: "Tu carta oficial,<br><em>redactada en 2 minutos.</em>",
-    heroSub: "Reclamación, disputa, solicitud a un organismo, conflicto con propietario o banco — describe tu situación y recibe una carta formal lista para enviar. Sin jerga. Sin estrés.",
-    btnHero: "Probar gratis", formNote: "Acceso gratuito durante la beta · Sin tarjeta de crédito",
+    h1: "Una carta oficial,<br><em>escrita para ti en dos minutos.</em>",
+    heroSub: "Un conflicto con el propietario, una multa que quieres impugnar, un correo de RRHH que necesita convertirse en una carta de verdad... Cuéntanos qué te pasa, y llévate un texto claro, con el formato correcto, listo para enviar.",
+    btnHero: "Probar gratis", formNote: "👇 Dos minutos de preguntas, y tu carta está lista.",
     success: "¡Anotado! Te contacto en 48h para probar Lettreo.",
     chip1: "Carta en formato oficial francés", chip2: "Ningún dato almacenado", chip3: "Resultado en menos de 2 min",
     mlTitle: "Disponible en tu idioma",
@@ -692,14 +748,14 @@ const translations = {
     q3:"¿Qué echaste de menos o te molestó?", q4:"¿Cuánto pagarías por este servicio si fuera de pago?",
     btnBeta: "Participar en la beta", formNote2: "Te envío el enlace de prueba en 48h · 100% gratuito",
     success2: "¡Perfecto! Te envío el enlace en 48h. Gracias por tu ayuda.",
-    footerH2: "¿Una pregunta? ¿Un comentario?", footerP: "Este proyecto está hecho a mano, en solitario. Escríbeme directamente — lo leo todo.",
+    footerH2: "¿Una pregunta? ¿Un comentario?", footerP: "Este proyecto lo hago a mano, yo solo. Escríbeme directamente, lo leo todo.",
     footerPrivacy: "Tus datos no se almacenan", dir: "ltr"
   },
   tr: {
     navCta: "Erken erişim", badge: "🧪 Beta sürüm — test kullanıcısı aranıyor",
-    h1: "Resmi mektubunuz,<br><em>2 dakikada hazır.</em>",
-    heroSub: "İtiraz, talep, kuruma başvuru, kiracı veya banka anlaşmazlığı — durumunuzu anlatın, göndermeye hazır resmi bir mektup alın. Jargon yok. Stres yok.",
-    btnHero: "Ücretsiz dene", formNote: "Beta süresince ücretsiz erişim · Kredi kartı gerekmez",
+    h1: "Resmi bir mektup,<br><em>sizin için iki dakikada yazılır.</em>",
+    heroSub: "Ev sahibinizle bir anlaşmazlık, itiraz etmek istediğiniz bir ceza, gerçek bir mektuba dönüşmesi gereken bir İK e-postası... Bize durumunuzu anlatın, açık, usulüne uygun, göndermeye hazır bir metinle ayrılın.",
+    btnHero: "Ücretsiz dene", formNote: "👇 İki dakikalık sorular, mektubunuz hazır.",
     success: "Kaydedildi! 48 saat içinde Lettreo'yu test etmek için sizinle iletişime geçeceğim.",
     chip1: "Resmi Fransız mektubu formatı", chip2: "Hiçbir veri saklanmaz", chip3: "2 dakikadan az sürede sonuç",
     mlTitle: "Kendi dilinizde erişilebilir",
@@ -723,7 +779,7 @@ const translations = {
     q3:"Neyi eksik buldunuz veya rahatsız etti?", q4:"Bu hizmet ücretli olsaydı ne kadar öderdiniz?",
     btnBeta: "Betaya katıl", formNote2: "48 saat içinde test bağlantısı göndereceğim · %100 ücretsiz",
     success2: "Harika! Test bağlantısını 48 saat içinde göndereceğim. Yardımınız için teşekkürler.",
-    footerH2: "Bir sorunuz mu var? Geri bildirim?", footerP: "Bu proje el yapımı, tek kişilik. Bana doğrudan yazın — hepsini okuyorum.",
+    footerH2: "Bir sorunuz mu var? Geri bildirim?", footerP: "Bu projeyi tek başıma, elimle yapıyorum. Bana doğrudan yazın, hepsini okuyorum.",
     footerPrivacy: "Verileriniz saklanmaz", dir: "ltr"
   }
 };
@@ -771,7 +827,7 @@ function setLang(lang) {
   const LW_I18N = {
     fr: {
       dir: "ltr",
-      stepOf: n => `Étape ${n} sur 4`,
+      stepOf: n => `Étape ${n} sur 5`,
       typeTitle: "Quel type de courrier voulez-vous rédiger ?",
       types: [
         { id: "bailleur", label: "Litige bailleur / propriétaire", icon: "🏠" },
@@ -781,9 +837,9 @@ function setLang(lang) {
         { id: "operateur", label: "Opérateur téléphone / internet", icon: "📡" },
         { id: "autre", label: "Autre situation", icon: "✉️" },
       ],
-      langHint: "Le courrier final sera toujours généré en français, quelle que soit la langue choisie ici.",
+      langHint: "Peu importe la langue choisie ici : le courrier sortira toujours en français.",
       situationTitle: "Décrivez votre situation",
-      situationSub: "Expliquez ce qui s'est passé, avec le plus de détails possible : dates, montants, échanges précédents.",
+      situationSub: "Racontez ce qui s'est passé, avec un maximum de détails : dates, montants, échanges déjà eus.",
       situationPlaceholder: "Exemple : Mon propriétaire refuse de me rendre mon dépôt de garantie de 800€ depuis 3 mois, sans justification écrite...",
       wordCount: n => `${n} mot${n > 1 ? "s" : ""}${n < 20 ? " · minimum 20 mots recommandé" : ""}`,
       tonQuestion: "Quel ton voulez-vous adopter ?",
@@ -793,35 +849,46 @@ function setLang(lang) {
         { id: "conciliant", label: "Conciliant", desc: "Je cherche un arrangement à l'amiable" },
       ],
       destTitle: "À qui s'adresse ce courrier ?",
-      destSub: "Ces informations sont facultatives — laissez vide si vous ne les connaissez pas et continuez.",
+      destSub: "Vous ne les connaissez pas ? Pas grave, laissez ces champs vides et continuez.",
       destNomLabel: "Nom ou organisme destinataire",
       destNomPlaceholder: "Ex : M. Bernard Lefebvre / Banque XYZ",
       destAdresseLabel: "Adresse du destinataire",
+      cpLabel: "Code postal",
+      villeLabel: "Ville",
       destAdressePlaceholder: "Ex : 12 rue de la République, 75001 Paris",
       demandeLabel: "Qu'attendez-vous concrètement de ce courrier ?",
       demandePlaceholder: "Ex : Obtenir le remboursement de 800€ sous 15 jours",
       expTitle: "Vos coordonnées",
-      expSub: "Remplissez votre nom et email (obligatoires) — adresse et téléphone sont facultatifs.",
+      expSub: "Votre nom et votre email nous suffisent pour continuer. L'adresse et le téléphone, c'est si vous voulez.",
       expNomLabel: "Prénom et nom *",
       expEmailLabel: "Email *",
       expAdresseLabel: "Adresse",
       expAdressePlaceholder: "12 rue des Lilas, 31000 Toulouse",
       expTelLabel: "Téléphone",
       expTelPlaceholder: "06 XX XX XX XX",
+      recapTitle: "Vérifiez votre demande",
+      recapType: "Type de courrier",
+      recapTon: "Ton souhaité",
+      recapDest: "Destinataire",
+      recapDemande: "Demande finale",
+      recapSituation: "Résumé de la situation",
+      recapExp: "Expéditeur",
+      recapNotProvided: "Non renseigné",
+      btnEdit: "Modifier",
       btnBack: "Retour",
       btnNext: "Continuer",
-      btnSubmit: "Envoyer ma demande",
+      btnSubmit: "Confirmer et générer",
       sendingText: "Envoi de votre demande…",
       errorText: "Une erreur est survenue lors de l'envoi. Réessayez.",
       btnRetry: "Réessayer",
-      successTitle: "Votre demande est bien reçue.",
-      successBody: () => `Votre courrier est généré automatiquement et s'affiche directement à l'écran, prêt à copier ou télécharger en PDF.`,
-      successHint: "Pensez à vérifier vos spams si vous ne voyez rien passer.",
+      successTitle: "Votre courrier est prêt !",
+      successBody: () => `Le voici, juste en dessous. Copiez-le ou téléchargez-le en PDF.`,
+      successHint: "Relisez-le avant de l'envoyer, et complétez les passages en surbrillance.",
       btnNewRequest: "Faire une nouvelle demande",
     },
     ar: {
       dir: "rtl",
-      stepOf: n => `الخطوة ${n} من 4`,
+      stepOf: n => `الخطوة ${n} من 5`,
       typeTitle: "ما نوع الرسالة التي تريد كتابتها؟",
       types: [
         { id: "bailleur", label: "نزاع مع المالك", icon: "🏠" },
@@ -831,9 +898,9 @@ function setLang(lang) {
         { id: "operateur", label: "مشغل الهاتف / الإنترنت", icon: "📡" },
         { id: "autre", label: "حالة أخرى", icon: "✉️" },
       ],
-      langHint: "ستُكتب الرسالة النهائية دائماً بالفرنسية، بغض النظر عن اللغة المختارة هنا.",
+      langHint: "أياً كانت اللغة التي تختارها هنا، ستصدر الرسالة دائماً بالفرنسية.",
       situationTitle: "صف وضعك",
-      situationSub: "اشرح ما حدث، بأكبر قدر ممكن من التفاصيل.",
+      situationSub: "احكِ لنا ما حدث، بأكبر قدر ممكن من التفاصيل: تواريخ، مبالغ، مراسلات سابقة.",
       situationPlaceholder: "مثال: يرفض مالك العقار إعادة وديعة الضمان البالغة 800 يورو منذ 3 أشهر...",
       wordCount: n => `${n} كلمة${n < 20 ? " · يُنصح بـ 20 كلمة على الأقل" : ""}`,
       tonQuestion: "ما النبرة التي تريد اعتمادها؟",
@@ -843,35 +910,46 @@ function setLang(lang) {
         { id: "conciliant", label: "ودية", desc: "أبحث عن حل ودي" },
       ],
       destTitle: "لمن هذه الرسالة موجهة؟",
-      destSub: "هذه المعلومات اختيارية.",
+      destSub: "لا تعرف هذه المعلومات؟ لا مشكلة، اتركها فارغة وتابع.",
       destNomLabel: "اسم أو جهة المستلم",
       destNomPlaceholder: "مثال: السيد برنار لوفيفر",
       destAdresseLabel: "عنوان المستلم",
+      cpLabel: "الرمز البريدي",
+      villeLabel: "المدينة",
       destAdressePlaceholder: "مثال: 12 شارع الجمهورية، باريس",
       demandeLabel: "ما الذي تتوقعه بالضبط من هذه الرسالة؟",
       demandePlaceholder: "مثال: الحصول على استرداد 800 يورو خلال 15 يوماً",
       expTitle: "بياناتك الشخصية",
-      expSub: "ستظهر في ترويسة الرسالة.",
+      expSub: "اسمك وبريدك الإلكتروني يكفيان للمتابعة. العنوان والهاتف اختياريان.",
       expNomLabel: "الاسم الكامل *",
       expEmailLabel: "البريد الإلكتروني *",
       expAdresseLabel: "العنوان",
       expAdressePlaceholder: "12 شارع الليلاس، تولوز",
       expTelLabel: "الهاتف",
       expTelPlaceholder: "06 XX XX XX XX",
+      recapTitle: "راجع طلبك",
+      recapType: "نوع الرسالة",
+      recapTon: "النبرة المطلوبة",
+      recapDest: "المستلم",
+      recapDemande: "الطلب النهائي",
+      recapSituation: "ملخص الوضع",
+      recapExp: "المرسل",
+      recapNotProvided: "غير محدد",
+      btnEdit: "تعديل",
       btnBack: "رجوع",
       btnNext: "متابعة",
-      btnSubmit: "إرسال طلبي",
+      btnSubmit: "تأكيد وإنشاء",
       sendingText: "جارٍ إرسال طلبك…",
       errorText: "حدث خطأ أثناء الإرسال. حاول مرة أخرى.",
       btnRetry: "إعادة المحاولة",
-      successTitle: "تم استلام طلبك بنجاح.",
-      successBody: () => `يتم إنشاء رسالتك تلقائياً وتظهر مباشرة على الشاشة، جاهزة للنسخ أو التنزيل بصيغة PDF.`,
-      successHint: "تحقق من مجلد البريد المزعج إذا لم تجد الرسالة.",
+      successTitle: "رسالتك جاهزة!",
+      successBody: () => `ها هي، بالأسفل مباشرة. انسخها أو حمّلها بصيغة PDF.`,
+      successHint: "راجعها قبل الإرسال، وأكمل الأجزاء المُظلّلة.",
       btnNewRequest: "تقديم طلب جديد",
     },
     en: {
       dir: "ltr",
-      stepOf: n => `Step ${n} of 4`,
+      stepOf: n => `Step ${n} of 5`,
       typeTitle: "What type of letter do you need?",
       types: [
         { id: "bailleur", label: "Landlord dispute", icon: "🏠" },
@@ -881,9 +959,9 @@ function setLang(lang) {
         { id: "operateur", label: "Phone / internet provider", icon: "📡" },
         { id: "autre", label: "Other situation", icon: "✉️" },
       ],
-      langHint: "The final letter will always be generated in French, regardless of the language chosen here.",
+      langHint: "Whatever language you pick here, the letter will always come out in French.",
       situationTitle: "Describe your situation",
-      situationSub: "Explain what happened, with as much detail as possible.",
+      situationSub: "Tell us what happened, with as much detail as you can: dates, amounts, previous exchanges.",
       situationPlaceholder: "Example: My landlord has refused to return my €800 security deposit for 3 months...",
       wordCount: n => `${n} word${n > 1 ? "s" : ""}${n < 20 ? " · 20 words minimum recommended" : ""}`,
       tonQuestion: "What tone do you want to use?",
@@ -893,35 +971,46 @@ function setLang(lang) {
         { id: "conciliant", label: "Conciliatory", desc: "I'm looking for an amicable solution" },
       ],
       destTitle: "Who is this letter addressed to?",
-      destSub: "This information is optional.",
+      destSub: "Don't know these details? No problem, leave them blank and move on.",
       destNomLabel: "Recipient name or organization",
       destNomPlaceholder: "E.g.: Mr. Bernard Lefebvre / XYZ Bank",
       destAdresseLabel: "Recipient address",
+      cpLabel: "Postal code",
+      villeLabel: "City",
       destAdressePlaceholder: "E.g.: 12 rue de la République, Paris",
       demandeLabel: "What do you specifically expect from this letter?",
       demandePlaceholder: "E.g.: Get a €800 refund within 15 days",
       expTitle: "Your details",
-      expSub: "They will appear in the letterhead.",
+      expSub: "Your name and email are all we need to move on. Address and phone are up to you.",
       expNomLabel: "Full name *",
       expEmailLabel: "Email *",
       expAdresseLabel: "Address",
       expAdressePlaceholder: "12 rue des Lilas, Toulouse",
       expTelLabel: "Phone",
       expTelPlaceholder: "06 XX XX XX XX",
+      recapTitle: "Review your request",
+      recapType: "Letter type",
+      recapTon: "Desired tone",
+      recapDest: "Recipient",
+      recapDemande: "Final request",
+      recapSituation: "Situation summary",
+      recapExp: "Sender",
+      recapNotProvided: "Not provided",
+      btnEdit: "Edit",
       btnBack: "Back",
       btnNext: "Continue",
-      btnSubmit: "Send my request",
+      btnSubmit: "Confirm and generate",
       sendingText: "Sending your request…",
       errorText: "An error occurred. Please try again.",
       btnRetry: "Retry",
-      successTitle: "Your request has been received.",
-      successBody: () => `Your letter is generated automatically and appears directly on screen, ready to copy or download as a PDF.`,
-      successHint: "Remember to check your spam folder if you don't see it.",
+      successTitle: "Your letter is ready!",
+      successBody: () => `Here it is, right below. Copy it or download it as a PDF.`,
+      successHint: "Give it a read before sending, and fill in the highlighted parts.",
       btnNewRequest: "Make a new request",
     },
     es: {
       dir: "ltr",
-      stepOf: n => `Paso ${n} de 4`,
+      stepOf: n => `Paso ${n} de 5`,
       typeTitle: "¿Qué tipo de carta necesita redactar?",
       types: [
         { id: "bailleur", label: "Disputa con el arrendador", icon: "🏠" },
@@ -931,9 +1020,9 @@ function setLang(lang) {
         { id: "operateur", label: "Operador de teléfono / internet", icon: "📡" },
         { id: "autre", label: "Otra situación", icon: "✉️" },
       ],
-      langHint: "La carta final siempre se generará en francés.",
+      langHint: "Elija el idioma que elija aquí, la carta siempre saldrá en francés.",
       situationTitle: "Describa su situación",
-      situationSub: "Explique lo que sucedió, con el mayor detalle posible.",
+      situationSub: "Cuéntenos qué pasó, con el mayor detalle posible: fechas, importes, intercambios previos.",
       situationPlaceholder: "Ejemplo: Mi arrendador se niega a devolverme la fianza de 800€ desde hace 3 meses...",
       wordCount: n => `${n} palabra${n > 1 ? "s" : ""}${n < 20 ? " · mínimo 20 palabras recomendado" : ""}`,
       tonQuestion: "¿Qué tono desea adoptar?",
@@ -943,35 +1032,46 @@ function setLang(lang) {
         { id: "conciliant", label: "Conciliador", desc: "Busco un acuerdo amistoso" },
       ],
       destTitle: "¿A quién se dirige esta carta?",
-      destSub: "Esta información es opcional.",
+      destSub: "¿No los conoce? No pasa nada, deje estos campos vacíos y continúe.",
       destNomLabel: "Nombre u organismo destinatario",
       destNomPlaceholder: "Ej.: Sr. Bernard Lefebvre / Banco XYZ",
       destAdresseLabel: "Dirección del destinatario",
+      cpLabel: "Código postal",
+      villeLabel: "Ciudad",
       destAdressePlaceholder: "Ej.: 12 rue de la République, París",
       demandeLabel: "¿Qué espera concretamente de esta carta?",
       demandePlaceholder: "Ej.: Obtener el reembolso de 800€ en 15 días",
       expTitle: "Sus datos",
-      expSub: "Aparecerán en el encabezado de la carta.",
+      expSub: "Con su nombre y su correo nos basta para continuar. Dirección y teléfono, si quiere.",
       expNomLabel: "Nombre completo *",
       expEmailLabel: "Correo electrónico *",
       expAdresseLabel: "Dirección",
       expAdressePlaceholder: "12 rue des Lilas, Toulouse",
       expTelLabel: "Teléfono",
       expTelPlaceholder: "06 XX XX XX XX",
+      recapTitle: "Revise su solicitud",
+      recapType: "Tipo de carta",
+      recapTon: "Tono deseado",
+      recapDest: "Destinatario",
+      recapDemande: "Solicitud final",
+      recapSituation: "Resumen de la situación",
+      recapExp: "Remitente",
+      recapNotProvided: "No proporcionado",
+      btnEdit: "Editar",
       btnBack: "Atrás",
       btnNext: "Continuar",
-      btnSubmit: "Enviar mi solicitud",
+      btnSubmit: "Confirmar y generar",
       sendingText: "Enviando su solicitud…",
       errorText: "Ocurrió un error. Inténtelo de nuevo.",
       btnRetry: "Reintentar",
-      successTitle: "Su solicitud ha sido recibida.",
-      successBody: () => `Su carta se genera automáticamente y aparece directamente en pantalla, lista para copiar o descargar en PDF.`,
-      successHint: "Recuerde revisar su carpeta de spam.",
+      successTitle: "¡Su carta está lista!",
+      successBody: () => `Aquí la tiene, justo debajo. Cópiela o descárguela en PDF.`,
+      successHint: "Léala antes de enviarla y complete las partes resaltadas.",
       btnNewRequest: "Hacer una nueva solicitud",
     },
     tr: {
       dir: "ltr",
-      stepOf: n => `Adım ${n}/4`,
+      stepOf: n => `Adım ${n}/5`,
       typeTitle: "Ne tür bir mektup yazmak istiyorsunuz?",
       types: [
         { id: "bailleur", label: "Ev sahibi anlaşmazlığı", icon: "🏠" },
@@ -981,9 +1081,9 @@ function setLang(lang) {
         { id: "operateur", label: "Telefon / internet operatörü", icon: "📡" },
         { id: "autre", label: "Diğer durum", icon: "✉️" },
       ],
-      langHint: "Nihai mektup her zaman Fransızca olarak oluşturulacaktır.",
+      langHint: "Burada hangi dili seçerseniz seçin, mektup her zaman Fransızca çıkar.",
       situationTitle: "Durumunuzu anlatın",
-      situationSub: "Neler olduğunu mümkün olduğunca ayrıntılı açıklayın.",
+      situationSub: "Neler olduğunu mümkün olduğunca ayrıntılı anlatın: tarihler, tutarlar, önceki yazışmalar.",
       situationPlaceholder: "Örnek: Ev sahibim 3 aydır 800€ depozitomı iade etmeyi reddediyor...",
       wordCount: n => `${n} kelime${n < 20 ? " · en az 20 kelime önerilir" : ""}`,
       tonQuestion: "Hangi tonu benimsemek istersiniz?",
@@ -993,30 +1093,41 @@ function setLang(lang) {
         { id: "conciliant", label: "Uzlaşmacı", desc: "Dostane bir çözüm arıyorum" },
       ],
       destTitle: "Bu mektup kime hitap ediyor?",
-      destSub: "Bu bilgiler isteğe bağlıdır.",
+      destSub: "Bu bilgileri bilmiyor musunuz? Sorun değil, boş bırakıp devam edin.",
       destNomLabel: "Alıcı adı veya kurum",
       destNomPlaceholder: "Örn: Bay Bernard Lefebvre",
       destAdresseLabel: "Alıcı adresi",
+      cpLabel: "Posta kodu",
+      villeLabel: "Şehir",
       destAdressePlaceholder: "Örn: 12 rue de la République, Paris",
       demandeLabel: "Bu mektuptan somut olarak ne bekliyorsunuz?",
       demandePlaceholder: "Örn: 15 gün içinde 800€ iade almak",
       expTitle: "Bilgileriniz",
-      expSub: "Mektubun üst kısmında görünecektir.",
+      expSub: "Devam etmek için adınız ve e-postanız yeterli. Adres ve telefon isteğe bağlı.",
       expNomLabel: "Ad Soyad *",
       expEmailLabel: "E-posta *",
       expAdresseLabel: "Adres",
       expAdressePlaceholder: "12 rue des Lilas, Toulouse",
       expTelLabel: "Telefon",
       expTelPlaceholder: "06 XX XX XX XX",
+      recapTitle: "Talebinizi gözden geçirin",
+      recapType: "Mektup türü",
+      recapTon: "İstenen ton",
+      recapDest: "Alıcı",
+      recapDemande: "Nihai talep",
+      recapSituation: "Durum özeti",
+      recapExp: "Gönderen",
+      recapNotProvided: "Belirtilmedi",
+      btnEdit: "Düzenle",
       btnBack: "Geri",
       btnNext: "Devam et",
-      btnSubmit: "Talebimi gönder",
+      btnSubmit: "Onayla ve oluştur",
       sendingText: "Talebiniz gönderiliyor…",
       errorText: "Bir hata oluştu. Tekrar deneyin.",
       btnRetry: "Tekrar dene",
-      successTitle: "Talebiniz alındı.",
-      successBody: () => `Mektubunuz otomatik olarak oluşturulur ve doğrudan ekranda görüntülenir, kopyalamaya veya PDF olarak indirmeye hazırdır.`,
-      successHint: "Görünmüyorsa spam klasörünüzü kontrol edin.",
+      successTitle: "Mektubunuz hazır!",
+      successBody: () => `İşte, hemen aşağıda. Kopyalayın ya da PDF olarak indirin.`,
+      successHint: "Göndermeden önce okuyun ve vurgulanan kısımları tamamlayın.",
       btnNewRequest: "Yeni bir talep oluştur",
     },
   };
@@ -1025,8 +1136,8 @@ function setLang(lang) {
   let lwStep = 0;
   let lwData = {
     type: "", situation: "", ton: "neutre",
-    destNom: "", destAdresse: "", demande: "",
-    expNom: "", expAdresse: "", expEmail: "", expTel: "",
+    destNom: "", destAdresse: "", destCp: "", destVille: "", demande: "",
+    expNom: "", expAdresse: "", expCp: "", expVille: "", expEmail: "", expTel: "",
   };
 
   function t() { return LW_I18N[lwLang]; }
@@ -1060,6 +1171,8 @@ function setLang(lang) {
     document.getElementById("lw-dest-nom").placeholder = d.destNomPlaceholder;
     document.getElementById("lw-dest-adresse-label").textContent = d.destAdresseLabel;
     document.getElementById("lw-dest-adresse").placeholder = d.destAdressePlaceholder;
+    document.getElementById("lw-dest-cp-label").textContent = d.cpLabel;
+    document.getElementById("lw-dest-ville-label").textContent = d.villeLabel;
     document.getElementById("lw-demande-label").textContent = d.demandeLabel;
     document.getElementById("lw-demande").placeholder = d.demandePlaceholder;
 
@@ -1070,11 +1183,13 @@ function setLang(lang) {
     document.getElementById("lw-exp-email-label").textContent = d.expEmailLabel;
     document.getElementById("lw-exp-adresse-label").textContent = d.expAdresseLabel;
     document.getElementById("lw-exp-adresse").placeholder = d.expAdressePlaceholder;
+    document.getElementById("lw-exp-cp-label").textContent = d.cpLabel;
+    document.getElementById("lw-exp-ville-label").textContent = d.villeLabel;
     document.getElementById("lw-exp-tel-label").textContent = d.expTelLabel;
     document.getElementById("lw-exp-tel").placeholder = d.expTelPlaceholder;
 
     document.getElementById("lw-btn-back").textContent = d.btnBack;
-    document.getElementById("lw-btn-next").textContent = lwStep === 3 ? d.btnSubmit : d.btnNext;
+    document.getElementById("lw-btn-next").textContent = d.btnNext;
     document.getElementById("lw-sending-text").textContent = d.sendingText;
     document.getElementById("lw-error-text").textContent = d.errorText;
     document.getElementById("lw-retry-btn").textContent = d.btnRetry;
@@ -1083,6 +1198,7 @@ function setLang(lang) {
     document.getElementById("lw-new-request-btn").textContent = d.btnNewRequest;
 
     lwUpdateWordCount();
+    lwRenderRecap();
   }
 
   function lwRenderChoices() {
@@ -1106,6 +1222,44 @@ function setLang(lang) {
       btn.onclick = () => { lwData.ton = tone.id; lwRenderChoices(); };
       tonesGrid.appendChild(btn);
     });
+  }
+
+  function lwRenderRecap() {
+    const d = t();
+    const typeLabel = (d.types.find(x => x.id === lwData.type) || {}).label || lwData.type;
+    const tonLabel = (d.tons.find(x => x.id === lwData.ton) || {}).label || lwData.ton;
+    const notProvided = d.recapNotProvided;
+
+    document.getElementById("lw-step4-eyebrow").textContent = d.stepOf(5);
+    document.getElementById("lw-step4-title").textContent = d.recapTitle;
+
+    document.getElementById("lw-recap-type-label").textContent = d.recapType;
+    document.getElementById("lw-recap-type-value").textContent = typeLabel;
+
+    document.getElementById("lw-recap-ton-label").textContent = d.recapTon;
+    document.getElementById("lw-recap-ton-value").textContent = tonLabel;
+
+    document.getElementById("lw-recap-dest-label").textContent = d.recapDest;
+    const destCpVille = [lwData.destCp, lwData.destVille].filter(Boolean).join(" ");
+    const destAdresseLine = [lwData.destAdresse, destCpVille].filter(Boolean).join(", ");
+    const destParts = [lwData.destNom, destAdresseLine].filter(Boolean).join(" — ");
+    document.getElementById("lw-recap-dest-value").textContent = destParts || notProvided;
+
+    document.getElementById("lw-recap-demande-label").textContent = d.recapDemande;
+    document.getElementById("lw-recap-demande-value").textContent = lwData.demande.trim() || notProvided;
+
+    document.getElementById("lw-recap-situation-label").textContent = d.recapSituation;
+    const situationText = lwData.situation.trim();
+    document.getElementById("lw-recap-situation-value").textContent = situationText.length > 150
+      ? situationText.slice(0, 150) + "..."
+      : situationText;
+
+    document.getElementById("lw-recap-exp-label").textContent = d.recapExp;
+    document.getElementById("lw-recap-exp-value").textContent = [lwData.expNom, lwData.expEmail].filter(Boolean).join(" — ");
+
+    document.getElementById("lw-recap-edit-btn").textContent = d.btnEdit;
+    document.getElementById("lw-recap-confirm-btn").textContent = d.btnSubmit;
+    document.getElementById("lw-recap-box").setAttribute("dir", d.dir);
   }
 
   window.lwOnSituationInput = function() {
@@ -1207,18 +1361,24 @@ function setLang(lang) {
     if (lwStep === 2) {
       lwData.destNom = document.getElementById("lw-dest-nom").value;
       lwData.destAdresse = document.getElementById("lw-dest-adresse").value;
+      lwData.destCp = document.getElementById("lw-dest-cp").value;
+      lwData.destVille = document.getElementById("lw-dest-ville").value;
       lwData.demande = document.getElementById("lw-demande").value;
     }
     if (lwStep === 3) {
       lwData.expAdresse = document.getElementById("lw-exp-adresse").value;
+      lwData.expCp = document.getElementById("lw-exp-cp").value;
+      lwData.expVille = document.getElementById("lw-exp-ville").value;
       lwData.expTel = document.getElementById("lw-exp-tel").value;
-      lwStep++;
-      lwRender();
-      lwSubmitRequest();
-      return;
     }
     lwStep++;
     lwRender();
+  };
+
+  window.lwConfirmGenerate = function() {
+    lwStep = 5;
+    lwRender();
+    lwSubmitRequest();
   };
 
   function lwRender() {
@@ -1229,9 +1389,30 @@ function setLang(lang) {
       d.classList.toggle("active", parseInt(d.dataset.step) <= lwStep);
     });
     document.getElementById("lw-btn-back").disabled = (lwStep === 0);
-    document.getElementById("lw-footer").style.display = (lwStep === 4) ? "none" : "flex";
-    document.getElementById("lw-btn-next").textContent = (lwStep === 3) ? t().btnSubmit : t().btnNext;
+    document.getElementById("lw-footer").style.display = (lwStep >= 4) ? "none" : "flex";
+    document.getElementById("lw-btn-next").textContent = t().btnNext;
     lwValidateStep();
+    lwRenderRecap();
+  }
+
+  const LW_PLACEHOLDER_RE = /\[À COMPLÉTER[^\]]*\]/g;
+
+  function lwEscapeHtml(str) {
+    const div = document.createElement("div");
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function lwHighlightPlaceholders(text) {
+    return lwEscapeHtml(text).replace(LW_PLACEHOLDER_RE, (match) => `<span class="lw-placeholder-highlight">${match}</span>`);
+  }
+
+  function lwCleanPlaceholdersForPDF(text) {
+    return text
+      .split("\n")
+      .filter((line) => !new RegExp(`^${LW_PLACEHOLDER_RE.source}$`).test(line.trim()))
+      .map((line) => line.replace(LW_PLACEHOLDER_RE, "___________"))
+      .join("\n");
   }
 
   window.lwSubmitRequest = async function() {
@@ -1250,10 +1431,14 @@ function setLang(lang) {
       situation: lwData.situation,
       destinataire_nom: lwData.destNom || "",
       destinataire_adresse: lwData.destAdresse || "",
+      destinataire_cp: lwData.destCp || "",
+      destinataire_ville: lwData.destVille || "",
       demande_finale: lwData.demande || "",
       expediteur_nom: lwData.expNom,
       expediteur_email: lwData.expEmail,
       expediteur_adresse: lwData.expAdresse || "",
+      expediteur_cp: lwData.expCp || "",
+      expediteur_ville: lwData.expVille || "",
       expediteur_telephone: lwData.expTel || "",
     };
 
@@ -1270,8 +1455,8 @@ function setLang(lang) {
       if (letterText && letterText.trim().length > 0) {
         document.getElementById("lw-success-body").textContent = "";
         const letterBox = document.getElementById("lw-letter-box");
-        letterBox.textContent = letterText;
-        letterBox.style.display = "block";
+        letterBox.innerHTML = lwHighlightPlaceholders(letterText);
+        document.getElementById("lw-letter-wrap").style.display = "block";
         document.getElementById("lw-success-box").style.display = "flex";
       } else {
         throw new Error("Réponse vide");
@@ -1294,8 +1479,9 @@ function setLang(lang) {
   };
 
   window.lwDownloadPDF = function() {
-    const text = document.getElementById("lw-letter-box").textContent;
-    if (!text || !window.jspdf) return;
+    const rawText = document.getElementById("lw-letter-box").textContent;
+    if (!rawText || !window.jspdf) return;
+    const text = lwCleanPlaceholdersForPDF(rawText);
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ unit: "mm", format: "a4" });
     const marginLeft = 20;
@@ -1319,17 +1505,21 @@ function setLang(lang) {
 
   window.lwRestart = function() {
     lwStep = 0;
-    lwData = { type: "", situation: "", ton: "neutre", destNom: "", destAdresse: "", demande: "", expNom: "", expAdresse: "", expEmail: "", expTel: "" };
+    lwData = { type: "", situation: "", ton: "neutre", destNom: "", destAdresse: "", destCp: "", destVille: "", demande: "", expNom: "", expAdresse: "", expCp: "", expVille: "", expEmail: "", expTel: "" };
     document.getElementById("lw-situation").value = "";
     document.getElementById("lw-dest-nom").value = "";
     document.getElementById("lw-dest-adresse").value = "";
+    document.getElementById("lw-dest-cp").value = "";
+    document.getElementById("lw-dest-ville").value = "";
     document.getElementById("lw-demande").value = "";
     document.getElementById("lw-exp-nom").value = "";
     document.getElementById("lw-exp-email").value = "";
     document.getElementById("lw-exp-adresse").value = "";
+    document.getElementById("lw-exp-cp").value = "";
+    document.getElementById("lw-exp-ville").value = "";
     document.getElementById("lw-exp-tel").value = "";
     document.getElementById("lw-success-box").style.display = "none";
-    document.getElementById("lw-letter-box").style.display = "none";
+    document.getElementById("lw-letter-wrap").style.display = "none";
     document.getElementById("lw-letter-box").textContent = "";
     document.getElementById("lw-error-box").style.display = "none";
     lwRenderChoices();

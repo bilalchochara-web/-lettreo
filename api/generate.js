@@ -10,14 +10,20 @@ export default async function handler(req, res) {
 
   const {
     type_courrier, situation, ton_souhaite,
-    destinataire_nom, destinataire_adresse, demande_finale,
-    expediteur_nom, expediteur_email, expediteur_adresse, expediteur_telephone
+    destinataire_nom, destinataire_adresse, destinataire_cp, destinataire_ville, demande_finale,
+    expediteur_nom, expediteur_email, expediteur_adresse, expediteur_cp, expediteur_ville, expediteur_telephone
   } = req.body;
 
   const emailDomain = (expediteur_email || '').split('@')[1]?.toLowerCase().trim();
   if (emailDomain && DISPOSABLE_EMAIL_DOMAINS.includes(emailDomain)) {
     return res.status(400).json({ error: 'Veuillez utiliser une adresse email valide.' });
   }
+
+  const destAdresseParts = [destinataire_adresse, [destinataire_cp, destinataire_ville].filter(Boolean).join(' ')].filter(Boolean);
+  const destAdresseLine = destAdresseParts.length ? destAdresseParts.join(', ') : '[À COMPLÉTER : adresse du destinataire]';
+
+  const expAdresseParts = [expediteur_adresse, [expediteur_cp, expediteur_ville].filter(Boolean).join(' ')].filter(Boolean);
+  const expAdresseLine = expAdresseParts.length ? expAdresseParts.join(', ') : '[À COMPLÉTER : adresse de l\'expéditeur]';
 
   const systemPrompt = `Tu es un expert en rédaction de courriers administratifs et professionnels français. Tu rédiges des courriers formels, clairs et juridiquement corrects pour des particuliers qui ne maîtrisent pas les codes de la correspondance officielle.
 
@@ -49,12 +55,12 @@ ${situation}
 
 DESTINATAIRE :
 - Nom / organisme : ${destinataire_nom || '[À COMPLÉTER : nom du destinataire]'}
-- Adresse : ${destinataire_adresse || '[À COMPLÉTER : adresse du destinataire]'}
+- Adresse : ${destAdresseLine}
 
 EXPÉDITEUR :
 - Prénom Nom : ${expediteur_nom}
 - Email : ${expediteur_email}
-- Adresse : ${expediteur_adresse || '[À COMPLÉTER : adresse de l\'expéditeur]'}
+- Adresse : ${expAdresseLine}
 - Téléphone : ${expediteur_telephone || ''}
 
 TON SOUHAITÉ : ${ton_souhaite}
