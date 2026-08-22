@@ -19,7 +19,9 @@
     /* Encre */
     --ink:       #191c22;
     --ink-soft:  #4b4740;
-    --ink-muted: #7a7568;
+    /* #6b6658 plutôt que #7a7568 : 5.21:1 sur --paper, donc utilisable
+       partout sans repasser sous le seuil AA du texte courant. */
+    --ink-muted: #6b6658;
     /* Filets */
     --rule: #ddd8cd;
     /* Interactif — uniquement pour ce qui est cliquable */
@@ -61,6 +63,14 @@
     font-size: 16px; line-height: 1.65;
     -webkit-font-smoothing: antialiased;
   }
+  /* Grain de papier — donne de la matière sans dégradé ni ombre.
+     Tuile SVG unique, très basse opacité, sous tout le contenu. */
+  body::before {
+    content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    opacity: .5;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.055'/%3E%3C/svg%3E");
+  }
+  body > * { position: relative; z-index: 1; }
   h1, h2, h3, .display { font-family: var(--font-display); font-weight: 600; }
   a { color: var(--blue); }
   a:hover { color: var(--blue-dark); }
@@ -73,11 +83,22 @@
   .rule-top { border-top: 1px solid var(--rule); }
 
   .overline {
+    display: inline-flex; align-items: center; gap: 10px;
     font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
     color: var(--ink-soft);
   }
-  .section-title { font-size: clamp(1.5rem, 3.2vw, 2.05rem); line-height: 1.2; letter-spacing: -.01em; }
-  .section-lead { color: var(--ink-soft); max-width: 62ch; margin-top: 12px; }
+  .overline::after { content: ""; width: clamp(24px, 5vw, 56px); height: 1px; background: var(--rule); }
+
+  /* Titre de section : numéro cadratin + filet, façon sommaire de rapport */
+  .section-head { display: flex; align-items: baseline; gap: 14px; }
+  .section-num {
+    font-family: var(--font-display); font-size: 13px; font-weight: 600;
+    color: var(--ink-muted); letter-spacing: .04em; flex: none;
+    padding-top: 2px;
+  }
+  .section-title { font-size: clamp(1.6rem, 3.4vw, 2.25rem); line-height: 1.18; letter-spacing: -.015em; }
+  .section-title em { font-style: italic; font-weight: 500; color: var(--ink-soft); }
+  .section-lead { color: var(--ink-soft); max-width: 62ch; margin-top: 12px; font-size: 1.02rem; }
 
   /* Icônes SVG fines (Lucide) */
   .ico { width: 1em; height: 1em; flex: none; stroke: currentColor; fill: none;
@@ -166,23 +187,35 @@
   @media (min-width: 940px) { .hero-grid { grid-template-columns: 1fr 1fr; align-items: center; } }
 
   .hero h1 {
-    font-size: clamp(2rem, 5.2vw, 3.15rem); line-height: 1.14; letter-spacing: -.02em;
-    color: var(--ink); margin-top: 14px;
+    font-size: clamp(2.15rem, 5.6vw, 3.5rem); line-height: 1.1; letter-spacing: -.025em;
+    color: var(--ink); margin-top: 16px; text-wrap: balance;
   }
-  .hero-lead { color: var(--ink-soft); font-size: clamp(1rem, 1.6vw, 1.075rem); margin-top: 18px; max-width: 52ch; }
-  .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 30px; }
+  .hero h1 em { font-style: italic; font-weight: 500; }
+  .hero-lead { color: var(--ink-soft); font-size: clamp(1.02rem, 1.6vw, 1.12rem); margin-top: 20px; max-width: 52ch; }
+  .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; margin-top: 32px; }
 
-  .proofs { display: flex; flex-wrap: wrap; gap: 0; margin-top: 38px; border-top: 1px solid var(--rule); }
-  .proof { flex: 1 1 150px; padding: 16px 18px 0 0; }
+  .proofs { display: flex; flex-wrap: wrap; gap: 0; margin-top: 44px; border-top: 1px solid var(--ink); }
+  .proof { flex: 1 1 150px; padding: 18px 18px 0 0; }
   .proof + .proof { border-inline-start: 1px solid var(--rule); padding-inline-start: 18px; }
-  .proof-value { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; color: var(--ink); }
-  .proof-label { font-size: 13px; color: var(--ink-soft); margin-top: 2px; }
+  .proof-value { font-family: var(--font-display); font-size: 1.65rem; font-weight: 600; color: var(--ink); line-height: 1.1; letter-spacing: -.01em; }
+  .proof-label { font-size: 13px; color: var(--ink-soft); margin-top: 5px; line-height: 1.4; }
 
-  /* Spécimen de courrier */
+  /* Spécimen de courrier — feuille posée sur une pile, rendue au filet */
+  .specimen-stack { position: relative; }
+  .specimen-stack::before, .specimen-stack::after {
+    content: ""; position: absolute; inset: 0; border-radius: var(--radius);
+    border: 1px solid var(--rule); background: var(--paper-raised); z-index: 0;
+  }
+  .specimen-stack::before { transform: translate(6px, 6px); opacity: .55; }
+  .specimen-stack::after  { transform: translate(3px, 3px); opacity: .8; }
+  [dir="rtl"] .specimen-stack::before { transform: translate(-6px, 6px); }
+  [dir="rtl"] .specimen-stack::after  { transform: translate(-3px, 3px); }
+
   .specimen {
+    position: relative; z-index: 1;
     background: var(--paper-raised); border: 1px solid var(--rule); border-radius: var(--radius);
-    box-shadow: var(--shadow); padding: clamp(22px, 3.4vw, 36px);
-    font-family: 'Spectral', Georgia, serif; font-size: 13px; line-height: 1.85; color: var(--ink);
+    box-shadow: var(--shadow); padding: clamp(24px, 3.6vw, 40px);
+    font-family: 'Spectral', Georgia, serif; font-size: 13.5px; line-height: 1.9; color: var(--ink);
     direction: ltr; text-align: start;
   }
   .specimen-meta { display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
@@ -205,10 +238,12 @@
   .lang-list { margin-top: 34px; border-top: 1px solid var(--rule); }
   .lang-row {
     display: grid; grid-template-columns: 42px 1fr; gap: 16px; align-items: baseline;
-    padding-block: 15px; border-bottom: 1px solid var(--rule);
+    padding-block: 17px; border-bottom: 1px solid var(--rule);
+    transition: background-color .15s;
   }
-  .lang-code { font-size: 11.5px; font-weight: 600; letter-spacing: .1em; color: var(--ink-soft); }
-  .lang-quote { color: var(--ink); font-size: 15px; }
+  .lang-row:hover { background: var(--paper-raised); }
+  .lang-code { font-family: var(--font-display); font-size: 12px; font-weight: 600; letter-spacing: .12em; color: var(--ink-muted); }
+  .lang-quote { color: var(--ink); font-size: 15.5px; font-family: 'Spectral', Georgia, serif; }
   .lang-row.is-ar .lang-quote { font-family: 'Noto Naskh Arabic', serif; direction: rtl; text-align: start; font-size: 16px; line-height: 1.9; }
   .baseline {
     margin-top: 30px; background: var(--paper-raised); border: 1px solid var(--rule);
@@ -221,10 +256,10 @@
      COMMENT ÇA MARCHE
      ============================================================ */
   .steps { display: grid; gap: clamp(24px, 3.5vw, 40px); grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); margin-top: 40px; }
-  .step { border-top: 3px solid var(--ink); padding-top: 18px; }
-  .step-n { font-family: var(--font-display); font-size: 13.5px; font-weight: 600; color: var(--ink-muted); }
-  .step h3 { font-size: 1.12rem; margin-top: 8px; color: var(--ink); }
-  .step p { color: var(--ink-soft); font-size: 14.5px; margin-top: 8px; }
+  .step { border-top: 3px solid var(--ink); padding-top: 20px; }
+  .step-n { font-family: var(--font-display); font-size: 13.5px; font-weight: 600; font-style: italic; color: var(--ink-muted); }
+  .step h3 { font-size: 1.25rem; margin-top: 10px; color: var(--ink); letter-spacing: -.01em; }
+  .step p { color: var(--ink-soft); font-size: 14.5px; margin-top: 10px; }
 
   /* ============================================================
      SITUATIONS
@@ -233,10 +268,13 @@
   @media (min-width: 720px) { .cases { grid-template-columns: 1fr 1fr; } }
   .case {
     display: flex; align-items: baseline; justify-content: space-between; gap: 18px;
-    padding-block: 15px; border-bottom: 1px solid var(--rule);
+    padding: 15px 10px 15px 0; border-bottom: 1px solid var(--rule);
+    border-inline-start: 2px solid transparent; margin-inline-start: -12px; padding-inline-start: 10px;
+    transition: border-color .15s, background-color .15s;
   }
-  .case-label { color: var(--ink); font-size: 15px; }
-  .case-cat { font-size: 12px; color: var(--ink-soft); white-space: nowrap; letter-spacing: .03em; }
+  .case:hover { border-inline-start-color: var(--ink); background: var(--paper-raised); }
+  .case-label { color: var(--ink); font-size: 15.5px; }
+  .case-cat { font-size: 12px; color: var(--ink-muted); white-space: nowrap; letter-spacing: .04em; }
 
   /* ============================================================
      EXEMPLES
@@ -263,7 +301,14 @@
   }
   .about-name { font-weight: 600; color: var(--ink); }
   .about-role { font-size: 13.5px; color: var(--ink-soft); }
-  .about-body p { color: var(--ink-soft); margin-bottom: 14px; max-width: 66ch; }
+  .about-body p { color: var(--ink-soft); margin-bottom: 16px; max-width: 66ch; }
+  /* Lettrine — clin d'œil au courrier, sur le premier paragraphe seulement */
+  .about-body p:first-of-type::first-letter {
+    float: inline-start; font-family: var(--font-display); font-weight: 600;
+    font-size: 3.1em; line-height: .82; color: var(--ink);
+    margin-inline-end: .1em; margin-block-start: .06em;
+  }
+  [dir="rtl"] .about-body p:first-of-type::first-letter { float: none; font-size: 1em; line-height: inherit; margin: 0; }
   .notice {
     background: var(--paper-sunken); border-inline-start: 3px solid var(--blue);
     border-radius: var(--radius); padding: 16px 20px; margin-top: 22px;
@@ -274,9 +319,14 @@
      CTA FINAL + FOOTER
      ============================================================ */
   .cta-final { background: var(--ink); color: var(--paper-raised); }
-  .cta-final h2 { font-size: clamp(1.6rem, 3.6vw, 2.3rem); line-height: 1.2; color: var(--paper-raised); max-width: 20ch; }
-  .cta-final p { color: rgba(255,253,249,.72); margin-top: 16px; max-width: 54ch; }
-  .cta-final .btn { margin-top: 28px; }
+  .cta-final h2 {
+    font-size: clamp(1.75rem, 4vw, 2.6rem); line-height: 1.14; letter-spacing: -.02em;
+    color: var(--paper-raised); max-width: 20ch; text-wrap: balance;
+  }
+  .cta-final h2 em { font-style: italic; font-weight: 500; color: rgba(255,253,249,.8); }
+  .cta-final p { color: rgba(255,253,249,.72); margin-top: 18px; max-width: 54ch; }
+  .cta-final .btn { margin-top: 30px; }
+  .cta-final .wrap { border-top: 1px solid rgba(255,253,249,.14); padding-top: clamp(28px, 4vw, 44px); }
 
   .site-footer { border-top: 1px solid var(--rule); padding-block: 26px; }
   .footer-inner { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; font-size: 13px; color: var(--ink-soft); }
@@ -365,6 +415,22 @@
   #lw-footer {
     display: flex; justify-content: space-between; gap: 12px;
     padding: 15px 22px; border-top: 1px solid var(--rule); background: var(--paper);
+  }
+
+  /* Passage mobile dédié : l'assistant occupe la largeur pleine et la hauteur
+     d'écran, avec la barre d'action collée en bas pendant le défilement. */
+  @media (max-width: 720px) {
+    #lettreo-wizard {
+      margin: 28px calc(var(--gutter) * -1) 0;
+      max-width: none; border-inline: 0; border-radius: 0;
+    }
+    #lw-main { min-height: calc(100svh - 230px); }
+    #lw-footer {
+      position: sticky; bottom: 0; z-index: 5;
+      padding-bottom: calc(15px + env(safe-area-inset-bottom));
+    }
+    #lw-footer .btn { flex: 1 1 0; }
+    #lw-nav { position: sticky; top: 62px; z-index: 5; }
   }
 
   .lw-recap { display: flex; flex-direction: column; margin-top: 18px; border-top: 1px solid var(--rule); }
@@ -462,7 +528,7 @@
     <div class="hero-grid">
       <div>
         <p class="overline" id="t-overline">Courrier administratif · 5 langues</p>
-        <h1 id="t-h1">Un courrier officiel, écrit correctement, en deux minutes.</h1>
+        <h1 id="t-h1">Un courrier officiel, <em>écrit correctement</em>, en deux minutes.</h1>
         <p class="hero-lead" id="t-lead">Un dépôt de garantie qu'on ne vous rend pas, une amende à contester, une décision à faire réexaminer. Vous racontez ce qui vous arrive ; Lettreo écrit la lettre dans les formes attendues par l'administration française.</p>
         <div class="hero-actions">
           <a href="#assistant" class="btn btn--primary" id="t-cta1">Rédiger mon courrier</a>
@@ -487,6 +553,7 @@
       </div>
 
       <div id="exemple">
+        <div class="specimen-stack">
         <article class="specimen">
           <div class="specimen-meta">
             <address>Claire Dubreuil<br>12 rue des Lilas<br>31000 Toulouse</address>
@@ -502,6 +569,7 @@
           </div>
           <p class="sign">Claire Dubreuil</p>
         </article>
+        </div>
         <p class="specimen-caption">
           <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
           <span id="t-caption">Courrier réel produit par Lettreo, mis en forme aux normes françaises.</span>
@@ -513,7 +581,10 @@
   <!-- MULTILINGUE -->
   <section class="section section--sunken rule-top">
     <div class="wrap">
-      <h2 class="section-title" id="t-mltitle">Décrivez votre situation dans votre langue</h2>
+      <div class="section-head">
+        <span class="section-num" aria-hidden="true">01</span>
+        <h2 class="section-title" id="t-mltitle">Décrivez votre situation dans votre langue</h2>
+      </div>
       <p class="section-lead" id="t-mlsub">La même phrase, telle que nos utilisateurs l'écrivent réellement.</p>
 
       <div class="lang-list">
@@ -531,7 +602,10 @@
   <!-- COMMENT ÇA MARCHE -->
   <section class="section rule-top" id="fonctionnement">
     <div class="wrap">
-      <h2 class="section-title" id="t-howtitle">Comment ça marche</h2>
+      <div class="section-head">
+        <span class="section-num" aria-hidden="true">02</span>
+        <h2 class="section-title" id="t-howtitle">Comment ça marche</h2>
+      </div>
       <p class="section-lead" id="t-howsub">Pas de modèle à remplir seul, pas de vocabulaire juridique à deviner.</p>
       <div class="steps">
         <div class="step">
@@ -556,7 +630,10 @@
   <!-- SITUATIONS -->
   <section class="section section--sunken rule-top" id="situations">
     <div class="wrap">
-      <h2 class="section-title" id="t-casestitle">Pour quelles situations</h2>
+      <div class="section-head">
+        <span class="section-num" aria-hidden="true">03</span>
+        <h2 class="section-title" id="t-casestitle">Pour quelles situations</h2>
+      </div>
       <p class="section-lead" id="t-casessub">Tout ce qui exige un courrier formel, sans savoir comment le tourner.</p>
       <div class="cases">
         <div class="case"><span class="case-label" id="c1">Restitution de dépôt de garantie</span><span class="case-cat" id="k1">Logement</span></div>
@@ -574,7 +651,10 @@
   <!-- EXEMPLES -->
   <section class="section rule-top">
     <div class="wrap">
-      <h2 class="section-title" id="t-extitle">D'autres courriers déjà produits</h2>
+      <div class="section-head">
+        <span class="section-num" aria-hidden="true">04</span>
+        <h2 class="section-title" id="t-extitle">D'autres courriers déjà produits</h2>
+      </div>
       <p class="section-lead" id="t-exsub">Extraits de lettres générées pour des situations réelles.</p>
       <div class="examples">
         <article class="example">
@@ -596,7 +676,10 @@
   <!-- ASSISTANT -->
   <section class="section section--sunken rule-top" id="assistant">
     <div class="wrap">
-      <h2 class="section-title" id="t-wiztitle">Rédigez votre courrier</h2>
+      <div class="section-head">
+        <span class="section-num" aria-hidden="true">05</span>
+        <h2 class="section-title" id="t-wiztitle">Rédigez votre courrier</h2>
+      </div>
       <p class="section-lead" id="t-wizsub">Répondez aux questions ; le courrier s'affiche à l'écran, prêt à copier ou à télécharger.</p>
 
       <div id="lettreo-wizard" dir="ltr">
@@ -789,7 +872,10 @@
   <!-- À PROPOS -->
   <section class="section rule-top" id="apropos">
     <div class="wrap">
-      <h2 class="section-title" id="t-abtitle">Qui est derrière Lettreo</h2>
+      <div class="section-head">
+        <span class="section-num" aria-hidden="true">06</span>
+        <h2 class="section-title" id="t-abtitle">Qui est derrière Lettreo</h2>
+      </div>
       <div class="about">
         <div class="about-id">
           <div class="monogram" aria-hidden="true">BC</div>
@@ -811,7 +897,7 @@
   <!-- CTA FINAL -->
   <section class="section cta-final">
     <div class="wrap">
-      <h2 id="t-finaltitle">Votre courrier peut être prêt dans deux minutes.</h2>
+      <h2 id="t-finaltitle">Votre courrier peut être prêt <em>dans deux minutes</em>.</h2>
       <p id="t-finalsub">Gratuit pendant la bêta. Aucune donnée conservée après génération.</p>
       <a href="#assistant" class="btn btn--onink" id="t-finalcta">Rédiger mon courrier</a>
     </div>
@@ -843,7 +929,7 @@ const translations = {
     dir: "ltr", badge: "Bêta",
     nav1: "Fonctionnement", nav2: "Situations", nav3: "À propos", navCta: "Rédiger mon courrier",
     overline: "Courrier administratif · 5 langues",
-    h1: "Un courrier officiel, écrit correctement, en deux minutes.",
+    h1: "Un courrier officiel, <em>écrit correctement</em>, en deux minutes.",
     lead: "Un dépôt de garantie qu'on ne vous rend pas, une amende à contester, une décision à faire réexaminer. Vous racontez ce qui vous arrive ; Lettreo écrit la lettre dans les formes attendues par l'administration française.",
     cta1: "Rédiger mon courrier", cta2: "Voir un exemple",
     p1v: "4 à 6", p1l: "questions simples",
@@ -870,7 +956,7 @@ const translations = {
     abP1: "Je développe Lettreo seul. L'idée est partie d'un constat simple : face à l'administration française, savoir tourner une lettre change concrètement l'issue d'un dossier — et cette compétence est très inégalement partagée.",
     abP2: "Le service est en bêta. Il est gratuit, il n'a ni équipe commerciale ni budget publicitaire, et il s'améliore surtout grâce aux retours des personnes qui l'utilisent pour de vraies démarches. Si quelque chose vous semble faux ou maladroit, écrivez-moi.",
     notice: "Lettreo est une aide à la rédaction et ne constitue pas un conseil juridique. Pour une situation sensible ou un litige engagé, faites relire votre courrier par un professionnel du droit.",
-    finalTitle: "Votre courrier peut être prêt dans deux minutes.",
+    finalTitle: "Votre courrier peut être prêt <em>dans deux minutes</em>.",
     finalSub: "Gratuit pendant la bêta. Aucune donnée conservée après génération.",
     finalCta: "Rédiger mon courrier",
     madeIn: "Fait en France", cgu: "CGU", privacy: "Confidentialité", contact: "Contact"
@@ -915,7 +1001,7 @@ const translations = {
     dir: "ltr", badge: "Beta",
     nav1: "How it works", nav2: "Situations", nav3: "About", navCta: "Write my letter",
     overline: "Administrative letters · 5 languages",
-    h1: "An official French letter, properly written, in two minutes.",
+    h1: "An official French letter, <em>properly written</em>, in two minutes.",
     lead: "A deposit that isn't being returned, a fine to contest, a decision to have reviewed. You explain what happened; Lettreo writes the letter in the form French administrations expect.",
     cta1: "Write my letter", cta2: "See an example",
     p1v: "4 to 6", p1l: "simple questions",
@@ -942,7 +1028,7 @@ const translations = {
     abP1: "I build Lettreo on my own. The idea came from a simple observation: when dealing with French administrations, knowing how to phrase a letter genuinely changes the outcome of a case — and that skill is very unevenly shared.",
     abP2: "The service is in beta. It is free, it has no sales team and no advertising budget, and it improves mainly through feedback from people using it for real procedures. If something looks wrong or clumsy, write to me.",
     notice: "Lettreo is a writing aid and does not constitute legal advice. For a sensitive situation or an ongoing dispute, have your letter reviewed by a legal professional.",
-    finalTitle: "Your letter can be ready in two minutes.",
+    finalTitle: "Your letter can be ready <em>in two minutes</em>.",
     finalSub: "Free during the beta. No data retained after generation.",
     finalCta: "Write my letter",
     madeIn: "Made in France", cgu: "Terms", privacy: "Privacy", contact: "Contact"
@@ -951,7 +1037,7 @@ const translations = {
     dir: "ltr", badge: "Beta",
     nav1: "Funcionamiento", nav2: "Situaciones", nav3: "Acerca de", navCta: "Redactar mi carta",
     overline: "Carta administrativa · 5 idiomas",
-    h1: "Una carta oficial, bien redactada, en dos minutos.",
+    h1: "Una carta oficial, <em>bien redactada</em>, en dos minutos.",
     lead: "Una fianza que no le devuelven, una multa que impugnar, una resolución que quiere que se revise. Usted cuenta lo que pasó; Lettreo escribe la carta con la forma que espera la administración francesa.",
     cta1: "Redactar mi carta", cta2: "Ver un ejemplo",
     p1v: "4 a 6", p1l: "preguntas sencillas",
@@ -978,7 +1064,7 @@ const translations = {
     abP1: "Desarrollo Lettreo yo solo. La idea nació de una constatación sencilla: ante la administración francesa, saber redactar una carta cambia realmente el desenlace de un expediente, y esa competencia está muy desigualmente repartida.",
     abP2: "El servicio está en beta. Es gratuito, no tiene equipo comercial ni presupuesto publicitario, y mejora sobre todo gracias a los comentarios de quienes lo usan en gestiones reales. Si algo le parece erróneo o torpe, escríbame.",
     notice: "Lettreo es una ayuda a la redacción y no constituye asesoramiento jurídico. En situaciones delicadas o litigios en curso, haga revisar su carta por un profesional del derecho.",
-    finalTitle: "Su carta puede estar lista en dos minutos.",
+    finalTitle: "Su carta puede estar lista <em>en dos minutos</em>.",
     finalSub: "Gratuito durante la beta. Ningún dato conservado tras la generación.",
     finalCta: "Redactar mi carta",
     madeIn: "Hecho en Francia", cgu: "Condiciones", privacy: "Privacidad", contact: "Contacto"
@@ -987,7 +1073,7 @@ const translations = {
     dir: "ltr", badge: "Beta",
     nav1: "Nasıl çalışır", nav2: "Durumlar", nav3: "Hakkında", navCta: "Mektubumu yaz",
     overline: "İdari mektup · 5 dil",
-    h1: "Resmî bir mektup, kurallara uygun biçimde, iki dakikada.",
+    h1: "Resmî bir mektup, <em>kurallara uygun biçimde</em>, iki dakikada.",
     lead: "İade edilmeyen bir depozito, itiraz etmek istediğiniz bir ceza, yeniden değerlendirilmesini istediğiniz bir karar. Siz olanı anlatırsınız; Lettreo mektubu Fransız idaresinin beklediği biçimde yazar.",
     cta1: "Mektubumu yaz", cta2: "Bir örnek gör",
     p1v: "4 ila 6", p1l: "basit soru",
@@ -1014,7 +1100,7 @@ const translations = {
     abP1: "Lettreo'yu tek başıma geliştiriyorum. Fikir basit bir gözlemden doğdu: Fransız idaresi karşısında bir mektubu doğru kurmayı bilmek dosyanın sonucunu gerçekten değiştiriyor — ve bu beceri çok eşitsiz dağılmış durumda.",
     abP2: "Hizmet beta aşamasında. Ücretsiz, satış ekibi ve reklam bütçesi yok; asıl olarak gerçek işlemler için kullananların geri bildirimleriyle gelişiyor. Size yanlış ya da yapmacık gelen bir şey olursa bana yazın.",
     notice: "Lettreo bir yazım yardımıdır ve hukuki danışmanlık niteliği taşımaz. Hassas durumlarda veya süren uyuşmazlıklarda mektubunuzu bir hukukçuya okutun.",
-    finalTitle: "Mektubunuz iki dakikada hazır olabilir.",
+    finalTitle: "Mektubunuz <em>iki dakikada</em> hazır olabilir.",
     finalSub: "Beta boyunca ücretsiz. Oluşturmadan sonra hiçbir veri saklanmaz.",
     finalCta: "Mektubumu yaz",
     madeIn: "Fransa'da yapıldı", cgu: "Şartlar", privacy: "Gizlilik", contact: "İletişim"
@@ -1047,7 +1133,7 @@ function setLang(lang) {
   setText("t-navcta", t.navCta);
 
   setText("t-overline", t.overline);
-  setText("t-h1", t.h1);
+  setHtml("t-h1", t.h1);
   setText("t-lead", t.lead);
   setText("t-cta1", t.cta1);
   const cta2 = document.getElementById("t-cta2");
@@ -1081,7 +1167,7 @@ function setLang(lang) {
   setText("t-abp1", t.abP1); setText("t-abp2", t.abP2);
   setText("t-notice", t.notice);
 
-  setText("t-finaltitle", t.finalTitle); setText("t-finalsub", t.finalSub); setText("t-finalcta", t.finalCta);
+  setHtml("t-finaltitle", t.finalTitle); setText("t-finalsub", t.finalSub); setText("t-finalcta", t.finalCta);
   setText("t-madein", t.madeIn); setText("t-cgu", t.cgu); setText("t-privacy", t.privacy); setText("t-contact", t.contact);
 
   if (window.lwSetLang) window.lwSetLang(lang);
