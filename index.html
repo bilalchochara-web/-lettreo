@@ -143,12 +143,6 @@
   }
   .brand { display: flex; align-items: baseline; gap: 9px; text-decoration: none; flex: none; }
   .brand-name { font-family: var(--font-display); font-weight: 600; font-size: 23px; color: var(--ink); letter-spacing: -.01em; }
-  .badge-beta {
-    font-family: var(--font-ui); font-size: 10.5px; font-weight: 600;
-    letter-spacing: .09em; text-transform: uppercase; color: var(--ink-soft);
-    border: 1px solid var(--rule); border-radius: var(--radius-sm); padding: 2px 6px;
-    white-space: nowrap;
-  }
   .site-nav { display: flex; gap: clamp(14px, 1.8vw, 26px); margin-inline-start: auto; }
   .site-nav a {
     font-size: 14.5px; font-weight: 500; color: var(--ink-soft); text-decoration: none;
@@ -171,7 +165,6 @@
 
   @media (max-width: 900px) { .site-nav { display: none; } }
   @media (max-width: 620px) {
-    .badge-beta { display: none; }
     .header-actions .btn { padding-inline: 14px; }
     .lang-seg button { padding-inline: 8px; }
   }
@@ -529,7 +522,6 @@
   <div class="wrap header-inner">
     <a class="brand" href="#top">
       <span class="brand-name">Lettreo</span>
-      <span class="badge-beta" id="t-badge">Bêta</span>
     </a>
     <nav class="site-nav" aria-label="Navigation principale">
       <a href="#fonctionnement" id="t-nav1">Fonctionnement</a>
@@ -957,7 +949,7 @@
         </div>
         <div class="about-body">
           <p id="t-abp1">Je développe Lettreo seul. L'idée est partie d'un constat simple : face à l'administration française, savoir tourner une lettre change concrètement l'issue d'un dossier — et cette compétence est très inégalement partagée.</p>
-          <p id="t-abp2">Le service est en bêta. Il est gratuit, il n'a ni équipe commerciale ni budget publicitaire, et il s'améliore surtout grâce aux retours des personnes qui l'utilisent pour de vraies démarches. Si quelque chose vous semble faux ou maladroit, écrivez-moi.</p>
+          <p id="t-abp2">Je développe Lettreo seul, sans équipe commerciale ni budget publicitaire. Le service est payant : c'est ce qui lui permet d'exister sans publicité ni revente de données. Il s'améliore surtout grâce aux retours des personnes qui l'utilisent pour de vraies démarches. Si quelque chose vous semble faux ou maladroit, écrivez-moi.</p>
           <p class="notice" id="t-notice">Lettreo est une aide à la rédaction et ne constitue pas un conseil juridique. Pour une situation sensible ou un litige engagé, faites relire votre courrier par un professionnel du droit.</p>
         </div>
       </div>
@@ -968,7 +960,7 @@
   <section class="section cta-final">
     <div class="wrap">
       <h2 id="t-finaltitle">Votre courrier peut être prêt <em>dans deux minutes</em>.</h2>
-      <p id="t-finalsub">Gratuit pendant la bêta. Aucune donnée conservée après génération.</p>
+      <p id="t-finalsub">À partir de 1,90 € le courrier. Aucune donnée conservée après génération.</p>
       <a href="#assistant" class="btn btn--onink" id="t-finalcta">Rédiger mon courrier</a>
     </div>
   </section>
@@ -978,6 +970,8 @@
 <footer class="site-footer">
   <div class="wrap footer-inner">
     <span>© 2026 Lettreo</span>
+    <span class="footer-sep" aria-hidden="true">·</span>
+    <span>SIREN 107 650 707</span>
     <span class="footer-sep" aria-hidden="true">·</span>
     <span id="t-madein">Fait en France</span>
     <span class="footer-sep" aria-hidden="true">·</span>
@@ -996,7 +990,7 @@
    ============================================================== */
 const translations = {
   fr: {
-    dir: "ltr", badge: "Bêta",
+    dir: "ltr",
     nav1: "Fonctionnement", nav2: "Situations", nav3: "À propos", navCta: "Rédiger mon courrier",
     overline: "Courrier administratif · 5 langues",
     h1: "Un courrier officiel, <em>écrit correctement</em>, en deux minutes.",
@@ -1024,15 +1018,15 @@ const translations = {
     wizTitle: "Rédigez votre courrier", wizSub: "Répondez aux questions ; le courrier s'affiche à l'écran, prêt à copier ou à télécharger.",
     abTitle: "Qui est derrière Lettreo", abRole: "Concepteur et développeur",
     abP1: "Je développe Lettreo seul. L'idée est partie d'un constat simple : face à l'administration française, savoir tourner une lettre change concrètement l'issue d'un dossier — et cette compétence est très inégalement partagée.",
-    abP2: "Le service est en bêta. Il est gratuit, il n'a ni équipe commerciale ni budget publicitaire, et il s'améliore surtout grâce aux retours des personnes qui l'utilisent pour de vraies démarches. Si quelque chose vous semble faux ou maladroit, écrivez-moi.",
+    abP2: "Je développe Lettreo seul, sans équipe commerciale ni budget publicitaire. Le service est payant : c'est ce qui lui permet d'exister sans publicité ni revente de données. Il s'améliore surtout grâce aux retours des personnes qui l'utilisent pour de vraies démarches. Si quelque chose vous semble faux ou maladroit, écrivez-moi.",
     notice: "Lettreo est une aide à la rédaction et ne constitue pas un conseil juridique. Pour une situation sensible ou un litige engagé, faites relire votre courrier par un professionnel du droit.",
     finalTitle: "Votre courrier peut être prêt <em>dans deux minutes</em>.",
-    finalSub: "Gratuit pendant la bêta. Aucune donnée conservée après génération.",
+    finalSub: "À partir de 1,90 € le courrier. Aucune donnée conservée après génération.",
     finalCta: "Rédiger mon courrier",
     madeIn: "Fait en France", cgu: "CGU", privacy: "Confidentialité", contact: "Contact"
   },
   ar: {
-    dir: "rtl", badge: "تجريبي",
+    dir: "rtl",
     nav1: "كيف يعمل", nav2: "الحالات", nav3: "من نحن", navCta: "اكتب رسالتي",
     overline: "رسالة إدارية · 5 لغات",
     h1: "رسالة رسمية، مكتوبة بشكل صحيح، في دقيقتين.",
@@ -1060,15 +1054,15 @@ const translations = {
     wizTitle: "اكتب رسالتك", wizSub: "أجب عن الأسئلة؛ تظهر الرسالة على الشاشة، جاهزة للنسخ أو التحميل.",
     abTitle: "من وراء Lettreo", abRole: "مصمّم ومطوّر",
     abP1: "أطوّر Lettreo بمفردي. انطلقت الفكرة من ملاحظة بسيطة: أمام الإدارة الفرنسية، معرفة صياغة رسالة تغيّر فعلاً مصير الملف — وهذه المهارة موزّعة بشكل غير عادل.",
-    abP2: "الخدمة في مرحلة تجريبية. مجانية، بلا فريق تجاري ولا ميزانية إعلانية، وتتحسّن أساساً بفضل ملاحظات من يستخدمونها في معاملات حقيقية. إن بدا لك شيء خاطئاً أو ركيكاً، راسلني.",
+    abP2: "أطوّر Lettreo وحدي، بلا فريق تجاري ولا ميزانية إعلانية. الخدمة مدفوعة، وهذا ما يتيح لها الاستمرار دون إعلانات أو بيع للبيانات. وهي تتحسّن أساساً بفضل ملاحظات من يستخدمونها في معاملات حقيقية. إن بدا لك شيء خاطئاً أو ركيكاً، راسلني.",
     notice: "Lettreo أداة مساعدة على الصياغة ولا يشكّل استشارة قانونية. في الحالات الحساسة أو النزاعات القائمة، اعرض رسالتك على مختص قانوني.",
     finalTitle: "قد تكون رسالتك جاهزة خلال دقيقتين.",
-    finalSub: "مجاني خلال المرحلة التجريبية. لا تُحفظ أي بيانات بعد الإنشاء.",
+    finalSub: "ابتداءً من 1,90 € للرسالة. لا تُحفظ أي بيانات بعد الإنشاء.",
     finalCta: "اكتب رسالتي",
     madeIn: "صُنع في فرنسا", cgu: "الشروط", privacy: "الخصوصية", contact: "اتصل"
   },
   en: {
-    dir: "ltr", badge: "Beta",
+    dir: "ltr",
     nav1: "How it works", nav2: "Situations", nav3: "About", navCta: "Write my letter",
     overline: "Administrative letters · 5 languages",
     h1: "An official French letter, <em>properly written</em>, in two minutes.",
@@ -1096,15 +1090,15 @@ const translations = {
     wizTitle: "Write your letter", wizSub: "Answer the questions; the letter appears on screen, ready to copy or download.",
     abTitle: "Who is behind Lettreo", abRole: "Designer and developer",
     abP1: "I build Lettreo on my own. The idea came from a simple observation: when dealing with French administrations, knowing how to phrase a letter genuinely changes the outcome of a case — and that skill is very unevenly shared.",
-    abP2: "The service is in beta. It is free, it has no sales team and no advertising budget, and it improves mainly through feedback from people using it for real procedures. If something looks wrong or clumsy, write to me.",
+    abP2: "I build Lettreo on my own, with no sales team and no advertising budget. The service is paid for: that is what lets it exist without ads or data resale. It improves mainly through feedback from people using it for real procedures. If something looks wrong or clumsy, write to me.",
     notice: "Lettreo is a writing aid and does not constitute legal advice. For a sensitive situation or an ongoing dispute, have your letter reviewed by a legal professional.",
     finalTitle: "Your letter can be ready <em>in two minutes</em>.",
-    finalSub: "Free during the beta. No data retained after generation.",
+    finalSub: "From €1.90 per letter. No data retained after generation.",
     finalCta: "Write my letter",
     madeIn: "Made in France", cgu: "Terms", privacy: "Privacy", contact: "Contact"
   },
   es: {
-    dir: "ltr", badge: "Beta",
+    dir: "ltr",
     nav1: "Funcionamiento", nav2: "Situaciones", nav3: "Acerca de", navCta: "Redactar mi carta",
     overline: "Carta administrativa · 5 idiomas",
     h1: "Una carta oficial, <em>bien redactada</em>, en dos minutos.",
@@ -1132,15 +1126,15 @@ const translations = {
     wizTitle: "Redacte su carta", wizSub: "Responda a las preguntas; la carta aparece en pantalla, lista para copiar o descargar.",
     abTitle: "Quién está detrás de Lettreo", abRole: "Diseñador y desarrollador",
     abP1: "Desarrollo Lettreo yo solo. La idea nació de una constatación sencilla: ante la administración francesa, saber redactar una carta cambia realmente el desenlace de un expediente, y esa competencia está muy desigualmente repartida.",
-    abP2: "El servicio está en beta. Es gratuito, no tiene equipo comercial ni presupuesto publicitario, y mejora sobre todo gracias a los comentarios de quienes lo usan en gestiones reales. Si algo le parece erróneo o torpe, escríbame.",
+    abP2: "Desarrollo Lettreo yo solo, sin equipo comercial ni presupuesto publicitario. El servicio es de pago: es lo que le permite existir sin publicidad ni reventa de datos. Mejora sobre todo gracias a los comentarios de quienes lo usan en gestiones reales. Si algo le parece erróneo o torpe, escríbame.",
     notice: "Lettreo es una ayuda a la redacción y no constituye asesoramiento jurídico. En situaciones delicadas o litigios en curso, haga revisar su carta por un profesional del derecho.",
     finalTitle: "Su carta puede estar lista <em>en dos minutos</em>.",
-    finalSub: "Gratuito durante la beta. Ningún dato conservado tras la generación.",
+    finalSub: "Desde 1,90 € por carta. Ningún dato conservado tras la generación.",
     finalCta: "Redactar mi carta",
     madeIn: "Hecho en Francia", cgu: "Condiciones", privacy: "Privacidad", contact: "Contacto"
   },
   tr: {
-    dir: "ltr", badge: "Beta",
+    dir: "ltr",
     nav1: "Nasıl çalışır", nav2: "Durumlar", nav3: "Hakkında", navCta: "Mektubumu yaz",
     overline: "İdari mektup · 5 dil",
     h1: "Resmî bir mektup, <em>kurallara uygun biçimde</em>, iki dakikada.",
@@ -1168,10 +1162,10 @@ const translations = {
     wizTitle: "Mektubunuzu yazın", wizSub: "Soruları yanıtlayın; mektup ekranda görünür, kopyalamaya veya indirmeye hazır.",
     abTitle: "Lettreo'nun arkasında kim var", abRole: "Tasarımcı ve geliştirici",
     abP1: "Lettreo'yu tek başıma geliştiriyorum. Fikir basit bir gözlemden doğdu: Fransız idaresi karşısında bir mektubu doğru kurmayı bilmek dosyanın sonucunu gerçekten değiştiriyor — ve bu beceri çok eşitsiz dağılmış durumda.",
-    abP2: "Hizmet beta aşamasında. Ücretsiz, satış ekibi ve reklam bütçesi yok; asıl olarak gerçek işlemler için kullananların geri bildirimleriyle gelişiyor. Size yanlış ya da yapmacık gelen bir şey olursa bana yazın.",
+    abP2: "Lettreo'yu tek başıma geliştiriyorum; satış ekibi ve reklam bütçesi yok. Hizmet ücretli: reklamsız ve veri satmadan var olabilmesini sağlayan da bu. Asıl olarak gerçek işlemler için kullananların geri bildirimleriyle gelişiyor. Size yanlış ya da yapmacık gelen bir şey olursa bana yazın.",
     notice: "Lettreo bir yazım yardımıdır ve hukuki danışmanlık niteliği taşımaz. Hassas durumlarda veya süren uyuşmazlıklarda mektubunuzu bir hukukçuya okutun.",
     finalTitle: "Mektubunuz <em>iki dakikada</em> hazır olabilir.",
-    finalSub: "Beta boyunca ücretsiz. Oluşturmadan sonra hiçbir veri saklanmaz.",
+    finalSub: "Mektup başına 1,90 €'dan başlar. Oluşturmadan sonra hiçbir veri saklanmaz.",
     finalCta: "Mektubumu yaz",
     madeIn: "Fransa'da yapıldı", cgu: "Şartlar", privacy: "Gizlilik", contact: "İletişim"
   }
@@ -1198,7 +1192,6 @@ function setLang(lang) {
     b.classList.toggle("active", b.dataset.lang === lang);
   });
 
-  setText("t-badge", t.badge);
   setText("t-nav1", t.nav1); setText("t-nav2", t.nav2); setText("t-nav3", t.nav3);
   setText("t-navcta", t.navCta);
 
