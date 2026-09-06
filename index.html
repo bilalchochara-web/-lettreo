@@ -971,9 +971,11 @@
   <div class="wrap footer-inner">
     <span>© 2026 Lettreo</span>
     <span class="footer-sep" aria-hidden="true">·</span>
-    <span>SIREN 107 650 707</span>
+    <span>Bilal Chochara EI · SIREN 107 650 707</span>
     <span class="footer-sep" aria-hidden="true">·</span>
     <span id="t-madein">Fait en France</span>
+    <span class="footer-sep" aria-hidden="true">·</span>
+    <a href="cgu.html#mentions-legales" id="t-legal">Mentions légales</a>
     <span class="footer-sep" aria-hidden="true">·</span>
     <a href="cgu.html" id="t-cgu">CGU</a>
     <span class="footer-sep" aria-hidden="true">·</span>
@@ -1023,7 +1025,7 @@ const translations = {
     finalTitle: "Votre courrier peut être prêt <em>dans deux minutes</em>.",
     finalSub: "À partir de 1,90 € le courrier. Aucune donnée conservée après génération.",
     finalCta: "Rédiger mon courrier",
-    madeIn: "Fait en France", cgu: "CGU", privacy: "Confidentialité", contact: "Contact"
+    madeIn: "Fait en France", legal: "Mentions légales", cgu: "CGU", privacy: "Confidentialité", contact: "Contact"
   },
   ar: {
     dir: "rtl",
@@ -1059,7 +1061,7 @@ const translations = {
     finalTitle: "قد تكون رسالتك جاهزة خلال دقيقتين.",
     finalSub: "ابتداءً من 1,90 € للرسالة. لا تُحفظ أي بيانات بعد الإنشاء.",
     finalCta: "اكتب رسالتي",
-    madeIn: "صُنع في فرنسا", cgu: "الشروط", privacy: "الخصوصية", contact: "اتصل"
+    madeIn: "صُنع في فرنسا", legal: "البيانات القانونية", cgu: "الشروط", privacy: "الخصوصية", contact: "اتصل"
   },
   en: {
     dir: "ltr",
@@ -1095,7 +1097,7 @@ const translations = {
     finalTitle: "Your letter can be ready <em>in two minutes</em>.",
     finalSub: "From €1.90 per letter. No data retained after generation.",
     finalCta: "Write my letter",
-    madeIn: "Made in France", cgu: "Terms", privacy: "Privacy", contact: "Contact"
+    madeIn: "Made in France", legal: "Legal notice", cgu: "Terms", privacy: "Privacy", contact: "Contact"
   },
   es: {
     dir: "ltr",
@@ -1131,7 +1133,7 @@ const translations = {
     finalTitle: "Su carta puede estar lista <em>en dos minutos</em>.",
     finalSub: "Desde 1,90 € por carta. Ningún dato conservado tras la generación.",
     finalCta: "Redactar mi carta",
-    madeIn: "Hecho en Francia", cgu: "Condiciones", privacy: "Privacidad", contact: "Contacto"
+    madeIn: "Hecho en Francia", legal: "Aviso legal", cgu: "Condiciones", privacy: "Privacidad", contact: "Contacto"
   },
   tr: {
     dir: "ltr",
@@ -1167,7 +1169,7 @@ const translations = {
     finalTitle: "Mektubunuz <em>iki dakikada</em> hazır olabilir.",
     finalSub: "Mektup başına 1,90 €'dan başlar. Oluşturmadan sonra hiçbir veri saklanmaz.",
     finalCta: "Mektubumu yaz",
-    madeIn: "Fransa'da yapıldı", cgu: "Şartlar", privacy: "Gizlilik", contact: "İletişim"
+    madeIn: "Fransa'da yapıldı", legal: "Yasal bilgiler", cgu: "Şartlar", privacy: "Gizlilik", contact: "İletişim"
   }
 };
 
@@ -1231,7 +1233,7 @@ function setLang(lang) {
   setText("t-notice", t.notice);
 
   setHtml("t-finaltitle", t.finalTitle); setText("t-finalsub", t.finalSub); setText("t-finalcta", t.finalCta);
-  setText("t-madein", t.madeIn); setText("t-cgu", t.cgu); setText("t-privacy", t.privacy); setText("t-contact", t.contact);
+  setText("t-madein", t.madeIn); setText("t-legal", t.legal); setText("t-cgu", t.cgu); setText("t-privacy", t.privacy); setText("t-contact", t.contact);
 
   if (window.lwSetLang) window.lwSetLang(lang);
 }
