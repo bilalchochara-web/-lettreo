@@ -862,6 +862,7 @@
               <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
               <span id="lw-pay-secure-text"></span>
             </p>
+            <p class="lw-hint" id="lw-pay-tax"></p>
 
             <div style="display:flex; gap:10px; margin-top:22px; flex-wrap:wrap;">
               <button class="btn btn--secondary" onclick="lwGoBack()" id="lw-pay-back-btn" style="flex:1 1 140px;"></button>
@@ -971,7 +972,7 @@
   <div class="wrap footer-inner">
     <span>© 2026 Lettreo</span>
     <span class="footer-sep" aria-hidden="true">·</span>
-    <span>Bilal Chochara EI · SIREN 107 650 707</span>
+    <span>Bilal Chochara EI · SIRET 107 650 707 00014</span>
     <span class="footer-sep" aria-hidden="true">·</span>
     <span id="t-madein">Fait en France</span>
     <span class="footer-sep" aria-hidden="true">·</span>
@@ -1305,6 +1306,7 @@ function setLang(lang) {
         ctaActive: "Générer mon courrier",
         redirecting: "Redirection vers le paiement…",
         secure: "Paiement sécurisé par Stripe. Aucune donnée bancaire ne transite par Lettreo.",
+        tax: "Prix total à payer, aucune taxe en sus. TVA non applicable, article 293 B du CGI.",
         back: "Retour",
         activeDay: "Votre pass journée est actif : vous pouvez générer ce courrier sans payer à nouveau.",
         activeMonth: "Votre abonnement est actif : vous pouvez générer ce courrier sans payer à nouveau.",
@@ -1403,6 +1405,7 @@ function setLang(lang) {
         ctaActive: "أنشئ رسالتي",
         redirecting: "جارٍ التحويل إلى صفحة الدفع…",
         secure: "دفع آمن عبر Stripe. لا تمر أي بيانات بنكية عبر Lettreo.",
+        tax: "السعر الإجمالي الواجب دفعه، دون أي ضريبة إضافية. ضريبة القيمة المضافة غير مطبّقة، المادة 293 B من قانون الضرائب الفرنسي.",
         back: "رجوع",
         activeDay: "تصريح اليوم مفعّل: يمكنك إنشاء هذه الرسالة دون دفع جديد.",
         activeMonth: "اشتراكك مفعّل: يمكنك إنشاء هذه الرسالة دون دفع جديد.",
@@ -1501,6 +1504,7 @@ function setLang(lang) {
         ctaActive: "Generate my letter",
         redirecting: "Redirecting to payment…",
         secure: "Secure payment by Stripe. No card details pass through Lettreo.",
+        tax: "Total price to pay, no tax added. VAT not applicable, Article 293 B of the French tax code.",
         back: "Back",
         activeDay: "Your day pass is active: you can generate this letter without paying again.",
         activeMonth: "Your subscription is active: you can generate this letter without paying again.",
@@ -1599,6 +1603,7 @@ function setLang(lang) {
         ctaActive: "Generar mi carta",
         redirecting: "Redirigiendo al pago…",
         secure: "Pago seguro con Stripe. Ningún dato bancario pasa por Lettreo.",
+        tax: "Precio total a pagar, sin impuestos adicionales. IVA no aplicable, artículo 293 B del código fiscal francés.",
         back: "Atrás",
         activeDay: "Su pase de un día está activo: puede generar esta carta sin volver a pagar.",
         activeMonth: "Su suscripción está activa: puede generar esta carta sin volver a pagar.",
@@ -1697,6 +1702,7 @@ function setLang(lang) {
         ctaActive: "Mektubumu oluştur",
         redirecting: "Ödeme sayfasına yönlendiriliyor…",
         secure: "Stripe ile güvenli ödeme. Hiçbir kart bilgisi Lettreo üzerinden geçmez.",
+        tax: "Ödenecek toplam tutar, ek vergi yok. KDV uygulanmaz, Fransız vergi kanunu madde 293 B.",
         back: "Geri",
         activeDay: "Günlük pass’iniz etkin: yeniden ödeme yapmadan bu mektubu oluşturabilirsiniz.",
         activeMonth: "Aboneliğiniz etkin: yeniden ödeme yapmadan bu mektubu oluşturabilirsiniz.",
@@ -1851,6 +1857,7 @@ function setLang(lang) {
     setT("lw-plan-month-desc", p.monthDesc);
 
     setT("lw-pay-secure-text", p.secure);
+    setT("lw-pay-tax", p.tax);
     setT("lw-pay-back-btn", p.back);
     lwRenderPayState();
   }
