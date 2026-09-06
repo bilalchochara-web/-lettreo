@@ -1,0 +1,7 @@
+node_modules/
+.vercel
+
+# Secrets — ne jamais versionner de clé Stripe ou Anthropic
+.env
+.env.*
+!.env.example

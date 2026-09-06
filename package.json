@@ -1,0 +1,10 @@
+{
+  "name": "lettreo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Lettreo — génération de courriers administratifs français",
+  "dependencies": {
+    "stripe": "^17.7.0"
+  }
+}
