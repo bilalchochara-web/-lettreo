@@ -187,7 +187,11 @@ ${demande_finale || 'Résoudre la situation décrite ci-dessus'}`;
       return res.status(500).json({ error: 'Réponse vide de Claude' });
     }
 
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    // Restreint au domaine public : l'interface appelle /api/generate en URL
+    // relative (même origine), donc ce header ne sert qu'à empêcher un autre
+    // site d'appeler cette API payante depuis le navigateur d'un visiteur.
+    res.setHeader('Access-Control-Allow-Origin', 'https://lettreo.fr');
+    res.setHeader('Vary', 'Origin');
     return res.status(200).json({
       letter,
       plan: entitlement.plan.id,
