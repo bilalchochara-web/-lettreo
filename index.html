@@ -435,6 +435,12 @@
     padding: 14px 16px; border: 1px solid var(--rule); border-inline-start: 3px solid var(--blue);
     border-radius: var(--radius); background: var(--paper); font-size: 13.5px; color: var(--ink);
   }
+  .lw-soon {
+    padding: 14px 22px; border-bottom: 1px solid var(--rule);
+    border-inline-start: 3px solid var(--blue); background: var(--paper);
+  }
+  .lw-soon-title { font-size: 14px; font-weight: 600; color: var(--ink); }
+  .lw-soon-body { font-size: 13px; color: var(--ink-soft); margin-top: 3px; }
   .lw-pay-secure { display: flex; align-items: center; gap: 7px; margin-top: 14px; font-size: 12.5px; color: var(--ink-soft); }
   .lw-pay-secure .ico { width: 14px; height: 14px; flex: none; }
 
@@ -730,6 +736,11 @@
             <div class="lw-progress-dot" data-step="3"></div>
             <div class="lw-progress-dot" data-step="4"></div>
           </div>
+        </div>
+
+        <div id="lw-soon" class="lw-soon" role="status" hidden>
+          <p class="lw-soon-title" id="lw-soon-title"></p>
+          <p class="lw-soon-body"><span id="lw-soon-body"></span> <a href="mailto:bilalchochara@gmail.com">bilalchochara@gmail.com</a></p>
         </div>
 
         <div id="lw-main">
@@ -1334,6 +1345,9 @@ function setLang(lang) {
         errorRequired: "Un paiement est nécessaire pour générer ce courrier.",
         errorUsed: "Ce paiement a déjà servi à générer un courrier. Choisissez une nouvelle formule.",
         cancelled: "Paiement annulé. Vous pouvez choisir une autre formule.",
+        soonTitle: "Paiement en ligne bientôt disponible",
+        soonBody: "Le paiement ouvre très prochainement. Vous pouvez déjà découvrir l'assistant. Pour être prévenu de l'ouverture, écrivez à",
+        soonCta: "Paiement bientôt disponible",
       },
       sendingText: "Rédaction de votre courrier…",
       errorText: "La génération a échoué. Réessayez dans un instant.",
@@ -1433,6 +1447,9 @@ function setLang(lang) {
         errorRequired: "الدفع مطلوب لإنشاء هذه الرسالة.",
         errorUsed: "استُخدم هذا الدفع بالفعل لإنشاء رسالة. اختر صيغة جديدة.",
         cancelled: "أُلغيت عملية الدفع. يمكنك اختيار صيغة أخرى.",
+        soonTitle: "الدفع الإلكتروني متاح قريباً",
+        soonBody: "سيُفتح الدفع قريباً جداً. يمكنك منذ الآن استكشاف المساعد. لتصلك رسالة عند الافتتاح، راسل",
+        soonCta: "الدفع متاح قريباً",
       },
       sendingText: "جارٍ تحرير رسالتك…",
       errorText: "فشل الإنشاء. حاول مرة أخرى بعد لحظات.",
@@ -1532,6 +1549,9 @@ function setLang(lang) {
         errorRequired: "A payment is required to generate this letter.",
         errorUsed: "This payment has already produced a letter. Please choose a new plan.",
         cancelled: "Payment cancelled. You can pick another plan.",
+        soonTitle: "Online payment coming soon",
+        soonBody: "Payment opens very soon. You can already explore the assistant. To be notified when it opens, write to",
+        soonCta: "Payment coming soon",
       },
       sendingText: "Writing your letter…",
       errorText: "Generation failed. Please try again in a moment.",
@@ -1631,6 +1651,9 @@ function setLang(lang) {
         errorRequired: "Se necesita un pago para generar esta carta.",
         errorUsed: "Este pago ya se ha usado para generar una carta. Elija una nueva fórmula.",
         cancelled: "Pago cancelado. Puede elegir otra fórmula.",
+        soonTitle: "Pago en línea disponible próximamente",
+        soonBody: "El pago se abrirá muy pronto. Ya puede descubrir el asistente. Para recibir un aviso de la apertura, escriba a",
+        soonCta: "Pago disponible próximamente",
       },
       sendingText: "Redactando su carta…",
       errorText: "La generación falló. Inténtelo de nuevo en un momento.",
@@ -1730,6 +1753,9 @@ function setLang(lang) {
         errorRequired: "Bu mektubu oluşturmak için ödeme gerekiyor.",
         errorUsed: "Bu ödeme daha önce bir mektup oluşturmak için kullanıldı. Yeni bir paket seçin.",
         cancelled: "Ödeme iptal edildi. Başka bir paket seçebilirsiniz.",
+        soonTitle: "Çevrimiçi ödeme yakında",
+        soonBody: "Ödeme çok yakında açılıyor. Asistanı şimdiden keşfedebilirsiniz. Açılıştan haberdar olmak için şu adrese yazın:",
+        soonCta: "Ödeme yakında",
       },
       sendingText: "Mektubunuz yazılıyor…",
       errorText: "Oluşturma başarısız oldu. Birazdan tekrar deneyin.",
@@ -1775,6 +1801,7 @@ function setLang(lang) {
   let lwPlan = "";
   let lwAccess = null;         // { token, plan, unlimited, expiresAt }
   let lwPayBusy = false;
+  let lwPaymentsEnabled = true;   // mis à jour par /api/payment-status
 
   const LW_TOKEN_KEY = "lettreo_access";
   const LW_DRAFT_KEY = "lettreo_draft";
@@ -1877,6 +1904,8 @@ function setLang(lang) {
     setT("lw-pay-secure-text", p.secure);
     setT("lw-pay-tax", p.tax);
     setT("lw-pay-back-btn", p.back);
+    setT("lw-soon-title", p.soonTitle);
+    setT("lw-soon-body", p.soonBody);
     lwRenderPayState();
   }
 
@@ -2146,8 +2175,9 @@ function setLang(lang) {
       el.classList.toggle("selected", el.dataset.plan === lwPlan);
     });
 
-    cta.textContent = lwPayBusy ? p.redirecting : (active ? p.ctaActive : p.cta);
-    cta.disabled = lwPayBusy || (!active && !lwPlan);
+    const soon = !lwPaymentsEnabled && !active;
+    cta.textContent = lwPayBusy ? p.redirecting : (active ? p.ctaActive : (soon ? p.soonCta : p.cta));
+    cta.disabled = lwPayBusy || soon || (!active && !lwPlan);
   }
 
   window.lwSelectPlan = function(planId) {
@@ -2193,7 +2223,7 @@ function setLang(lang) {
   };
 
   async function lwStartCheckout() {
-    if (!lwPlan || lwPayBusy) return;
+    if (!lwPlan || lwPayBusy || !lwPaymentsEnabled) return;
     lwPayBusy = true;
     lwPayError("");
     lwRenderPayState();
@@ -2214,6 +2244,22 @@ function setLang(lang) {
       lwPayError(t().pay.errorGeneric);
       lwRenderPayState();
     }
+  }
+
+  /* Le paiement est-il ouvert ? Tant que Stripe n'est pas configuré en
+     production, on l'annonce au lieu de laisser échouer le bouton. */
+  async function lwCheckPaymentStatus() {
+    try {
+      const resp = await fetch("/api/payment-status", { cache: "no-store" });
+      const json = await resp.json();
+      lwPaymentsEnabled = !(json && json.payments_enabled === false);
+    } catch (e) {
+      // Réponse illisible : le parcours normal gère l'erreur.
+      lwPaymentsEnabled = true;
+    }
+    const banner = $("lw-soon");
+    if (banner) banner.hidden = lwPaymentsEnabled;
+    lwRenderPayState();
   }
 
   function lwLaunchGeneration() {
@@ -2507,6 +2553,7 @@ function setLang(lang) {
   lwRenderChoices();
   lwRender();
   lwHandleCheckoutReturn();
+  lwCheckPaymentStatus();
   lwInitMic();
 })();
 </script>
