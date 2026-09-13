@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lettreo — Générez vos courriers administratifs en 2 minutes</title>
-<meta name="description" content="Lettreo génère automatiquement vos courriers administratifs officiels par IA, en français, arabe, anglais, espagnol et turc. Rapide, prêt à envoyer, à partir de 1,90 € le courrier.">
+<meta name="description" content="Lettreo génère automatiquement vos courriers administratifs officiels par IA, en français, arabe, anglais, espagnol, turc, russe et chinois. Rapide, prêt à envoyer, à partir de 1,90 € le courrier.">
 <link rel="canonical" href="https://lettreo.fr">
 
 <!-- Open Graph -->
@@ -13,14 +13,14 @@
 <meta property="og:url" content="https://lettreo.fr">
 <meta property="og:locale" content="fr_FR">
 <meta property="og:title" content="Lettreo — Générez vos courriers administratifs en 2 minutes">
-<meta property="og:description" content="Lettreo génère automatiquement vos courriers administratifs officiels par IA, en français, arabe, anglais, espagnol et turc. Rapide, prêt à envoyer, à partir de 1,90 € le courrier.">
+<meta property="og:description" content="Lettreo génère automatiquement vos courriers administratifs officiels par IA, en français, arabe, anglais, espagnol, turc, russe et chinois. Rapide, prêt à envoyer, à partir de 1,90 € le courrier.">
 
 <!-- Twitter — carte « summary » et non « summary_large_image » : aucune
      image sociale n'existe encore dans le dépôt. -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:url" content="https://lettreo.fr">
 <meta name="twitter:title" content="Lettreo — Générez vos courriers administratifs en 2 minutes">
-<meta name="twitter:description" content="Lettreo génère automatiquement vos courriers administratifs officiels par IA, en français, arabe, anglais, espagnol et turc. Rapide, prêt à envoyer, à partir de 1,90 € le courrier.">
+<meta name="twitter:description" content="Lettreo génère automatiquement vos courriers administratifs officiels par IA, en français, arabe, anglais, espagnol, turc, russe et chinois. Rapide, prêt à envoyer, à partir de 1,90 € le courrier.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -70,6 +70,18 @@
   [dir="rtl"] {
     --font-display: 'Noto Naskh Arabic', serif;
     --font-ui: 'Noto Naskh Arabic', system-ui, sans-serif;
+  }
+
+  /* Russe : Public Sans n'a pas de cyrillique. L'interface passe sur la police
+     système pour éviter deux fontes dans une même ligne ; Spectral, lui,
+     couvre le cyrillique et reste pour les titres. */
+  html[lang="ru"] {
+    --font-ui: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  /* Chinois : polices système CJK, sans téléchargement supplémentaire. */
+  html[lang^="zh"] {
+    --font-display: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    --font-ui: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -189,6 +201,8 @@
   /* Sous 480px, le CTA du héros prend le relais immédiatement :
      on libère la barre pour le sélecteur de langue, essentiel ici. */
   @media (max-width: 480px) { .header-actions > .btn { display: none; } }
+  /* Sept langues : on resserre les segments sur les plus petits écrans. */
+  @media (max-width: 400px) { .lang-seg button { padding-inline: 6px; letter-spacing: 0; } }
 
   /* ============================================================
      HÉROS
@@ -255,6 +269,7 @@
   .lang-row:hover { background: var(--paper-raised); }
   .lang-code { font-family: var(--font-display); font-size: 12px; font-weight: 600; letter-spacing: .12em; color: var(--ink-muted); }
   .lang-quote { color: var(--ink); font-size: 15.5px; font-family: 'Spectral', Georgia, serif; }
+  .lang-row.is-zh .lang-quote { font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif; }
   .lang-row.is-ar .lang-quote { font-family: 'Noto Naskh Arabic', serif; direction: rtl; text-align: start; font-size: 16px; line-height: 1.9; }
   .baseline {
     margin-top: 30px; background: var(--paper-raised); border: 1px solid var(--rule);
@@ -441,6 +456,9 @@
   }
   .lw-soon-title { font-size: 14px; font-weight: 600; color: var(--ink); }
   .lw-soon-body { font-size: 13px; color: var(--ink-soft); margin-top: 3px; }
+  .lw-promo { margin-top: 18px; max-width: 320px; }
+  .lw-promo-input { text-transform: uppercase; letter-spacing: .04em; }
+  .lw-promo-input::placeholder { text-transform: none; letter-spacing: normal; }
   .lw-pay-secure { display: flex; align-items: center; gap: 7px; margin-top: 14px; font-size: 12.5px; color: var(--ink-soft); }
   .lw-pay-secure .ico { width: 14px; height: 14px; flex: none; }
 
@@ -554,11 +572,13 @@
     </nav>
     <div class="header-actions">
       <div class="lang-seg" role="group" aria-label="Langue">
-        <button type="button" class="lang-btn active" data-lang="fr" onclick="setLang('fr')">FR</button>
-        <button type="button" class="lang-btn" data-lang="ar" onclick="setLang('ar')">AR</button>
-        <button type="button" class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
-        <button type="button" class="lang-btn" data-lang="es" onclick="setLang('es')">ES</button>
-        <button type="button" class="lang-btn" data-lang="tr" onclick="setLang('tr')">TR</button>
+        <button type="button" class="lang-btn active" data-lang="fr" lang="fr" title="Français" onclick="setLang('fr')">FR</button>
+        <button type="button" class="lang-btn" data-lang="ar" lang="ar" title="العربية" onclick="setLang('ar')">AR</button>
+        <button type="button" class="lang-btn" data-lang="en" lang="en" title="English" onclick="setLang('en')">EN</button>
+        <button type="button" class="lang-btn" data-lang="es" lang="es" title="Español" onclick="setLang('es')">ES</button>
+        <button type="button" class="lang-btn" data-lang="tr" lang="tr" title="Türkçe" onclick="setLang('tr')">TR</button>
+        <button type="button" class="lang-btn" data-lang="ru" lang="ru" title="Русский" onclick="setLang('ru')">RU</button>
+        <button type="button" class="lang-btn" data-lang="zh" lang="zh-Hans" title="中文（简体）" onclick="setLang('zh')">中文</button>
       </div>
       <a href="#assistant" class="btn btn--primary" data-short="Rédiger"><span id="t-navcta">Rédiger mon courrier</span></a>
     </div>
@@ -571,7 +591,7 @@
   <section class="wrap hero">
     <div class="hero-grid">
       <div>
-        <p class="overline" id="t-overline">Courrier administratif · 5 langues</p>
+        <p class="overline" id="t-overline">Courrier administratif · 7 langues</p>
         <h1 id="t-h1">Un courrier officiel, <em>écrit correctement</em>, en deux minutes.</h1>
         <p class="hero-lead" id="t-lead">Un dépôt de garantie qu'on ne vous rend pas, une amende à contester, une décision à faire réexaminer. Vous racontez ce qui vous arrive ; Lettreo écrit la lettre dans les formes attendues par l'administration française.</p>
         <div class="hero-actions">
@@ -637,6 +657,8 @@
         <div class="lang-row"><span class="lang-code">EN</span><span class="lang-quote">“My landlord has refused to return my security deposit for 3 months.”</span></div>
         <div class="lang-row"><span class="lang-code">ES</span><span class="lang-quote">«Mi arrendador se niega a devolverme la fianza desde hace 3 meses.»</span></div>
         <div class="lang-row"><span class="lang-code">TR</span><span class="lang-quote">“Ev sahibim 3 aydır depozitomu iade etmeyi reddediyor.”</span></div>
+        <div class="lang-row"><span class="lang-code">RU</span><span class="lang-quote" lang="ru">«Хозяин квартиры уже 3 месяца отказывается возвращать мне залог.»</span></div>
+        <div class="lang-row is-zh"><span class="lang-code">ZH</span><span class="lang-quote" lang="zh-Hans">“房东三个月了一直不肯退我押金。”</span></div>
       </div>
 
       <p class="baseline" id="t-baseline">Vous écrivez dans la langue que vous maîtrisez. <strong>Le courrier sort toujours en français administratif</strong>, prêt à être envoyé tel quel.</p>
@@ -885,6 +907,11 @@
               <span id="lw-pay-active-text"></span>
             </div>
 
+            <div class="lw-promo" id="lw-promo">
+              <label class="lw-label" for="lw-promo-input" id="lw-promo-label"></label>
+              <input class="lw-input lw-promo-input" id="lw-promo-input" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="64">
+            </div>
+
             <p class="lw-error" id="lw-pay-error" style="display:none;"></p>
 
             <p class="lw-pay-secure">
@@ -1024,7 +1051,7 @@ const translations = {
   fr: {
     dir: "ltr",
     nav1: "Fonctionnement", nav2: "Situations", nav3: "À propos", navCta: "Rédiger mon courrier",
-    overline: "Courrier administratif · 5 langues",
+    overline: "Courrier administratif · 7 langues",
     h1: "Un courrier officiel, <em>écrit correctement</em>, en deux minutes.",
     lead: "Un dépôt de garantie qu'on ne vous rend pas, une amende à contester, une décision à faire réexaminer. Vous racontez ce qui vous arrive ; Lettreo écrit la lettre dans les formes attendues par l'administration française.",
     cta1: "Rédiger mon courrier", cta2: "Voir un exemple",
@@ -1060,7 +1087,7 @@ const translations = {
   ar: {
     dir: "rtl",
     nav1: "كيف يعمل", nav2: "الحالات", nav3: "من نحن", navCta: "اكتب رسالتي",
-    overline: "رسالة إدارية · 5 لغات",
+    overline: "رسالة إدارية · 7 لغات",
     h1: "رسالة رسمية، مكتوبة بشكل صحيح، في دقيقتين.",
     lead: "وديعة ضمان لا تُعاد إليك، مخالفة تريد الطعن فيها، قرار تطلب إعادة النظر فيه. تحكي ما حدث، و Lettreo يكتب الرسالة بالصيغة التي تنتظرها الإدارة الفرنسية.",
     cta1: "اكتب رسالتي", cta2: "شاهد مثالاً",
@@ -1096,7 +1123,7 @@ const translations = {
   en: {
     dir: "ltr",
     nav1: "How it works", nav2: "Situations", nav3: "About", navCta: "Write my letter",
-    overline: "Administrative letters · 5 languages",
+    overline: "Administrative letters · 7 languages",
     h1: "An official French letter, <em>properly written</em>, in two minutes.",
     lead: "A deposit that isn't being returned, a fine to contest, a decision to have reviewed. You explain what happened; Lettreo writes the letter in the form French administrations expect.",
     cta1: "Write my letter", cta2: "See an example",
@@ -1132,7 +1159,7 @@ const translations = {
   es: {
     dir: "ltr",
     nav1: "Funcionamiento", nav2: "Situaciones", nav3: "Acerca de", navCta: "Redactar mi carta",
-    overline: "Carta administrativa · 5 idiomas",
+    overline: "Carta administrativa · 7 idiomas",
     h1: "Una carta oficial, <em>bien redactada</em>, en dos minutos.",
     lead: "Una fianza que no le devuelven, una multa que impugnar, una resolución que quiere que se revise. Usted cuenta lo que pasó; Lettreo escribe la carta con la forma que espera la administración francesa.",
     cta1: "Redactar mi carta", cta2: "Ver un ejemplo",
@@ -1168,7 +1195,7 @@ const translations = {
   tr: {
     dir: "ltr",
     nav1: "Nasıl çalışır", nav2: "Durumlar", nav3: "Hakkında", navCta: "Mektubumu yaz",
-    overline: "İdari mektup · 5 dil",
+    overline: "İdari mektup · 7 dil",
     h1: "Resmî bir mektup, <em>kurallara uygun biçimde</em>, iki dakikada.",
     lead: "İade edilmeyen bir depozito, itiraz etmek istediğiniz bir ceza, yeniden değerlendirilmesini istediğiniz bir karar. Siz olanı anlatırsınız; Lettreo mektubu Fransız idaresinin beklediği biçimde yazar.",
     cta1: "Mektubumu yaz", cta2: "Bir örnek gör",
@@ -1200,6 +1227,78 @@ const translations = {
     finalSub: "Mektup başına 1,90 €'dan başlar. Oluşturmadan sonra hiçbir veri saklanmaz.",
     finalCta: "Mektubumu yaz",
     madeIn: "Fransa'da yapıldı", legal: "Yasal bilgiler", cgu: "Şartlar", privacy: "Gizlilik", contact: "İletişim"
+  },
+  ru: {
+    dir: "ltr",
+    nav1: "Как это работает", nav2: "Ситуации", nav3: "О проекте", navCta: "Составить письмо",
+    overline: "Официальные письма · 7 языков",
+    h1: "Официальное письмо, <em>составленное по всем правилам</em>, — за две минуты.",
+    lead: "Вам не возвращают залог, нужно оспорить штраф или добиться пересмотра решения? Просто расскажите, что случилось, — Lettreo составит письмо так, как этого ждут французские учреждения.",
+    cta1: "Составить письмо", cta2: "Посмотреть пример",
+    p1v: "4–6", p1l: "простых вопросов",
+    p2v: "2 мин", p2l: "до готового письма",
+    p3v: "0", p3l: "сохранённых данных",
+    caption: "Настоящее письмо, подготовленное Lettreo и оформленное по французским стандартам.",
+    mlTitle: "Опишите ситуацию на удобном вам языке",
+    mlSub: "Одна и та же фраза — именно так её пишут наши пользователи.",
+    baseline: "Пишите на том языке, которым владеете. <strong>Письмо всегда составляется на официальном французском</strong> и сразу готово к отправке.",
+    howTitle: "Как это работает", howSub: "Не нужно самому разбираться в шаблонах и подбирать юридические формулировки.",
+    s1n: "Шаг 1", s1t: "Вы рассказываете", s1b: "Четыре–шесть простых вопросов: кому вы пишете, что произошло и чего хотите добиться.",
+    s2n: "Шаг 2", s2t: "Lettreo составляет письмо", s2b: "Официальная структура, принятые формулы вежливости, тон с учётом адресата и ссылка на закон, если она уместна.",
+    s3n: "Шаг 3", s3t: "Вы проверяете и отправляете", s3b: "Текст можно отредактировать прямо на экране. Скопируйте его или скачайте в PDF — письмо готово к печати.",
+    casesTitle: "В каких ситуациях поможет", casesSub: "Везде, где нужно официальное письмо, а вы не знаете, как его сформулировать.",
+    c1: "Возврат залога за жильё", c2: "Спор с банком или страховой компанией", c3: "Обжалование штрафа или решения",
+    c4: "Письмо работодателю или в отдел кадров", c5: "Жалоба оператору связи", c6: "Ответ в France Travail или CPAM",
+    c7: "Просьба о рассрочке платежа", c8: "Расторжение договора или подписки",
+    catLogement: "Жильё", catAdmin: "Госучреждения", catFinances: "Финансы",
+    catSocial: "Социальная защита", catTravail: "Работа", catConso: "Права потребителей",
+    exTitle: "Другие письма, которые мы уже составили", exSub: "Фрагменты писем, подготовленных для реальных ситуаций (на французском).",
+    ex1k: "Жалоба оператору", ex2k: "Ответ в France Travail", ex3k: "Рассрочка платежа",
+    wizTitle: "Составьте письмо", wizSub: "Ответьте на несколько вопросов — письмо появится на экране, его можно будет скопировать или скачать.",
+    abTitle: "Кто создаёт Lettreo", abRole: "Автор и разработчик",
+    abP1: "Я создаю Lettreo в одиночку. Идея родилась из простого наблюдения: в общении с французскими учреждениями умение правильно составить письмо реально влияет на исход дела — а владеют этим умением далеко не все.",
+    abP2: "У проекта нет отдела продаж и рекламного бюджета. Сервис платный — именно это позволяет ему работать без рекламы и без продажи данных. Развивается он прежде всего благодаря отзывам тех, кто пользуется им в реальных делах. Если что-то покажется вам неточным или неудачно сформулированным, напишите мне.",
+    notice: "Lettreo помогает составить письмо, но не заменяет юридическую консультацию. Если ситуация деликатная или спор уже начался, попросите юриста проверить ваше письмо.",
+    finalTitle: "Ваше письмо может быть готово <em>уже через две минуты</em>.",
+    finalSub: "От 1,90 € за письмо. После составления письма данные не сохраняются.",
+    finalCta: "Составить письмо",
+    madeIn: "Сделано во Франции", legal: "Правовая информация", cgu: "Условия использования", privacy: "Конфиденциальность", contact: "Контакты"
+  },
+  zh: {
+    dir: "ltr", htmlLang: "zh-Hans",
+    nav1: "使用方法", nav2: "适用场景", nav3: "关于", navCta: "撰写信函",
+    overline: "法国行政信函 · 支持 7 种语言",
+    h1: "两分钟，写好一封<em>规范得体</em>的正式信函。",
+    lead: "押金迟迟不退、罚单需要申诉、决定希望复议……您只需说明遇到的情况，Lettreo 就会按照法国行政机关要求的格式，为您写好这封信。",
+    cta1: "开始撰写", cta2: "查看示例",
+    p1v: "4–6", p1l: "个简单问题",
+    p2v: "2 分钟", p2l: "即可拿到信函",
+    p3v: "0", p3l: "数据留存",
+    caption: "由 Lettreo 生成的真实信函，已按法国规范排版。",
+    mlTitle: "用您熟悉的语言说明情况",
+    mlSub: "同一句话，我们的用户实际上是这样写的。",
+    baseline: "您可以用自己熟悉的语言填写。<strong>生成的信函始终是规范的法语公文</strong>，可以直接寄出。",
+    howTitle: "使用方法", howSub: "不用自己套模板，也不必琢磨法律术语。",
+    s1n: "第一步", s1t: "说明情况", s1b: "回答四到六个简单问题：写给谁、发生了什么、希望达到什么结果。",
+    s2n: "第二步", s2t: "Lettreo 撰写", s2b: "规范的公函结构、得体的惯用语、贴合收信方的语气，并在适用时引用相关法律条文。",
+    s3n: "第三步", s3t: "核对后寄出", s3b: "信函内容可以直接在页面上修改。您可以复制文本，或下载 PDF 打印。",
+    casesTitle: "适用场景", casesSub: "凡是需要一封正式信函、却不知从何下笔的情况，都可以使用。",
+    c1: "申请退还租房押金", c2: "银行或保险纠纷", c3: "对罚单或行政决定提出申诉",
+    c4: "致雇主或人事部门的信函", c5: "向电信运营商投诉", c6: "回复 France Travail 或 CPAM",
+    c7: "申请分期付款", c8: "解除合同或取消订阅",
+    catLogement: "住房", catAdmin: "行政事务", catFinances: "财务",
+    catSocial: "社会保障", catTravail: "工作", catConso: "消费维权",
+    exTitle: "更多已生成的信函", exSub: "以下为针对真实情况生成的信函节选（法语原文）。",
+    ex1k: "运营商投诉", ex2k: "回复 France Travail", ex3k: "分期付款",
+    wizTitle: "撰写您的信函", wizSub: "回答几个问题，信函就会显示在页面上，您可以复制或下载。",
+    abTitle: "谁在打造 Lettreo", abRole: "设计与开发",
+    abP1: "Lettreo 由我独立开发。这个想法源于一个简单的观察：与法国行政机关打交道时，一封信写得是否得体，往往直接影响事情的结果——而并不是每个人都掌握这项能力。",
+    abP2: "这个项目没有销售团队，也没有广告预算。服务采用付费模式，正因如此，才能做到不投放广告、不出售数据。它的改进主要依靠真实用户的反馈。如果您发现任何不准确或表达欠妥之处，欢迎来信告诉我。",
+    notice: "Lettreo 是写作辅助工具，不构成法律意见。如果情况较为敏感，或已进入争议程序，建议请法律专业人士审阅您的信函。",
+    finalTitle: "只需<em>两分钟</em>，您的信函即可完成。",
+    finalSub: "每封信 1.90 欧元起。生成后不保留任何数据。",
+    finalCta: "开始撰写",
+    madeIn: "法国制作", legal: "法律声明", cgu: "使用条款", privacy: "隐私政策", contact: "联系我们"
   }
 };
 
@@ -1219,7 +1318,7 @@ function setLang(lang) {
   if (!t) return;
 
   document.documentElement.setAttribute("dir", t.dir);
-  document.documentElement.setAttribute("lang", lang);
+  document.documentElement.setAttribute("lang", t.htmlLang || lang);
   document.querySelectorAll(".lang-seg .lang-btn").forEach(b => {
     b.classList.toggle("active", b.dataset.lang === lang);
   });
@@ -1348,6 +1447,9 @@ function setLang(lang) {
         soonTitle: "Paiement en ligne bientôt disponible",
         soonBody: "Le paiement ouvre très prochainement. Vous pouvez déjà découvrir l'assistant. Pour être prévenu de l'ouverture, écrivez à",
         soonCta: "Paiement bientôt disponible",
+        promoLabel: "Code promo (facultatif)",
+        promoPlaceholder: "Saisissez votre code",
+        promoInvalid: "Ce code promo n’est pas valide ou a expiré.",
       },
       sendingText: "Rédaction de votre courrier…",
       errorText: "La génération a échoué. Réessayez dans un instant.",
@@ -1450,6 +1552,9 @@ function setLang(lang) {
         soonTitle: "الدفع الإلكتروني متاح قريباً",
         soonBody: "سيُفتح الدفع قريباً جداً. يمكنك منذ الآن استكشاف المساعد. لتصلك رسالة عند الافتتاح، راسل",
         soonCta: "الدفع متاح قريباً",
+        promoLabel: "رمز ترويجي (اختياري)",
+        promoPlaceholder: "أدخل الرمز",
+        promoInvalid: "هذا الرمز الترويجي غير صالح أو انتهت صلاحيته.",
       },
       sendingText: "جارٍ تحرير رسالتك…",
       errorText: "فشل الإنشاء. حاول مرة أخرى بعد لحظات.",
@@ -1552,6 +1657,9 @@ function setLang(lang) {
         soonTitle: "Online payment coming soon",
         soonBody: "Payment opens very soon. You can already explore the assistant. To be notified when it opens, write to",
         soonCta: "Payment coming soon",
+        promoLabel: "Promo code (optional)",
+        promoPlaceholder: "Enter your code",
+        promoInvalid: "This promo code is not valid or has expired.",
       },
       sendingText: "Writing your letter…",
       errorText: "Generation failed. Please try again in a moment.",
@@ -1654,6 +1762,9 @@ function setLang(lang) {
         soonTitle: "Pago en línea disponible próximamente",
         soonBody: "El pago se abrirá muy pronto. Ya puede descubrir el asistente. Para recibir un aviso de la apertura, escriba a",
         soonCta: "Pago disponible próximamente",
+        promoLabel: "Código promocional (opcional)",
+        promoPlaceholder: "Introduzca su código",
+        promoInvalid: "Este código promocional no es válido o ha caducado.",
       },
       sendingText: "Redactando su carta…",
       errorText: "La generación falló. Inténtelo de nuevo en un momento.",
@@ -1756,6 +1867,9 @@ function setLang(lang) {
         soonTitle: "Çevrimiçi ödeme yakında",
         soonBody: "Ödeme çok yakında açılıyor. Asistanı şimdiden keşfedebilirsiniz. Açılıştan haberdar olmak için şu adrese yazın:",
         soonCta: "Ödeme yakında",
+        promoLabel: "İndirim kodu (isteğe bağlı)",
+        promoPlaceholder: "Kodunuzu girin",
+        promoInvalid: "Bu indirim kodu geçersiz veya süresi dolmuş.",
       },
       sendingText: "Mektubunuz yazılıyor…",
       errorText: "Oluşturma başarısız oldu. Birazdan tekrar deneyin.",
@@ -1784,6 +1898,226 @@ function setLang(lang) {
       },
       disclaimer: "Yazım yardımı, hukuki danışmanlık değil.",
       btnNewRequest: "Başka bir mektup yaz",
+    },
+    ru: {
+      dir: "ltr",
+      navTitle: "Ваше письмо",
+      stepOf: n => `Шаг ${n} из 5`,
+      typeTitle: "Какое письмо вам нужно составить?",
+      types: [
+        { id: "bailleur", label: "Спор с арендодателем или владельцем жилья", cat: "Жильё" },
+        { id: "banque", label: "Банк или страховая компания", cat: "Финансы" },
+        { id: "administration", label: "Госучреждение или штраф", cat: "Госучреждения" },
+        { id: "employeur", label: "Работодатель или отдел кадров", cat: "Работа" },
+        { id: "operateur", label: "Оператор связи или интернет-провайдер", cat: "Права потребителей" },
+        { id: "autre", label: "Другая ситуация", cat: "Разное" },
+      ],
+      langHint: "На каком бы языке вы ни заполняли форму, письмо будет составлено на французском.",
+      situationTitle: "Расскажите, что произошло",
+      situationSub: "Опишите всё как можно подробнее: даты, суммы и какие шаги вы уже предпринимали.",
+      situationPlaceholder: "Например: хозяин квартиры уже три месяца не возвращает мне залог в 800 € и не даёт никаких письменных объяснений…",
+      dictate: "Надиктовать", dictating: "Остановить",
+      wordCount: n => {
+        const m10 = n % 10, m100 = n % 100;
+        const word = m10 === 1 && m100 !== 11 ? "слово"
+          : m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? "слова" : "слов";
+        return `${n} ${word}${n < 20 ? " · рекомендуем написать не меньше 20 слов" : ""}`;
+      },
+      tonQuestion: "Каким тоном написать письмо?",
+      tons: [
+        { id: "ferme", label: "Твёрдый", desc: "Прямо и без двусмысленностей" },
+        { id: "neutre", label: "Нейтральный", desc: "Только факты, без эмоций" },
+        { id: "conciliant", label: "Примирительный", desc: "С расчётом на компромисс" },
+      ],
+      destTitle: "Кому адресовано письмо?",
+      destSub: "Эти данные необязательны. Если их нет под рукой, оставьте поля пустыми и продолжайте.",
+      destNomLabel: "Имя получателя или название организации",
+      destNomPlaceholder: "M. Bernard Lefebvre / Banque XYZ",
+      destAdresseLabel: "Адрес получателя",
+      destAdressePlaceholder: "12 rue de la République",
+      cpLabel: "Почтовый индекс", villeLabel: "Город",
+      demandeLabel: "Какого результата вы ждёте от этого письма?",
+      demandePlaceholder: "Вернуть 800 € в течение 15 дней",
+      expTitle: "Ваши контактные данные",
+      expSub: "Чтобы продолжить, достаточно имени и электронной почты. Адрес и телефон указывать не обязательно.",
+      expNomLabel: "Имя и фамилия *", expEmailLabel: "Электронная почта *",
+      expAdresseLabel: "Адрес", expAdressePlaceholder: "12 rue des Lilas",
+      expTelLabel: "Телефон", expTelPlaceholder: "06 00 00 00 00",
+      recapTitle: "Проверьте ваш запрос",
+      recapType: "Тип письма", recapTon: "Тон", recapDest: "Получатель",
+      recapDemande: "Чего вы добиваетесь", recapSituation: "Кратко о ситуации", recapExp: "Отправитель",
+      recapNotProvided: "Не указано",
+      btnEdit: "Изменить", btnBack: "Назад", btnNext: "Продолжить", btnSubmit: "Подтвердить и составить",
+      btnToPayment: "Перейти к оплате",
+      pay: {
+        eyebrow: "Последний шаг",
+        title: "Выберите тариф",
+        sub: "Всё готово, осталось выбрать тариф. Оплата проходит через Stripe — Lettreo не получает данные вашей банковской карты.",
+        unitName: "Одно письмо", unitPrice: "1,90 €",
+        unitDesc: "1,90 € за одно письмо. Платите только за то, чем пользуетесь.",
+        dayTag: "Популярный выбор",
+        dayName: "Доступ на сутки", dayPrice: "2,90 €",
+        dayDesc: "2,90 € за сутки без ограничений. Сколько угодно писем в течение 24 часов.",
+        monthName: "Ежемесячная подписка", monthPrice: "4,90 €",
+        monthDesc: "4,90 € в месяц без ограничений. Отменить можно в любой момент.",
+        cta: "Оплатить и составить письмо",
+        ctaActive: "Составить письмо",
+        redirecting: "Переходим к оплате…",
+        secure: "Безопасная оплата через Stripe. Данные карты не передаются Lettreo.",
+        tax: "Цены указаны с учётом всех налогов, включая НДС по действующей ставке.",
+        back: "Назад",
+        activeDay: "У вас действует доступ на сутки: это письмо можно составить без повторной оплаты.",
+        activeMonth: "Ваша подписка активна: это письмо можно составить без повторной оплаты.",
+        activeUnit: "Это письмо уже оплачено — его можно составить прямо сейчас.",
+        errorGeneric: "Не удалось перейти к оплате. Пожалуйста, попробуйте ещё раз через минуту.",
+        errorVerify: "Оплата прошла, но подтвердить её пока не удалось. Пожалуйста, обновите страницу через минуту.",
+        errorRequired: "Чтобы составить это письмо, его нужно оплатить.",
+        errorUsed: "Эта оплата уже использована для составления письма. Пожалуйста, выберите тариф заново.",
+        cancelled: "Оплата отменена. Вы можете выбрать другой тариф.",
+        soonTitle: "Онлайн-оплата скоро заработает",
+        soonBody: "Оплата станет доступна в ближайшее время, а пока вы можете познакомиться с сервисом. Чтобы узнать об открытии, напишите на",
+        soonCta: "Оплата скоро будет доступна",
+        promoLabel: "Промокод (если есть)",
+        promoPlaceholder: "Введите промокод",
+        promoInvalid: "Этот промокод недействителен или срок его действия истёк.",
+      },
+      sendingText: "Составляем ваше письмо…",
+      errorText: "Не удалось составить письмо. Пожалуйста, попробуйте ещё раз через минуту.",
+      btnRetry: "Попробовать снова",
+      statusReady: "Письмо готово",
+      successTitle: "Ваше письмо",
+      btnCopy: "Скопировать текст", btnCopied: "Текст скопирован", btnPdf: "Скачать PDF",
+      editHint: "Нажмите на текст, чтобы внести правки перед отправкой.",
+      checksTitle: "Перед отправкой",
+      toFillTitle: n => {
+        const m10 = n % 10, m100 = n % 100;
+        const word = m10 === 1 && m100 !== 11 ? "фрагмент"
+          : m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? "фрагмента" : "фрагментов";
+        return `Нужно дополнить: ${n} ${word}`;
+      },
+      toFillNone: "Всё заполнено",
+      toFillBody: "Замените выделенные фрагменты своими данными.",
+      toFillNoneBody: "В письме нет фрагментов, которые нужно дополнить.",
+      formatTitle: "Официальный формат соблюдён",
+      formatItems: { coord: "Данные отправителя и получателя", objet: "Тема письма", date: "Место и дата", politesse: "Формула вежливости" },
+      formatMissing: "отсутствует",
+      legalTitle: "Приведена ссылка на закон",
+      adviceHead: "Совет по отправке",
+      advice: {
+        bailleur: "Отправьте заказным письмом с уведомлением о вручении (lettre recommandée avec accusé de réception): с даты получения начинает течь установленный законом срок возврата залога, а уведомление понадобится, если вы обратитесь в согласительную комиссию.",
+        banque: "Отправьте заказным письмом с уведомлением о вручении и сохраните копию. Если ответа не будет в течение двух месяцев, вы сможете обратиться к банковскому или страховому медиатору.",
+        administration: "Отправьте заказным письмом с уведомлением о вручении до истечения срока обжалования. Если возникнет спор, учитываться будет именно дата получения.",
+        employeur: "Передайте письмо лично под подпись или отправьте заказным письмом с уведомлением о вручении и сохраните подписанную копию.",
+        operateur: "Отправьте заказным письмом с уведомлением о вручении. Если в течение двух месяцев вопрос не решится, вы сможете обратиться к медиатору по электронным коммуникациям.",
+        autre: "Для любых шагов с юридическими последствиями лучше выбирать заказное письмо с уведомлением о вручении и сохранять копию отправленного письма.",
+      },
+      disclaimer: "Помощь в составлении писем, а не юридическая консультация.",
+      btnNewRequest: "Составить другое письмо",
+    },
+    zh: {
+      dir: "ltr",
+      navTitle: "您的信函",
+      stepOf: n => `第 ${n} 步，共 5 步`,
+      typeTitle: "您需要撰写哪一类信函？",
+      types: [
+        { id: "bailleur", label: "与房东或业主的纠纷", cat: "住房" },
+        { id: "banque", label: "银行或保险", cat: "财务" },
+        { id: "administration", label: "行政机关或罚款", cat: "行政事务" },
+        { id: "employeur", label: "雇主或人事部门", cat: "工作" },
+        { id: "operateur", label: "电话或网络运营商", cat: "消费维权" },
+        { id: "autre", label: "其他情况", cat: "其他" },
+      ],
+      langHint: "无论您在这里选择哪种语言，生成的信函都将使用法语。",
+      situationTitle: "请说明您遇到的情况",
+      situationSub: "请尽可能详细地描述事情经过，包括日期、金额以及之前的沟通情况。",
+      situationPlaceholder: "例如：房东三个月来一直不退还我 800 欧元的押金，也没有给出任何书面理由……",
+      dictate: "语音输入", dictating: "停止",
+      wordCount: n => `${n} 字${n < 40 ? " · 建议至少写 40 字" : ""}`,
+      tonQuestion: "您希望信函采用怎样的语气？",
+      tons: [
+        { id: "ferme", label: "坚定", desc: "直截了当，立场明确" },
+        { id: "neutre", label: "中立", desc: "客观陈述事实，不带情绪" },
+        { id: "conciliant", label: "温和", desc: "以协商解决为目标" },
+      ],
+      destTitle: "这封信要寄给谁？",
+      destSub: "以下信息均为选填。如果暂时没有，可以留空，直接继续。",
+      destNomLabel: "收信人姓名或机构名称",
+      destNomPlaceholder: "M. Bernard Lefebvre / Banque XYZ",
+      destAdresseLabel: "收信人地址",
+      destAdressePlaceholder: "12 rue de la République",
+      cpLabel: "邮政编码", villeLabel: "城市",
+      demandeLabel: "您希望这封信达到什么具体结果？",
+      demandePlaceholder: "15 天内退还 800 欧元押金",
+      expTitle: "您的联系信息",
+      expSub: "只需填写姓名和电子邮箱即可继续，地址和电话可以不填。",
+      expNomLabel: "姓名 *", expEmailLabel: "电子邮箱 *",
+      expAdresseLabel: "地址", expAdressePlaceholder: "12 rue des Lilas",
+      expTelLabel: "电话", expTelPlaceholder: "06 00 00 00 00",
+      recapTitle: "请核对您的信息",
+      recapType: "信函类型", recapTon: "语气", recapDest: "收信人",
+      recapDemande: "希望达到的结果", recapSituation: "情况摘要", recapExp: "寄信人",
+      recapNotProvided: "未填写",
+      btnEdit: "修改", btnBack: "返回", btnNext: "继续", btnSubmit: "确认并生成",
+      btnToPayment: "前往付款",
+      pay: {
+        eyebrow: "最后一步",
+        title: "请选择套餐",
+        sub: "信函已准备好，只差选择套餐。付款由 Stripe 安全处理，Lettreo 不会获取您的银行卡信息。",
+        unitName: "按封付费", unitPrice: "€1.90",
+        unitDesc: "每封信 1.90 欧元，用多少付多少。",
+        dayTag: "最受欢迎",
+        dayName: "一日通", dayPrice: "€2.90",
+        dayDesc: "2.90 欧元畅用一天，24 小时内不限封数。",
+        monthName: "包月订阅", monthPrice: "€4.90",
+        monthDesc: "每月 4.90 欧元，不限封数，可随时取消。",
+        cta: "付款并生成信函",
+        ctaActive: "生成信函",
+        redirecting: "正在前往付款页面……",
+        secure: "付款由 Stripe 安全处理，银行卡信息不经过 Lettreo。",
+        tax: "价格已含全部税费，增值税按现行税率计入。",
+        back: "返回",
+        activeDay: "您的一日通仍在有效期内，无需再次付款即可生成这封信。",
+        activeMonth: "您的订阅已生效，无需再次付款即可生成这封信。",
+        activeUnit: "这封信已付款，现在就可以生成。",
+        errorGeneric: "暂时无法发起付款，请稍后再试。",
+        errorVerify: "您的付款已成功，但暂时无法完成验证，请稍后刷新页面。",
+        errorRequired: "生成这封信需要先付款。",
+        errorUsed: "这笔付款已用于生成信函，请重新选择套餐。",
+        cancelled: "付款已取消，您可以选择其他套餐。",
+        soonTitle: "在线付款即将开通",
+        soonBody: "付款功能很快就会开通，您现在可以先体验填写流程。如希望开通时收到通知，请发邮件至",
+        soonCta: "付款即将开通",
+        promoLabel: "优惠码（选填）",
+        promoPlaceholder: "请输入优惠码",
+        promoInvalid: "该优惠码无效或已过期。",
+      },
+      sendingText: "正在为您撰写信函……",
+      errorText: "信函生成失败，请稍后再试。",
+      btnRetry: "重试",
+      statusReady: "信函已生成",
+      successTitle: "您的信函",
+      btnCopy: "复制文本", btnCopied: "已复制", btnPdf: "下载 PDF",
+      editHint: "点击文本，即可在寄出前修改。",
+      checksTitle: "寄出前请确认",
+      toFillTitle: n => `还有 ${n} 处需要补充`,
+      toFillNone: "无需补充",
+      toFillBody: "请将高亮部分替换为您的信息。",
+      toFillNoneBody: "信函中没有需要补充的内容。",
+      formatTitle: "已符合正式公函格式",
+      formatItems: { coord: "寄信人及收信人信息", objet: "信函事由", date: "地点和日期", politesse: "结尾敬语" },
+      formatMissing: "缺失",
+      legalTitle: "已引用法律依据",
+      adviceHead: "寄送建议",
+      advice: {
+        bailleur: "建议以挂号信加回执（lettre recommandée avec accusé de réception）寄出：法定退还期限从对方签收之日起计算；如需向调解委员会申请调解，也须出示签收凭证。",
+        banque: "建议以挂号信加回执寄出，并保留一份副本。如两个月内未获答复，可向银行或保险调解员申请调解。",
+        administration: "请在申诉期限届满前，以挂号信加回执寄出。日后如有争议，以签收日期为准。",
+        employeur: "可当面递交并请对方签字确认收讫，或以挂号信加回执寄出，并留存一份签字副本备查。",
+        operateur: "建议以挂号信加回执寄出。如两个月内未得到满意答复，可向电子通信调解员申请调解。",
+        autre: "凡是涉及法律效力的事项，建议以挂号信加回执寄出，并保留所寄信函的副本。",
+      },
+      disclaimer: "写作辅助工具，不构成法律意见。",
+      btnNewRequest: "再写一封",
     },
   };
 
@@ -1906,6 +2240,8 @@ function setLang(lang) {
     setT("lw-pay-back-btn", p.back);
     setT("lw-soon-title", p.soonTitle);
     setT("lw-soon-body", p.soonBody);
+    setT("lw-promo-label", p.promoLabel);
+    $("lw-promo-input").placeholder = p.promoPlaceholder;
     lwRenderPayState();
   }
 
@@ -1991,7 +2327,7 @@ function setLang(lang) {
 
   /* ---------- Dictée ---------- */
   const LW_SPEECH_RECOGNITION = window.SpeechRecognition || window.webkitSpeechRecognition;
-  const LW_SPEECH_LOCALES = { fr: "fr-FR", ar: "ar-SA", en: "en-US", es: "es-ES", tr: "tr-TR" };
+  const LW_SPEECH_LOCALES = { fr: "fr-FR", ar: "ar-SA", en: "en-US", es: "es-ES", tr: "tr-TR", ru: "ru-RU", zh: "zh-CN" };
   let lwRecognition = null;
   let lwRecording = false;
 
@@ -2039,8 +2375,13 @@ function setLang(lang) {
   };
 
   function lwUpdateWordCount() {
-    const words = lwData.situation.trim().split(/\s+/).filter(Boolean).length;
-    setT("lw-wordcount", t().wordCount(words));
+    const text = lwData.situation.trim();
+    // Le chinois ne sépare pas les mots par des espaces : on compte les
+    // caractères chinois, plus les éventuels mots en alphabet latin.
+    const count = lwLang === "zh"
+      ? (text.match(/\p{Script=Han}|[A-Za-z0-9]+/gu) || []).length
+      : text.split(/\s+/).filter(Boolean).length;
+    setT("lw-wordcount", t().wordCount(count));
   }
 
   window.lwValidateStep3 = function() {
@@ -2165,6 +2506,9 @@ function setLang(lang) {
 
     const active = lwHasActiveAccess();
     box.style.display = active ? "flex" : "none";
+    // Un accès déjà payé n'a pas besoin de code promo.
+    const promo = $("lw-promo");
+    if (promo) promo.hidden = active;
     if (active) {
       const key = lwAccess.plan === "month" ? "activeMonth"
         : (lwAccess.plan === "day" ? "activeDay" : "activeUnit");
@@ -2228,15 +2572,25 @@ function setLang(lang) {
     lwPayError("");
     lwRenderPayState();
     lwSaveDraft();
+    const promoInput = $("lw-promo-input");
+    const promoCode = promoInput ? promoInput.value.trim() : "";
 
     try {
       const resp = await fetch("/api/create-checkout-session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        // Seul l'identifiant de formule est transmis : le prix est fixé côté serveur.
-        body: JSON.stringify({ plan: lwPlan, email: lwData.expEmail || undefined }),
+        // Formule et code promo éventuel : le prix est fixé côté serveur, et le
+        // code n'est appliqué qu'après vérification auprès de Stripe.
+        body: JSON.stringify({ plan: lwPlan, email: lwData.expEmail || undefined, promo_code: promoCode || undefined }),
       });
       const json = await resp.json();
+      if (resp.status === 400 && json && json.reason === "promo_invalid") {
+        lwPayBusy = false;
+        lwPayError(t().pay.promoInvalid);
+        lwRenderPayState();
+        if (promoInput) promoInput.focus();
+        return;
+      }
       if (!resp.ok || !json.url) throw new Error((json && json.error) || "checkout");
       window.location.href = json.url;
     } catch (e) {
@@ -2536,7 +2890,7 @@ function setLang(lang) {
     lwAccess = lwLoadAccess();
     lwData = { type: "", situation: "", ton: "neutre", destNom: "", destAdresse: "", destCp: "", destVille: "", demande: "", expNom: "", expAdresse: "", expCp: "", expVille: "", expEmail: "", expTel: "" };
     ["lw-situation","lw-dest-nom","lw-dest-adresse","lw-dest-cp","lw-dest-ville","lw-demande",
-     "lw-exp-nom","lw-exp-email","lw-exp-adresse","lw-exp-cp","lw-exp-ville","lw-exp-tel"]
+     "lw-exp-nom","lw-exp-email","lw-exp-adresse","lw-exp-cp","lw-exp-ville","lw-exp-tel","lw-promo-input"]
       .forEach(id => { $(id).value = ""; });
     $("lw-success-box").style.display = "none";
     $("lw-letter-box").textContent = "";

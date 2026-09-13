@@ -19,6 +19,12 @@ const DISPOSABLE_EMAIL_DOMAINS = [
   '10minutemail.com', 'throwam.com', 'sharklasers.com', 'trashmail.com'
 ];
 
+// Langues proposées par l'interface. Le courrier sort toujours en français.
+const INPUT_LANGUAGES = {
+  fr: 'français', ar: 'arabe', en: 'anglais', es: 'espagnol',
+  tr: 'turc', ru: 'russe', zh: 'chinois simplifié',
+};
+
 const PAYMENT_ERRORS = {
   token_invalid: 'Votre accès a expiré. Choisissez une formule pour continuer.',
   session_invalid: 'Paiement introuvable. Choisissez une formule pour continuer.',
@@ -65,7 +71,8 @@ export default async function handler(req, res) {
   const {
     type_courrier, situation, ton_souhaite,
     destinataire_nom, destinataire_adresse, destinataire_cp, destinataire_ville, demande_finale,
-    expediteur_nom, expediteur_email, expediteur_adresse, expediteur_cp, expediteur_ville, expediteur_telephone
+    expediteur_nom, expediteur_email, expediteur_adresse, expediteur_cp, expediteur_ville, expediteur_telephone,
+    langue_interface
   } = body;
 
   const emailDomain = (expediteur_email || '').split('@')[1]?.toLowerCase().trim();
@@ -79,10 +86,10 @@ export default async function handler(req, res) {
 
   // Le crédit est réservé AVANT la génération pour qu'un même paiement ne
   // puisse pas produire deux courriers ; il est rendu si la génération échoue.
-  let reservedPaymentIntentId = null;
-  if (entitlement.plan.id === 'unit' && entitlement.paymentIntentId) {
+  let reservedLedger = null;
+  if (entitlement.plan.id === 'unit' && entitlement.ledger) {
     try {
-      const reserved = await reserveUnitCredit(entitlement.paymentIntentId);
+      const reserved = await reserveUnitCredit(entitlement.ledger);
       if (!reserved) {
         return res.status(402).json({
           error: PAYMENT_ERRORS.already_used,
@@ -90,7 +97,7 @@ export default async function handler(req, res) {
           reason: 'already_used',
         });
       }
-      reservedPaymentIntentId = entitlement.paymentIntentId;
+      reservedLedger = entitlement.ledger;
     } catch (err) {
       console.error('Réservation du crédit impossible:', err && err.message);
       return res.status(503).json({ error: 'Vérification du paiement momentanément indisponible.' });
@@ -98,9 +105,9 @@ export default async function handler(req, res) {
   }
 
   const releaseCredit = async () => {
-    if (reservedPaymentIntentId) {
-      await releaseUnitCredit(reservedPaymentIntentId);
-      reservedPaymentIntentId = null;
+    if (reservedLedger) {
+      await releaseUnitCredit(reservedLedger);
+      reservedLedger = null;
     }
   };
 
@@ -133,10 +140,19 @@ RÈGLES ABSOLUES :
 6. Vouvoiement systématique. Jamais de tutoiement.
 7. Le corps du courrier ne contient aucun conseil juridique ni mise en garde.
 8. Texte brut uniquement. Pas de markdown. Paragraphes séparés par une ligne vide.
-9. Ne mets AUCUNE mention, avertissement ou note après la signature. Le courrier se termine après la signature et les éventuelles pièces jointes. Rien d'autre.`;
+9. Ne mets AUCUNE mention, avertissement ou note après la signature. Le courrier se termine après la signature et les éventuelles pièces jointes. Rien d'autre.
+10. L'utilisateur peut décrire sa situation en français, arabe, anglais, espagnol, turc, russe ou chinois. Quelle que soit cette langue, tu comprends le récit tel qu'il est exprimé et tu rédiges le courrier EXCLUSIVEMENT en français administratif : aucun mot, aucune citation, aucun caractère de la langue d'origine ne doit y figurer. Tu ne traduis pas mot à mot : tu restitues fidèlement les faits avec les formulations d'usage d'un courrier français. Montants et dates suivent les conventions françaises (ex. : 800 €, 3 mars 2026).
+11. Les noms propres et adresses écrits dans un alphabet non latin (arabe, cyrillique, caractères chinois) sont transcrits en caractères latins selon la translittération usuelle (pinyin pour le chinois). Ceux déjà écrits en caractères latins sont repris à l'identique.`;
+
+  // Langue de l'interface, transmise comme simple indice : seules les valeurs
+  // connues sont reprises, jamais un texte libre venu du navigateur.
+  const languageLine = langue_interface !== 'fr'
+    && Object.prototype.hasOwnProperty.call(INPUT_LANGUAGES, langue_interface)
+    ? `\nLANGUE PROBABLE DE LA SITUATION : ${INPUT_LANGUAGES[langue_interface]}. Le courrier reste intégralement en français.\n`
+    : '';
 
   const userContent = `Génère le courrier correspondant à cette situation. Si la situation est décrite dans une autre langue que le français, comprends-la mais génère le courrier entièrement en français.
-
+${languageLine}
 TYPE DE COURRIER : ${type_courrier}
 
 SITUATION DÉCRITE :
@@ -195,7 +211,7 @@ ${demande_finale || 'Résoudre la situation décrite ci-dessus'}`;
     return res.status(200).json({
       letter,
       plan: entitlement.plan.id,
-      credit_consumed: Boolean(reservedPaymentIntentId),
+      credit_consumed: Boolean(reservedLedger),
     });
 
   } catch (err) {

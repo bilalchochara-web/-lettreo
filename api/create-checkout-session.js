@@ -35,12 +35,51 @@
  * ("unit" | "day" | "month"). Le montant facturé n'est jamais transmis par le
  * navigateur : il est déterminé côté serveur dans api/_lib/plans.js, et le tarif
  * Stripe configuré est recontrôlé avant toute création de session.
+ *
+ * Un code promo facultatif peut accompagner la formule. Il n'est jamais transmis
+ * tel quel : il est d'abord résolu auprès de Stripe (code promotionnel actif ou
+ * coupon valide). La réduction appliquée est donc toujours celle définie dans
+ * Stripe, jamais un montant venu du navigateur.
  */
 
 import { getStripe } from './_lib/stripe.js';
 import { getPlan, getPriceId } from './_lib/plans.js';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const PROMO_RE = /^[A-Za-z0-9_-]{2,64}$/;
+const PROMO_INVALID = { error: 'Ce code promo n’est pas valide ou a expiré.', reason: 'promo_invalid' };
+
+/**
+ * Résout le code saisi en réduction Stripe, ou renvoie null s'il n'est pas
+ * utilisable. Accepte un code promotionnel Stripe, puis un identifiant de
+ * coupon (ex. « BETA100 » créé avec cet identifiant). La casse saisie est
+ * tolérée : « beta100 » retrouve « BETA100 ».
+ */
+async function resolveDiscount(stripe, input) {
+  const candidates = [...new Set([input, input.toUpperCase()])];
+
+  for (const code of candidates) {
+    const { data } = await stripe.promotionCodes.list({ code, active: true, limit: 1 });
+    const promo = data[0];
+    if (!promo) continue;
+
+    const expired = promo.expires_at && promo.expires_at * 1000 <= Date.now();
+    const exhausted = promo.max_redemptions && promo.times_redeemed >= promo.max_redemptions;
+    const coupon = promo.coupon || (promo.promotion && promo.promotion.coupon);
+    const couponInvalid = coupon && typeof coupon === 'object' && coupon.valid === false;
+    return expired || exhausted || couponInvalid ? null : { promotion_code: promo.id };
+  }
+
+  for (const code of candidates) {
+    try {
+      const coupon = await stripe.coupons.retrieve(code);
+      return coupon && !coupon.deleted && coupon.valid ? { coupon: coupon.id } : null;
+    } catch (err) {
+      if (!err || err.statusCode !== 404) throw err;
+    }
+  }
+  return null;
+}
 
 /** Reconstruit l'URL publique du site pour les redirections de retour. */
 function baseUrl(req) {
@@ -110,16 +149,31 @@ export default async function handler(req, res) {
   const rawEmail = body && typeof body.email === 'string' ? body.email.trim() : '';
   const customerEmail = EMAIL_RE.test(rawEmail) && rawEmail.length <= 254 ? rawEmail : undefined;
 
+  // Code promo facultatif.
+  const promoCode = body && typeof body.promo_code === 'string' ? body.promo_code.trim() : '';
+  if (promoCode && !PROMO_RE.test(promoCode)) {
+    return res.status(400).json(PROMO_INVALID);
+  }
+
   try {
     const stripe = getStripe();
     const site = baseUrl(req);
     const lineItem = await buildLineItem(stripe, plan);
+
+    const discount = promoCode ? await resolveDiscount(stripe, promoCode) : null;
+    if (promoCode && !discount) {
+      return res.status(400).json(PROMO_INVALID);
+    }
 
     const session = await stripe.checkout.sessions.create({
       mode: plan.mode,
       line_items: [lineItem],
       locale: 'auto',
       customer_email: customerEmail,
+      ...(discount ? { discounts: [discount] } : {}),
+      // Une session rendue gratuite par le code n'a pas de PaymentIntent : le
+      // client Stripe créé ici sert alors de registre au crédit à l'unité.
+      ...(discount && plan.mode === 'payment' ? { customer_creation: 'always' } : {}),
       // La formule est inscrite dans les métadonnées : c'est elle qui fera foi
       // lors de la vérification du droit, côté serveur.
       metadata: { lettreo_plan: plan.id },
@@ -132,6 +186,13 @@ export default async function handler(req, res) {
 
     return res.status(200).json({ id: session.id, url: session.url });
   } catch (err) {
+    // Code reconnu mais refusé par Stripe à la création (épuisé entre-temps,
+    // réservé à d'autres produits…) : c'est le code qui est en cause.
+    const promoError = err && (String(err.param || '').startsWith('discounts')
+      || /coupon|promotion/i.test(String(err.code || '')));
+    if (promoCode && promoError) {
+      return res.status(400).json(PROMO_INVALID);
+    }
     console.error('Création de session Checkout impossible:', err && err.message);
     return res.status(500).json({ error: 'Le paiement est momentanément indisponible.' });
   }

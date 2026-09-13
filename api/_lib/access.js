@@ -178,8 +178,13 @@ export async function verifyCheckoutSession(sessionId) {
     };
   }
 
-  // Formules réglées en une fois (unité et pass journée).
-  if (session.payment_status !== 'paid') {
+  // Formules réglées en une fois (unité et pass journée). Une session n'ouvre
+  // un droit qu'une fois terminée : payée, ou gratuite grâce à un code promo à
+  // 100 % (Stripe indique alors « no_payment_required »). Exiger « complete »
+  // empêche d'obtenir un accès depuis une session gratuite jamais finalisée,
+  // qui échapperait au nombre maximal d'utilisations du code.
+  const settled = session.payment_status === 'paid' || session.payment_status === 'no_payment_required';
+  if (session.status !== 'complete' || !settled) {
     return { ok: false, reason: 'unpaid' };
   }
 
@@ -196,24 +201,42 @@ export async function verifyCheckoutSession(sessionId) {
     };
   }
 
-  // Formule à l'unité : un seul courrier. La consommation est tracée sur le
-  // PaymentIntent — Stripe fait office de registre, sans base de données.
+  // Formule à l'unité : un seul courrier. La consommation est tracée dans
+  // Stripe, qui fait office de registre sans base de données : sur le
+  // PaymentIntent quand il y a eu paiement, sur le client Stripe quand la
+  // session était gratuite (aucun PaymentIntent n'existe alors).
   const paymentIntentId = typeof session.payment_intent === 'string'
     ? session.payment_intent
     : (session.payment_intent && session.payment_intent.id);
-  if (!paymentIntentId) return { ok: false, reason: 'unpaid' };
+  const customerId = typeof session.customer === 'string'
+    ? session.customer
+    : (session.customer && session.customer.id);
 
-  const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
-  if (paymentIntent.status !== 'succeeded') return { ok: false, reason: 'unpaid' };
-  if (paymentIntent.metadata && paymentIntent.metadata.lettreo_consumed_at) {
-    return { ok: false, reason: 'already_used' };
+  let ledger;
+  if (paymentIntentId) {
+    const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
+    if (paymentIntent.status !== 'succeeded') return { ok: false, reason: 'unpaid' };
+    if (paymentIntent.metadata && paymentIntent.metadata.lettreo_consumed_at) {
+      return { ok: false, reason: 'already_used' };
+    }
+    ledger = { type: 'payment_intent', id: paymentIntentId };
+  } else if (session.payment_status === 'no_payment_required' && customerId) {
+    const customer = await stripe.customers.retrieve(customerId);
+    if (!customer || customer.deleted) return { ok: false, reason: 'session_invalid' };
+    if (customer.metadata && customer.metadata.lettreo_consumed_at) {
+      return { ok: false, reason: 'already_used' };
+    }
+    ledger = { type: 'customer', id: customerId };
+  } else {
+    return { ok: false, reason: 'unpaid' };
   }
 
   return {
     ok: true,
     plan,
     sessionId: session.id,
-    paymentIntentId,
+    paymentIntentId: paymentIntentId || null,
+    ledger,
     subscriptionId: null,
     // Le crédit reste valable tant qu'il n'est pas consommé ; on borne malgré
     // tout la durée de vie du jeton pour limiter sa réutilisation.
@@ -240,12 +263,12 @@ export async function verifyEntitlement(rawToken) {
  * qu'un même paiement ne puisse pas produire deux courriers.
  * @returns {Promise<boolean>} false si le crédit était déjà consommé.
  */
-export async function reserveUnitCredit(paymentIntentId) {
-  const stripe = getStripe();
-  const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
-  if (paymentIntent.metadata && paymentIntent.metadata.lettreo_consumed_at) return false;
+export async function reserveUnitCredit(ledger) {
+  const api = ledgerApi(getStripe(), ledger);
+  const record = await api.retrieve(ledger.id);
+  if (record.metadata && record.metadata.lettreo_consumed_at) return false;
 
-  await stripe.paymentIntents.update(paymentIntentId, {
+  await api.update(ledger.id, {
     metadata: { lettreo_consumed_at: new Date().toISOString() },
   });
   return true;
@@ -255,14 +278,20 @@ export async function reserveUnitCredit(paymentIntentId) {
  * Libère le crédit si la génération a échoué : l'utilisateur ne doit pas
  * perdre son courrier à cause d'une erreur de notre côté.
  */
-export async function releaseUnitCredit(paymentIntentId) {
+export async function releaseUnitCredit(ledger) {
   try {
-    const stripe = getStripe();
     // Une valeur vide supprime la clé de métadonnée côté Stripe.
-    await stripe.paymentIntents.update(paymentIntentId, {
+    await ledgerApi(getStripe(), ledger).update(ledger.id, {
       metadata: { lettreo_consumed_at: '' },
     });
   } catch (err) {
-    console.error('Libération du crédit impossible', paymentIntentId, err && err.message);
+    console.error('Libération du crédit impossible', ledger && ledger.id, err && err.message);
   }
+}
+
+/** Objet Stripe portant la trace de consommation : PaymentIntent ou client. */
+function ledgerApi(stripe, ledger) {
+  if (ledger && ledger.type === 'payment_intent') return stripe.paymentIntents;
+  if (ledger && ledger.type === 'customer') return stripe.customers;
+  throw new Error('Registre de consommation inconnu.');
 }
