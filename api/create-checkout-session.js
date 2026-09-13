@@ -39,7 +39,9 @@
  * Un code promo facultatif peut accompagner la formule. Il n'est jamais transmis
  * tel quel : il est d'abord résolu auprès de Stripe (code promotionnel actif ou
  * coupon valide). La réduction appliquée est donc toujours celle définie dans
- * Stripe, jamais un montant venu du navigateur.
+ * Stripe, jamais un montant venu du navigateur. Sans code saisi, la page
+ * Stripe affiche son propre champ (allow_promotion_codes), qui n'accepte que
+ * les codes promotionnels Stripe, pas les identifiants de coupon.
  */
 
 import { getStripe } from './_lib/stripe.js';
@@ -131,10 +133,14 @@ export default async function handler(req, res) {
       line_items: [lineItem],
       locale: 'auto',
       customer_email: customerEmail,
-      ...(discount ? { discounts: [discount] } : {}),
-      // Une session rendue gratuite par le code n'a pas de PaymentIntent : le
+      // Code saisi sur Lettreo : appliqué d'avance. Sinon, la page Stripe
+      // propose son propre champ de code promotionnel. Stripe interdit de
+      // combiner les deux paramètres dans une même session.
+      ...(discount ? { discounts: [discount] } : { allow_promotion_codes: true }),
+      // Une session rendue gratuite par un code n'a pas de PaymentIntent : le
       // client Stripe créé ici sert alors de registre au crédit à l'unité.
-      ...(discount && plan.mode === 'payment' ? { customer_creation: 'always' } : {}),
+      // Le code pouvant aussi être saisi sur la page Stripe, on le crée toujours.
+      ...(plan.mode === 'payment' ? { customer_creation: 'always' } : {}),
       // La formule est inscrite dans les métadonnées : c'est elle qui fera foi
       // lors de la vérification du droit, côté serveur.
       metadata: { lettreo_plan: plan.id },
