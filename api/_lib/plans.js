@@ -58,6 +58,52 @@ export function getPriceId(plan) {
   return null;
 }
 
+/**
+ * Détermine la ligne de facturation d'une formule.
+ * - Si un tarif Stripe est configuré : on l'utilise, APRÈS avoir vérifié qu'il
+ *   est actif et correspond au montant, à la devise et au rythme attendus
+ *   (garde-fou contre une mauvaise configuration).
+ * - Sinon : on construit le tarif à la volée depuis la constante serveur.
+ * Partagée par la création de session et par /api/payment-status.
+ * @throws {Error} si le tarif configuré est introuvable ou incohérent.
+ */
+export async function buildLineItem(stripe, plan) {
+  const configured = getPriceId(plan);
+
+  if (configured) {
+    const price = await stripe.prices.retrieve(configured.id);
+    const where = `formule "${plan.id}" (${configured.name})`;
+
+    if (price.active === false) {
+      throw new Error(`Tarif Stripe archivé pour la ${where}.`);
+    }
+    if (price.unit_amount !== plan.amount || price.currency !== plan.currency) {
+      throw new Error(
+        `Tarif Stripe incohérent pour la ${where} : ` +
+        `${price.unit_amount} ${price.currency} configuré, ${plan.amount} ${plan.currency} attendu.`
+      );
+    }
+    const isRecurring = Boolean(price.recurring);
+    if (isRecurring !== (plan.mode === 'subscription')
+      || (plan.interval && price.recurring && price.recurring.interval !== plan.interval)) {
+      throw new Error(`Type de tarif Stripe incohérent pour la ${where} : attendu ${plan.interval ? 'récurrent (' + plan.interval + ')' : 'paiement unique'}.`);
+    }
+
+    return { price: configured.id, quantity: 1 };
+  }
+
+  // Repli : montant fixé par le serveur, sans tarif préenregistré.
+  const priceData = {
+    currency: plan.currency,
+    unit_amount: plan.amount,
+    product_data: { name: `Lettreo — ${plan.label}`, description: plan.description },
+  };
+  if (plan.mode === 'subscription') {
+    priceData.recurring = { interval: plan.interval };
+  }
+  return { price_data: priceData, quantity: 1 };
+}
+
 /** Renvoie la formule correspondant à l'identifiant, ou null si inconnu. */
 export function getPlan(planId) {
   if (typeof planId !== 'string') return null;

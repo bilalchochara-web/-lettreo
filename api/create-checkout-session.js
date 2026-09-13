@@ -43,7 +43,7 @@
  */
 
 import { getStripe } from './_lib/stripe.js';
-import { getPlan, getPriceId } from './_lib/plans.js';
+import { getPlan, buildLineItem } from './_lib/plans.js';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const PROMO_RE = /^[A-Za-z0-9_-]{2,64}$/;
@@ -90,45 +90,6 @@ function baseUrl(req) {
   if (!host) throw new Error('Impossible de déterminer l’URL du site.');
   const proto = req.headers['x-forwarded-proto'] || 'https';
   return `${proto}://${host}`;
-}
-
-/**
- * Détermine la ligne de facturation.
- * - Si le tarif Stripe est configuré : on l'utilise, APRÈS avoir vérifié qu'il
- *   correspond bien au montant attendu (garde-fou contre une mauvaise config).
- * - Sinon : on construit le tarif à la volée depuis la constante serveur.
- */
-async function buildLineItem(stripe, plan) {
-  const configured = getPriceId(plan);
-
-  if (configured) {
-    const price = await stripe.prices.retrieve(configured.id);
-
-    if (price.unit_amount !== plan.amount || price.currency !== plan.currency) {
-      throw new Error(
-        `Tarif Stripe incohérent pour la formule "${plan.id}" : ` +
-        `${price.unit_amount} ${price.currency} configuré, ` +
-        `${plan.amount} ${plan.currency} attendu (${configured.name}).`
-      );
-    }
-    const isRecurring = Boolean(price.recurring);
-    if (isRecurring !== (plan.mode === 'subscription')) {
-      throw new Error(`Type de tarif Stripe incohérent pour la formule "${plan.id}" (${configured.name}).`);
-    }
-
-    return { price: configured.id, quantity: 1 };
-  }
-
-  // Repli : montant fixé par le serveur, sans tarif préenregistré.
-  const priceData = {
-    currency: plan.currency,
-    unit_amount: plan.amount,
-    product_data: { name: `Lettreo — ${plan.label}`, description: plan.description },
-  };
-  if (plan.mode === 'subscription') {
-    priceData.recurring = { interval: plan.interval };
-  }
-  return { price_data: priceData, quantity: 1 };
 }
 
 export default async function handler(req, res) {
