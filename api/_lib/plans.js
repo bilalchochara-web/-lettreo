@@ -13,7 +13,7 @@ export const PLANS = {
     mode: 'payment',
     amount: 190,               // 1,90 €
     currency: 'eur',
-    priceEnv: 'STRIPE_PRICE_ID_UNIT',
+    priceEnv: ['STRIPE_PRICE_ID_UNITE', 'STRIPE_PRICE_ID_UNIT'],
     label: 'Courrier à l\u2019unité',
     description: 'Un courrier généré, relu et téléchargeable en PDF.',
     // Une seule génération : la consommation est tracée côté Stripe.
@@ -25,7 +25,7 @@ export const PLANS = {
     mode: 'payment',
     amount: 290,               // 2,90 €
     currency: 'eur',
-    priceEnv: 'STRIPE_PRICE_ID_DAY',
+    priceEnv: ['STRIPE_PRICE_ID_JOURNEE', 'STRIPE_PRICE_ID_DAY'],
     label: 'Pass journée',
     description: 'Courriers illimités pendant 24 heures.',
     letters: null,
@@ -36,7 +36,7 @@ export const PLANS = {
     mode: 'subscription',
     amount: 490,               // 4,90 €
     currency: 'eur',
-    priceEnv: 'STRIPE_PRICE_ID_MONTH',
+    priceEnv: ['STRIPE_PRICE_ID_MENSUEL', 'STRIPE_PRICE_ID_MONTH'],
     label: 'Abonnement mensuel',
     description: 'Courriers illimités, résiliable à tout moment.',
     letters: null,
@@ -44,6 +44,19 @@ export const PLANS = {
     interval: 'month',
   },
 };
+
+/**
+ * Renvoie l'ID de tarif Stripe configuré pour la formule, avec le nom de la
+ * variable d'environnement qui le porte, ou null si aucune n'est définie.
+ * Le premier nom de `priceEnv` est celui utilisé dans Vercel ; le second, plus
+ * ancien, reste accepté.
+ */
+export function getPriceId(plan) {
+  for (const name of plan.priceEnv) {
+    if (process.env[name]) return { name, id: process.env[name] };
+  }
+  return null;
+}
 
 /** Renvoie la formule correspondant à l'identifiant, ou null si inconnu. */
 export function getPlan(planId) {

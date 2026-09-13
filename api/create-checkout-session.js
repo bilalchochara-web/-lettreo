@@ -15,9 +15,10 @@
  *                           Utilisé par /api/webhook.js pour vérifier que les
  *                           notifications proviennent bien de Stripe.
  *
- *   STRIPE_PRICE_ID_UNIT    ID du tarif « à l'unité »        → 1,90 € (paiement unique)
- *   STRIPE_PRICE_ID_DAY     ID du tarif « pass journée »     → 2,90 € (paiement unique)
- *   STRIPE_PRICE_ID_MONTH   ID du tarif « abonnement mois »  → 4,90 €/mois (récurrent)
+ *   STRIPE_PRICE_ID_UNITE    ID du tarif « à l'unité »        → 1,90 € TTC (paiement unique)
+ *   STRIPE_PRICE_ID_JOURNEE  ID du tarif « pass journée »     → 2,90 € TTC (paiement unique)
+ *   STRIPE_PRICE_ID_MENSUEL  ID du tarif « abonnement mois »  → 4,90 € TTC/mois (récurrent)
+ *   (Les anciens noms STRIPE_PRICE_ID_UNIT, _DAY et _MONTH restent acceptés.)
  *
  * VARIABLES OPTIONNELLES :
  *
@@ -37,7 +38,7 @@
  */
 
 import { getStripe } from './_lib/stripe.js';
-import { getPlan } from './_lib/plans.js';
+import { getPlan, getPriceId } from './_lib/plans.js';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -59,24 +60,24 @@ function baseUrl(req) {
  * - Sinon : on construit le tarif à la volée depuis la constante serveur.
  */
 async function buildLineItem(stripe, plan) {
-  const priceId = process.env[plan.priceEnv];
+  const configured = getPriceId(plan);
 
-  if (priceId) {
-    const price = await stripe.prices.retrieve(priceId);
+  if (configured) {
+    const price = await stripe.prices.retrieve(configured.id);
 
     if (price.unit_amount !== plan.amount || price.currency !== plan.currency) {
       throw new Error(
         `Tarif Stripe incohérent pour la formule "${plan.id}" : ` +
         `${price.unit_amount} ${price.currency} configuré, ` +
-        `${plan.amount} ${plan.currency} attendu (${plan.priceEnv}).`
+        `${plan.amount} ${plan.currency} attendu (${configured.name}).`
       );
     }
     const isRecurring = Boolean(price.recurring);
     if (isRecurring !== (plan.mode === 'subscription')) {
-      throw new Error(`Type de tarif Stripe incohérent pour la formule "${plan.id}" (${plan.priceEnv}).`);
+      throw new Error(`Type de tarif Stripe incohérent pour la formule "${plan.id}" (${configured.name}).`);
     }
 
-    return { price: priceId, quantity: 1 };
+    return { price: configured.id, quantity: 1 };
   }
 
   // Repli : montant fixé par le serveur, sans tarif préenregistré.

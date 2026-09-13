@@ -96,9 +96,12 @@ async function onCheckoutCompleted(stripe, session) {
 
 /** invoice.payment_succeeded — échéance mensuelle réglée (ou 1re facture). */
 function onInvoicePaid(invoice) {
-  const subscriptionId = typeof invoice.subscription === 'string'
-    ? invoice.subscription
-    : (invoice.subscription && invoice.subscription.id);
+  // Depuis la version d'API 2025-03-31 (et donc en 2026-08-26.dahlia, celle du
+  // webhook), l'abonnement se lit dans invoice.parent.subscription_details ;
+  // invoice.subscription reste lu pour les versions antérieures.
+  const ref = invoice.subscription
+    || (invoice.parent && invoice.parent.subscription_details && invoice.parent.subscription_details.subscription);
+  const subscriptionId = typeof ref === 'string' ? ref : (ref && ref.id);
 
   console.log(
     `Facture réglée — ${(invoice.amount_paid || 0) / 100} ${String(invoice.currency || '').toUpperCase()}, ` +
